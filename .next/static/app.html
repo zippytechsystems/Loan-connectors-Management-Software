@@ -70,7 +70,7 @@
         </p>
 
         <!-- Golden Amber "Get Started" CTA Button -->
-        <button type="button" class="zippy-btn-get-started" id="btn-get-started" onclick="window.launchZippyDashboard && window.launchZippyDashboard(event)" aria-label="Get Started and Launch Dashboard">
+        <button type="button" class="zippy-btn-get-started" id="btn-get-started" onclick="window.openZippyLoginPage && window.openZippyLoginPage(event)" aria-label="Get Started and Open Login Page">
           Get Started
         </button>
 
@@ -143,13 +143,21 @@
           <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.1); z-index: -1;"></div>
         </div>
 
+        <!-- Strict Authorized Credentials Quick-Fill Pill -->
+        <button type="button" id="btn-drawer-quick-lingaswamy" class="zippy-quick-credential-pill" style="margin-bottom: 12px;" title="Fill M. Lingaswamy Credentials">
+          <span class="pill-sparkle">⚡</span>
+          <span class="pill-label">Authorized:</span>
+          <strong class="pill-val">M.Lingaswamy@123</strong>
+          <span class="pill-tap">[Tap to Fill]</span>
+        </button>
+
         <!-- Credentials Form -->
         <form id="form-drawer-login" novalidate>
           <div id="drawer-login-error" style="display: none; padding: 8px 12px; margin-bottom: 12px; font-size: 12px; border-radius: 8px; background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4);"></div>
 
           <div class="form-group mb-12">
             <label class="form-label" for="drawer-username" style="font-size: 12px; color: #cbd5e1;">Username or Email</label>
-            <input type="text" id="drawer-username" class="form-input" placeholder="e.g. admin or partner" value="admin" required autocomplete="username" style="background: rgba(15, 23, 42, 0.8); border-color: rgba(56, 189, 248, 0.4); color: #fff;">
+            <input type="text" id="drawer-username" class="form-input" placeholder="e.g. M.Lingaswamy@123" value="M.Lingaswamy@123" required autocomplete="username" style="background: rgba(15, 23, 42, 0.8); border-color: rgba(56, 189, 248, 0.4); color: #fff;">
           </div>
 
           <div class="form-group mb-16">
@@ -157,11 +165,11 @@
               <label class="form-label" for="drawer-password" style="font-size: 12px; color: #cbd5e1; margin-bottom: 0;">Password</label>
               <button type="button" id="btn-toggle-pwd" style="background: none; border: none; color: #38bdf8; font-size: 11px; cursor: pointer; padding: 0;">Show</button>
             </div>
-            <input type="password" id="drawer-password" class="form-input" placeholder="Enter password" value="ConnectorDemo!26" required autocomplete="current-password" style="background: rgba(15, 23, 42, 0.8); border-color: rgba(56, 189, 248, 0.4); color: #fff;">
+            <input type="password" id="drawer-password" class="form-input" placeholder="Enter password (zippy@pass0001)" value="zippy@pass0001" required autocomplete="current-password" style="background: rgba(15, 23, 42, 0.8); border-color: rgba(56, 189, 248, 0.4); color: #fff;">
           </div>
 
           <button type="submit" class="btn btn-primary" id="btn-drawer-submit" style="width: 100%; height: 44px; font-size: 14px; font-weight: 700; background: linear-gradient(180deg, #0284c7 0%, #0369a1 100%);">
-            Sign In &amp; Launch Home Page
+            Sign In &amp; Launch Dashboard
           </button>
         </form>
 
@@ -209,17 +217,17 @@
 
       <!-- Auth Header Text -->
       <div class="zippy-auth-header-text">
-        <h2 class="zippy-auth-heading" id="auth-main-heading">Join Zippy Network</h2>
-        <p class="zippy-auth-subheading">Verified Loan Connector &amp; DSA Platform • Hyderabad &amp; Telangana</p>
+        <h2 class="zippy-auth-heading" id="auth-main-heading">Sign In to Zippy Loan Connector</h2>
+        <p class="zippy-auth-subheading">Strict Authorized Access • Verified Connector &amp; Admin Network</p>
       </div>
 
-      <!-- Tab Switcher (Create Account | Sign In | 1-Click Demo) -->
+      <!-- Tab Switcher (Sign In | Create Account | 1-Click Demo) -->
       <div class="zippy-auth-tab-bar" role="tablist">
-        <button type="button" class="zippy-auth-tab-item active" id="tab-zippy-register" role="tab" aria-selected="true">
-          <span>📝</span> Create Account
-        </button>
-        <button type="button" class="zippy-auth-tab-item" id="tab-zippy-signin" role="tab" aria-selected="false">
+        <button type="button" class="zippy-auth-tab-item active" id="tab-zippy-signin" role="tab" aria-selected="true">
           <span>🔑</span> Sign In
+        </button>
+        <button type="button" class="zippy-auth-tab-item" id="tab-zippy-register" role="tab" aria-selected="false">
+          <span>📝</span> Create Account
         </button>
         <button type="button" class="zippy-auth-tab-item" id="tab-zippy-demo" role="tab" aria-selected="false">
           <span>⚡</span> Quick Demo
@@ -233,8 +241,60 @@
         <div id="zippy-auth-error" class="zippy-alert zippy-alert-error" style="display: none;"></div>
         <div id="zippy-auth-success" class="zippy-alert zippy-alert-success" style="display: none;"></div>
 
-        <!-- PANEL 1: CREATE ACCOUNT / SIGN UP -->
-        <div id="panel-zippy-register" class="zippy-auth-panel active">
+        <!-- PANEL 1: STRICT SIGN IN (DEFAULT ACTIVE) -->
+        <div id="panel-zippy-signin" class="zippy-auth-panel active" style="display: block;">
+          <!-- Strict Security Banner -->
+          <div class="zippy-strict-banner">
+            <div class="zippy-strict-badge">
+              <span class="badge-icon">🔒</span>
+              <span class="badge-title">STRICT AUTHENTICATION REQUIRED</span>
+            </div>
+            <p class="zippy-strict-desc">
+              Please enter your authorized username &amp; password to launch the 15-Option Business Dashboard.
+            </p>
+            <button type="button" id="btn-quick-fill-lingaswamy" class="zippy-quick-credential-pill" title="Click to fill M. Lingaswamy credentials">
+              <span class="pill-sparkle">⚡</span>
+              <span class="pill-label">Authorized Account:</span>
+              <strong class="pill-val">M.Lingaswamy@123</strong>
+              <span class="pill-tap">[Tap to Fill]</span>
+            </button>
+          </div>
+
+          <form id="form-zippy-signin" novalidate>
+            <div class="zippy-input-group mb-12">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <label class="zippy-input-label" for="zippy-login-username" style="margin-bottom:0;">Username or Email *</label>
+                <span style="font-size: 11px; color: #f59e0b; font-weight: 600;">Authorized: M.Lingaswamy@123</span>
+              </div>
+              <input type="text" id="zippy-login-username" class="zippy-text-input" placeholder="e.g. M.Lingaswamy@123" value="M.Lingaswamy@123" required autocomplete="username">
+            </div>
+
+            <div class="zippy-input-group mb-16">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <label class="zippy-input-label" for="zippy-login-password" style="margin-bottom:0;">Password *</label>
+                <button type="button" class="btn-pwd-peek" id="btn-peek-login-pwd">Show</button>
+              </div>
+              <input type="password" id="zippy-login-password" class="zippy-text-input" placeholder="Enter password (zippy@pass0001)" value="zippy@pass0001" required autocomplete="current-password">
+            </div>
+
+            <button type="submit" class="zippy-btn-auth-submit zippy-btn-gold" id="btn-submit-zippy-signin">
+              <span>🔐</span> Strict Sign In &amp; Launch Dashboard 🚀
+            </button>
+          </form>
+
+          <button type="button" class="zippy-btn-back-welcome" id="btn-signin-back-welcome">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <span>← Back to Home / Welcome Screen</span>
+          </button>
+
+          <div class="zippy-auth-footer-toggle">
+            New to Zippy Platform? 
+            <button type="button" class="zippy-link-btn" id="btn-toggle-to-register">Create Account now</button>
+          </div>
+        </div>
+
+        <!-- PANEL 2: CREATE ACCOUNT / SIGN UP -->
+        <div id="panel-zippy-register" class="zippy-auth-panel" style="display: none;">
           <form id="form-zippy-register" novalidate>
             <div class="zippy-input-group mb-10">
               <label class="zippy-input-label" for="zippy-reg-fullname">Full Name *</label>
@@ -302,33 +362,6 @@
           <div class="zippy-auth-footer-toggle">
             Already registered? 
             <button type="button" class="zippy-link-btn" id="btn-toggle-to-signin">Sign In to Account</button>
-          </div>
-        </div>
-
-        <!-- PANEL 2: SIGN IN -->
-        <div id="panel-zippy-signin" class="zippy-auth-panel" style="display: none;">
-          <form id="form-zippy-signin" novalidate>
-            <div class="zippy-input-group mb-12">
-              <label class="zippy-input-label" for="zippy-login-username">Username or Email *</label>
-              <input type="text" id="zippy-login-username" class="zippy-text-input" placeholder="e.g. admin or partner" value="admin" required autocomplete="username">
-            </div>
-
-            <div class="zippy-input-group mb-16">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                <label class="zippy-input-label" for="zippy-login-password" style="margin-bottom:0;">Password *</label>
-                <button type="button" class="btn-pwd-peek" id="btn-peek-login-pwd">Show</button>
-              </div>
-              <input type="password" id="zippy-login-password" class="zippy-text-input" placeholder="Enter password" value="ConnectorDemo!26" required autocomplete="current-password">
-            </div>
-
-            <button type="submit" class="zippy-btn-auth-submit zippy-btn-blue" id="btn-submit-zippy-signin">
-              <span>🔑</span> Sign In &amp; Launch Dashboard 🚀
-            </button>
-          </form>
-
-          <div class="zippy-auth-footer-toggle">
-            New to Zippy Platform? 
-            <button type="button" class="zippy-link-btn" id="btn-toggle-to-register">Create Account now</button>
           </div>
         </div>
 
@@ -465,6 +498,21 @@
         <span class="zippy-brand-tag"><span class="active-dot"></span> Zippy Loan Connector Loan Software Application</span>
         <button type="button" class="zippy-view-switch-btn" id="zippy-toggle-console" title="Open Full Operations Console">
           <span>📊</span> <span>Operations Console</span>
+        </button>
+      </div>
+
+      <!-- Active User Status Pill -->
+      <div class="zippy-user-banner" id="zippy-active-user-banner" style="display: flex; justify-content: space-between; align-items: center; background: rgba(14, 165, 233, 0.12); border: 1.5px solid rgba(56, 189, 248, 0.35); border-radius: 12px; padding: 7px 14px; margin: 0 16px 12px 16px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 15px;">👑</span>
+          <div>
+            <span style="font-size: 11px; color: #94a3b8; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">User:</span>
+            <strong id="zippy-dash-username" style="color: #ffffff; font-size: 12.5px; margin-left: 4px;">M. Lingaswamy</strong>
+            <span id="zippy-dash-role-badge" style="background: rgba(245, 158, 11, 0.2); border: 1px solid #f59e0b; color: #fcd34d; font-size: 10px; font-weight: 800; border-radius: 6px; padding: 1px 6px; margin-left: 6px;">ADMIN</span>
+          </div>
+        </div>
+        <button type="button" id="zippy-dash-logout-btn" onclick="window.zippyLogout && window.zippyLogout(event)" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; font-size: 11px; font-weight: 700; border-radius: 8px; padding: 4px 10px; cursor: pointer;" title="Logout to Home Page">
+          Logout
         </button>
       </div>
 

@@ -158,7 +158,7 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function showAuthScreen(defaultTab = 'register') {
+  function showAuthScreen(defaultTab = 'signin') {
     const welcome = document.getElementById('screen-welcome-login');
     const auth = document.getElementById('screen-zippy-auth');
     const zippy = document.getElementById('zippy-dashboard-screen');
@@ -273,6 +273,12 @@
 
     const roleBadge = document.getElementById('header-user-role');
     if (roleBadge) roleBadge.textContent = user.role.toUpperCase();
+
+    const zippyDashUser = document.getElementById('zippy-dash-username');
+    if (zippyDashUser) zippyDashUser.textContent = user.fullName || user.username;
+
+    const zippyDashRole = document.getElementById('zippy-dash-role-badge');
+    if (zippyDashRole) zippyDashRole.textContent = user.role.toUpperCase();
 
     const scopePill = document.getElementById('tenant-scope-indicator');
     if (scopePill) {
@@ -3122,31 +3128,22 @@
     updateWelcomeTime();
     setInterval(updateWelcomeTime, 30000);
 
-    // Directly launch Dashboard on "Get Started" (User Core Request)
-    window.launchZippyDashboard = async function(e) {
+    // Dedicated Strict Login Page Trigger on "Get Started" (User Core Request)
+    window.openZippyLoginPage = function(e) {
       if (e && e.preventDefault) e.preventDefault();
-      try {
-        if (!state.currentUser) {
-          // Auto-authenticate active connector partner so database records and token are active
-          await switchPersona('connector');
-        } else {
-          await refreshAllData();
-        }
-      } catch (err) {
-        console.warn('Auto persona session fallback:', err);
-      }
-      showDashboardScreen();
-      showToast('Zippy Enterprises', `Welcome ${state.currentUser?.fullName || 'Connector'}! All 15 loan modules ready.`, 'success');
+      if (authDrawer) authDrawer.classList.remove('open');
+      showAuthScreen('signin');
     };
+    window.launchZippyDashboard = window.openZippyLoginPage;
 
     if (btnGetStarted) {
-      btnGetStarted.addEventListener('click', window.launchZippyDashboard);
+      btnGetStarted.addEventListener('click', window.openZippyLoginPage);
     }
 
-    // Logo Click on Welcome Screen launches dashboard directly
+    // Logo Click on Welcome Screen opens strict login page
     const welcomeLogo = document.getElementById('btn-welcome-logo');
     if (welcomeLogo) {
-      welcomeLogo.addEventListener('click', window.launchZippyDashboard);
+      welcomeLogo.addEventListener('click', window.openZippyLoginPage);
     }
 
     // Resume into Business Dashboard
@@ -3168,6 +3165,18 @@
     if (drawerHandle && authDrawer) {
       drawerHandle.addEventListener('click', () => {
         authDrawer.classList.remove('open');
+      });
+    }
+
+    // Quick fill M. Lingaswamy credentials in drawer
+    const btnDrawerLingaswamy = document.getElementById('btn-drawer-quick-lingaswamy');
+    if (btnDrawerLingaswamy) {
+      btnDrawerLingaswamy.addEventListener('click', () => {
+        const uInput = document.getElementById('drawer-username');
+        const pInput = document.getElementById('drawer-password');
+        if (uInput) uInput.value = 'M.Lingaswamy@123';
+        if (pInput) pInput.value = 'zippy@pass0001';
+        showToast('Credentials Loaded', 'M.Lingaswamy@123 / zippy@pass0001 loaded into drawer login.', 'info');
       });
     }
 
@@ -3226,14 +3235,14 @@
           showToast('Welcome Back', `Authenticated as ${res.user.fullName || res.user.username} (${res.user.role.toUpperCase()})`, 'success');
         } catch (err) {
           if (errEl) {
-            errEl.textContent = err.message;
+            errEl.textContent = err.message || 'Invalid username or password';
             errEl.style.display = 'block';
           }
           showToast('Sign In Error', err.message, 'error');
         } finally {
           if (submitBtn) {
             submitBtn.disabled = false;
-            submitBtn.textContent = 'Sign In & Launch Home Page';
+            submitBtn.textContent = 'Sign In & Launch Dashboard';
           }
         }
       });
@@ -3311,7 +3320,9 @@
           panelSignIn.classList.add('active');
           panelSignIn.style.display = 'block';
         }
-        if (authHeading) authHeading.textContent = 'Sign In to Workspace';
+        if (authHeading) authHeading.textContent = 'Sign In to Zippy Loan Connector';
+        const subHead = document.querySelector('.zippy-auth-subheading');
+        if (subHead) subHead.textContent = 'Strict Authorized Access • M.Lingaswamy@123';
       } else if (activeName === 'demo') {
         if (tabDemo) tabDemo.classList.add('active');
         if (panelDemo) {
@@ -3369,6 +3380,26 @@
         }
       });
     });
+
+    // Quick-Fill M. Lingaswamy Credentials on Sign In Panel
+    const btnQuickFillLingaswamy = document.getElementById('btn-quick-fill-lingaswamy');
+    if (btnQuickFillLingaswamy) {
+      btnQuickFillLingaswamy.addEventListener('click', () => {
+        const uInput = document.getElementById('zippy-login-username');
+        const pInput = document.getElementById('zippy-login-password');
+        if (uInput) uInput.value = 'M.Lingaswamy@123';
+        if (pInput) pInput.value = 'zippy@pass0001';
+        showToast('Credentials Loaded', 'M.Lingaswamy@123 / zippy@pass0001 loaded into login fields.', 'info');
+      });
+    }
+
+    // Back to Welcome button on Sign In panel
+    const btnSignInBackWelcome = document.getElementById('btn-signin-back-welcome');
+    if (btnSignInBackWelcome) {
+      btnSignInBackWelcome.addEventListener('click', () => {
+        showWelcomeScreen();
+      });
+    }
 
     // Create Account Form Submit
     const formReg = document.getElementById('form-zippy-register');
@@ -3442,22 +3473,36 @@
       });
     }
 
-    // Sign In Form Submit
+    // Strict Sign In Form Submit
     const formSignIn = document.getElementById('form-zippy-signin');
     if (formSignIn) {
       formSignIn.addEventListener('submit', async (e) => {
         e.preventDefault();
         const errEl = document.getElementById('zippy-auth-error');
+        const succEl = document.getElementById('zippy-auth-success');
         if (errEl) errEl.style.display = 'none';
+        if (succEl) succEl.style.display = 'none';
 
         const submitBtn = document.getElementById('btn-submit-zippy-signin');
         if (submitBtn) {
           submitBtn.disabled = true;
-          submitBtn.textContent = 'Authenticating...';
+          submitBtn.innerHTML = '<span>⏳</span> Verifying Credentials...';
         }
 
         const username = (document.getElementById('zippy-login-username')?.value || '').trim();
         const password = document.getElementById('zippy-login-password')?.value || '';
+
+        if (!username || !password) {
+          if (errEl) {
+            errEl.textContent = '❌ Please enter both username and password to proceed.';
+            errEl.style.display = 'block';
+          }
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span>🔐</span> Strict Sign In &amp; Launch Dashboard 🚀';
+          }
+          return;
+        }
 
         try {
           const res = await api('/api/v1/auth/login', {
@@ -3465,23 +3510,55 @@
             body: JSON.stringify({ username, password })
           });
           if (res.csrfToken) state.csrfToken = res.csrfToken;
+
+          if (succEl) {
+            succEl.textContent = `✅ Identity Verified: Welcome ${res.user.fullName || res.user.username}! Launching 15-Box Dashboard...`;
+            succEl.style.display = 'block';
+          }
+
           await fetchCurrentUser();
           await refreshAllData();
-          showDashboardScreen();
-          showToast('Welcome Back', `Authenticated as ${res.user.fullName || res.user.username}. All 15 modules active.`, 'success');
+
+          setTimeout(() => {
+            showDashboardScreen();
+            showToast('Welcome M. Lingaswamy', `Authenticated successfully as ${res.user.fullName || res.user.username} [${(res.user.role || 'Admin').toUpperCase()}]. All 15 modules active.`, 'success');
+          }, 400);
         } catch (err) {
           if (errEl) {
-            errEl.textContent = err.message || 'Invalid username or password';
+            errEl.textContent = `❌ Authentication Failed: ${err.message || 'Invalid username or password'}. Please check your credentials (e.g., M.Lingaswamy@123 / zippy@pass0001).`;
             errEl.style.display = 'block';
           }
-          showToast('Sign In Error', err.message, 'error');
+          showToast('Authentication Failed', err.message || 'Invalid credentials', 'error');
         } finally {
           if (submitBtn) {
             submitBtn.disabled = false;
-            submitBtn.innerHTML = '<span>🔑</span> Sign In &amp; Launch Dashboard 🚀';
+            submitBtn.innerHTML = '<span>🔐</span> Strict Sign In &amp; Launch Dashboard 🚀';
           }
         }
       });
+    }
+
+    // Connect dashboard logout and power buttons
+    window.zippyLogout = async function(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      try {
+        await api('/api/v1/auth/logout', { method: 'POST' });
+      } catch (err) {
+        console.warn('Logout notice:', err);
+      }
+      state.currentUser = null;
+      showWelcomeScreen();
+      showToast('Signed Out', 'You have been safely signed out. Please sign in with your credentials to enter.', 'info');
+    };
+
+    window.backToWelcomeScreen = function(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      showWelcomeScreen();
+    };
+
+    const zippyPowerBtn = document.getElementById('zippy-btn-power');
+    if (zippyPowerBtn) {
+      zippyPowerBtn.addEventListener('click', window.zippyLogout);
     }
   }
 
@@ -3491,7 +3568,10 @@
     showAuthScreen,
     showDashboardScreen,
     showConsoleScreen,
-    launchDashboard: (e) => window.launchZippyDashboard && window.launchZippyDashboard(e),
+    openZippyLoginPage: (e) => window.openZippyLoginPage && window.openZippyLoginPage(e),
+    launchDashboard: (e) => window.openZippyLoginPage && window.openZippyLoginPage(e),
+    zippyLogout: (e) => window.zippyLogout && window.zippyLogout(e),
+    backToWelcomeScreen: (e) => window.backToWelcomeScreen && window.backToWelcomeScreen(e),
     viewLeadDetail,
     quickTransition,
     openDispatchModal,

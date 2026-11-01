@@ -66,14 +66,16 @@ function seedDatabase() {
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
     const demoPasswordHash = hashPassword('ConnectorDemo!26');
-    userStmt.run(1, 'admin', demoPasswordHash, 'Vikram Singhania', 'admin@veridianops.net', 'admin', null, null, 1, 1, '2026-10-01T08:00:00Z');
-    userStmt.run(2, 'ops', demoPasswordHash, 'Ananya Deshmukh', 'ananya.ops@veridianops.net', 'operations', null, null, 0, 1, '2026-10-01T08:00:00Z');
-    userStmt.run(3, 'partner', demoPasswordHash, 'Kavitha Raman', 'kavitha@northstarconnect.in', 'connector', 1, null, 0, 1, '2026-10-01T08:00:00Z');
-    userStmt.run(4, 'partner2', demoPasswordHash, 'Manish Agarwal', 'manish@apexadvisors.in', 'connector', 2, null, 0, 1, '2026-10-05T08:00:00Z');
-    userStmt.run(5, 'lender', demoPasswordHash, 'Rohit Malhotra', 'rohit.lender@riverbendcap.com', 'lender', null, 1, 0, 1, '2026-10-01T08:00:00Z');
-    userStmt.run(6, 'auditor', demoPasswordHash, 'Gita Sundaram', 'gita.auditor@veridianops.net', 'auditor', null, null, 0, 1, '2026-10-01T08:00:00Z');
-    userStmt.run(7, 'reviewer', demoPasswordHash, 'Sunil Chawla', 'sunil.reviewer@veridianops.net', 'reviewer', null, 1, 0, 1, '2026-10-01T08:00:00Z');
-    userStmt.run(8, 'finance', demoPasswordHash, 'Meera Namboodiri', 'meera.finance@veridianops.net', 'finance', null, null, 0, 1, '2026-10-01T08:00:00Z');
+    const lingaswamyPasswordHash = hashPassword('zippy@pass0001');
+    userStmt.run(1, 'M.Lingaswamy@123', lingaswamyPasswordHash, 'M. Lingaswamy', 'm.lingaswamy@zippyconnector.com', 'admin', null, null, 0, 1, '2026-10-01T08:00:00Z');
+    userStmt.run(2, 'admin', demoPasswordHash, 'Vikram Singhania', 'admin@veridianops.net', 'admin', null, null, 1, 1, '2026-10-01T08:00:00Z');
+    userStmt.run(3, 'ops', demoPasswordHash, 'Ananya Deshmukh', 'ananya.ops@veridianops.net', 'operations', null, null, 0, 1, '2026-10-01T08:00:00Z');
+    userStmt.run(4, 'partner', demoPasswordHash, 'Kavitha Raman', 'kavitha@northstarconnect.in', 'connector', 1, null, 0, 1, '2026-10-01T08:00:00Z');
+    userStmt.run(5, 'partner2', demoPasswordHash, 'Manish Agarwal', 'manish@apexadvisors.in', 'connector', 2, null, 0, 1, '2026-10-05T08:00:00Z');
+    userStmt.run(6, 'lender', demoPasswordHash, 'Rohit Malhotra', 'rohit.lender@riverbendcap.com', 'lender', null, 1, 0, 1, '2026-10-01T08:00:00Z');
+    userStmt.run(7, 'auditor', demoPasswordHash, 'Gita Sundaram', 'gita.auditor@veridianops.net', 'auditor', null, null, 0, 1, '2026-10-01T08:00:00Z');
+    userStmt.run(8, 'reviewer', demoPasswordHash, 'Sunil Chawla', 'sunil.reviewer@veridianops.net', 'reviewer', null, 1, 0, 1, '2026-10-01T08:00:00Z');
+    userStmt.run(9, 'finance', demoPasswordHash, 'Meera Namboodiri', 'meera.finance@veridianops.net', 'finance', null, null, 0, 1, '2026-10-01T08:00:00Z');
 
     // 4. Loan Products
     const prodStmt = dbSync.prepare(`
