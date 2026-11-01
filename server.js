@@ -179,20 +179,25 @@ const server = http.createServer(async (req, res) => {
   
   // Map clean public marketing and internal workspace routes
   const cleanRouteMap = {
-    '/': 'index.html',
-    '/index': 'index.html',
-    '/index.html': 'index.html',
+    '/': 'app.html',
+    '/index': 'app.html',
+    '/index.html': 'app.html',
+    '/app': 'app.html',
+    '/app.html': 'app.html',
+    '/login': 'app.html',
+    '/home': 'app.html',
+    '/dashboard': 'app.html',
+    '/workspace': 'app.html',
+    '/portal': 'app.html',
+    '/marketing': 'index.html',
+    '/website': 'index.html',
     '/hyderabad-nacharam': 'hyderabad-nacharam.html',
     '/connector-network': 'connector-network.html',
     '/loan-products': 'loan-products.html',
     '/about': 'about.html',
     '/contact': 'contact.html',
     '/privacy-policy': 'privacy-policy.html',
-    '/terms': 'terms.html',
-    '/app': 'app.html',
-    '/workspace': 'app.html',
-    '/portal': 'app.html',
-    '/login': 'app.html'
+    '/terms': 'terms.html'
   };
 
   let targetRelative = cleanRouteMap[cleanPath] || null;
@@ -212,9 +217,9 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (!targetRelative) {
-    // Fallback: if browser request without file extension, serve index.html
-    if (!path.extname(pathname)) {
-      targetRelative = 'index.html';
+    // Fallback: if browser request without file extension, serve app.html
+    if (!path.extname(u.pathname)) {
+      targetRelative = 'app.html';
     } else {
       res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
       return res.end('Resource not found');
@@ -229,7 +234,7 @@ const server = http.createServer(async (req, res) => {
     return res.end('Access denied');
   }
 
-  const isPrivateWorkspace = ['/app', '/workspace', '/portal', '/login'].includes(pathname) || 
+  const isPrivateWorkspace = ['/app', '/workspace', '/portal', '/login', '/home', '/dashboard'].includes(u.pathname) || 
                             targetRelative.endsWith('app.html');
 
   if (isPrivateWorkspace) {

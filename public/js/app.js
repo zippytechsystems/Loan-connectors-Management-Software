@@ -145,6 +145,37 @@
       .replace(/'/g, '&#039;');
   }
 
+  // Multi-Screen Navigation Controller (Welcome Onboarding Screen <-> Home Dashboard <-> Operations Console)
+  function showWelcomeScreen() {
+    const welcome = document.getElementById('screen-welcome-login');
+    const zippy = document.getElementById('zippy-dashboard-screen');
+    const consoleWrap = document.getElementById('enterprise-console-wrapper');
+    if (welcome) welcome.style.display = 'flex';
+    if (zippy) zippy.style.display = 'none';
+    if (consoleWrap) consoleWrap.style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showDashboardScreen() {
+    const welcome = document.getElementById('screen-welcome-login');
+    const zippy = document.getElementById('zippy-dashboard-screen');
+    const consoleWrap = document.getElementById('enterprise-console-wrapper');
+    if (welcome) welcome.style.display = 'none';
+    if (zippy) zippy.style.display = 'block';
+    if (consoleWrap) consoleWrap.style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showConsoleScreen() {
+    const welcome = document.getElementById('screen-welcome-login');
+    const zippy = document.getElementById('zippy-dashboard-screen');
+    const consoleWrap = document.getElementById('enterprise-console-wrapper');
+    if (welcome) welcome.style.display = 'none';
+    if (zippy) zippy.style.display = 'none';
+    if (consoleWrap) consoleWrap.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   // Initialize Application
   async function init() {
     setupTabNavigation();
@@ -153,15 +184,23 @@
     setupForms();
     setupKeyboardShortcuts();
     setupZippyDashboard();
+    setupWelcomeScreen();
     updateLiveDate();
+
+    const hash = window.location.hash;
+    const isLoginRoute = window.location.pathname === '/login' || hash === '#login';
 
     try {
       await fetchCurrentUser();
       await refreshAllData();
+      if (isLoginRoute) {
+        showWelcomeScreen();
+      } else {
+        showDashboardScreen();
+      }
     } catch (err) {
-      console.warn('Initial session check:', err.message);
-      // Auto-login as demo admin if needed
-      await switchPersona('admin');
+      console.log('Unauthenticated session, showing Welcome & Login Onboarding screen.');
+      showWelcomeScreen();
     }
   }
 
@@ -2000,17 +2039,19 @@
     const consoleWrapper = document.getElementById('enterprise-console-wrapper');
     const toggleConsoleBtn = document.getElementById('zippy-toggle-console');
     const returnZippyBtn = document.getElementById('btn-return-zippy-dash');
+    const dashTimeEl = document.getElementById('dashboard-status-time');
+
+    function updateDashTime() {
+      if (dashTimeEl) {
+        const now = new Date();
+        dashTimeEl.textContent = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: false });
+      }
+    }
+    updateDashTime();
+    setInterval(updateDashTime, 30000);
 
     function showZippyScreen() {
-      if (zippyScreen) zippyScreen.style.display = 'block';
-      if (consoleWrapper) consoleWrapper.style.display = 'none';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function showConsoleScreen() {
-      if (zippyScreen) zippyScreen.style.display = 'none';
-      if (consoleWrapper) consoleWrapper.style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      showDashboardScreen();
     }
 
     if (toggleConsoleBtn) toggleConsoleBtn.addEventListener('click', showConsoleScreen);
@@ -2030,15 +2071,14 @@
       btnPower.addEventListener('click', async () => {
         showConfirmationModal({
           title: 'Sign Out Session',
-          message: 'Are you sure you want to exit your Zippy Enterprises session?',
+          message: 'Are you sure you want to sign out and return to the Welcome screen?',
           onConfirm: async () => {
             try {
               await api('/api/v1/auth/logout', { method: 'POST' });
-              showToast('Signed Out', 'Session terminated. Reloading...', 'info');
-              setTimeout(() => window.location.reload(), 400);
-            } catch (e) {
-              window.location.reload();
-            }
+            } catch (e) {}
+            state.currentUser = null;
+            showToast('Signed Out', 'Session terminated. Returning to Welcome screen...', 'info');
+            showWelcomeScreen();
           }
         });
       });
@@ -2304,9 +2344,137 @@
     }
   }
 
+  // 16. Welcome & Onboarding Screen Handlers (Screenshot Replica)
+  function setupWelcomeScreen() {
+    const welcomeScreen = document.getElementById('screen-welcome-login');
+    const authDrawer = document.getElementById('welcome-auth-drawer');
+    const btnGetStarted = document.getElementById('btn-get-started');
+    const btnCloseDrawer = document.getElementById('btn-close-auth-drawer');
+    const drawerHandle = document.getElementById('btn-drawer-handle');
+    const statusTimeEl = document.getElementById('welcome-status-time');
+
+    // Live mobile status time update
+    function updateWelcomeTime() {
+      if (statusTimeEl) {
+        const now = new Date();
+        statusTimeEl.textContent = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: false });
+      }
+    }
+    updateWelcomeTime();
+    setInterval(updateWelcomeTime, 30000);
+
+    // Open Auth Drawer on "Get Started"
+    if (btnGetStarted && authDrawer) {
+      btnGetStarted.addEventListener('click', () => {
+        authDrawer.classList.add('open');
+      });
+    }
+
+    // Close Auth Drawer
+    if (btnCloseDrawer && authDrawer) {
+      btnCloseDrawer.addEventListener('click', () => {
+        authDrawer.classList.remove('open');
+      });
+    }
+    if (drawerHandle && authDrawer) {
+      drawerHandle.addEventListener('click', () => {
+        authDrawer.classList.remove('open');
+      });
+    }
+
+    // Logo Click on Welcome Screen
+    const welcomeLogo = document.getElementById('btn-welcome-logo');
+    if (welcomeLogo && authDrawer) {
+      welcomeLogo.addEventListener('click', () => {
+        authDrawer.classList.toggle('open');
+      });
+    }
+
+    // 1-Click Quick Demo Sign-Ins in Drawer
+    document.querySelectorAll('.quick-role-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const role = btn.dataset.role;
+        if (authDrawer) authDrawer.classList.remove('open');
+        try {
+          await switchPersona(role);
+          showDashboardScreen();
+          showToast('Welcome to Zippy', `Instant Demo Login verified: [${role.toUpperCase()}]. Home Page active.`, 'success');
+        } catch (err) {
+          showToast('Sign-In Error', err.message, 'error');
+        }
+      });
+    });
+
+    // Toggle Password Visibility
+    const btnTogglePwd = document.getElementById('btn-toggle-pwd');
+    const pwdInput = document.getElementById('drawer-password');
+    if (btnTogglePwd && pwdInput) {
+      btnTogglePwd.addEventListener('click', () => {
+        const isPwd = pwdInput.type === 'password';
+        pwdInput.type = isPwd ? 'text' : 'password';
+        btnTogglePwd.textContent = isPwd ? 'Hide' : 'Show';
+      });
+    }
+
+    // Drawer Login Form Submit
+    const formDrawerLogin = document.getElementById('form-drawer-login');
+    if (formDrawerLogin) {
+      formDrawerLogin.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const errEl = document.getElementById('drawer-login-error');
+        if (errEl) errEl.style.display = 'none';
+        const submitBtn = document.getElementById('btn-drawer-submit');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Authenticating...';
+        }
+
+        const username = (document.getElementById('drawer-username')?.value || '').trim();
+        const password = document.getElementById('drawer-password')?.value || '';
+
+        try {
+          const res = await api('/api/v1/auth/login', {
+            method: 'POST',
+            body: JSON.stringify({ username, password })
+          });
+          if (res.csrfToken) state.csrfToken = res.csrfToken;
+          if (authDrawer) authDrawer.classList.remove('open');
+          await fetchCurrentUser();
+          await refreshAllData();
+          showDashboardScreen();
+          showToast('Welcome Back', `Authenticated as ${res.user.fullName || res.user.username} (${res.user.role.toUpperCase()})`, 'success');
+        } catch (err) {
+          if (errEl) {
+            errEl.textContent = err.message;
+            errEl.style.display = 'block';
+          }
+          showToast('Sign In Error', err.message, 'error');
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Sign In & Launch Home Page';
+          }
+        }
+      });
+    }
+
+    // Register link in Drawer
+    const btnDrawerReg = document.getElementById('btn-drawer-open-reg');
+    if (btnDrawerReg) {
+      btnDrawerReg.addEventListener('click', () => {
+        if (authDrawer) authDrawer.classList.remove('open');
+        openModal('modal-auth-login');
+        const tabReg = document.getElementById('tab-auth-register');
+        if (tabReg) tabReg.click();
+      });
+    }
+  }
+
   // Export app namespace for inline element event handlers
   window.app = {
-
+    showWelcomeScreen,
+    showDashboardScreen,
+    showConsoleScreen,
     viewLeadDetail,
     quickTransition,
     openDispatchModal,
