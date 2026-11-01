@@ -61,7 +61,7 @@ if ((NODE_ENV === 'production' || PRODUCTION_HARDENED) && DB_CLIENT === 'mysql')
 module.exports = {
   ROOT_DIR,
   PORT: Number(process.env.PORT || 4180),
-  HOST: process.env.HOST || '127.0.0.1',
+  HOST: process.env.HOST || (process.env.PORT ? '0.0.0.0' : '127.0.0.1'),
   NODE_ENV,
   DB_CLIENT,
   DB_FILE: process.env.CONNECTOR_DB 

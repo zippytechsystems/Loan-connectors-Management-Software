@@ -268,6 +268,20 @@ const server = http.createServer(async (req, res) => {
   fs.createReadStream(filePath).pipe(res);
 });
 
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`\n❌ [Server Error] Port ${config.PORT} is already in use by another running process.`);
+    console.error(`👉 Solution: Stop the existing process running on port ${config.PORT}:`);
+    console.error(`   • Windows (PowerShell): Stop-Process -Id (Get-NetTCPConnection -LocalPort ${config.PORT} -ErrorAction SilentlyContinue).OwningProcess -Force`);
+    console.error(`   • macOS / Linux:        npx kill-port ${config.PORT}`);
+    console.error(`   • Or start on another port: PORT=${Number(config.PORT) + 1} npm run dev\n`);
+    process.exit(1);
+  } else {
+    console.error('\n❌ [Server Error]:', err.message);
+    process.exit(1);
+  }
+});
+
 server.listen(config.PORT, config.HOST, () => {
   console.log(`=======================================================`);
   console.log(`  Veridian Loan Connector Network OS (Standalone)      `);
@@ -279,12 +293,29 @@ server.listen(config.PORT, config.HOST, () => {
   console.log(`=======================================================`);
 });
 
-// Graceful termination
-process.on('SIGINT', () => {
-  console.log('\nClosing server and database connections...');
+// Graceful termination handling for both SIGINT and SIGTERM (watch mode)
+let isShuttingDown = false;
+function handleShutdown(signal) {
+  if (isShuttingDown) return;
+  isShuttingDown = true;
+  console.log(`\nReceived ${signal}. Closing server and database connections...`);
+  if (typeof server.closeAllConnections === 'function') {
+    server.closeAllConnections();
+  }
+  if (typeof server.closeIdleConnections === 'function') {
+    server.closeIdleConnections();
+  }
   server.close(() => {
     try { db.close(); } catch (e) {}
     console.log('Veridian Network OS shutdown cleanly.');
     process.exit(0);
   });
-});
+  setTimeout(() => {
+    try { db.close(); } catch (e) {}
+    process.exit(0);
+  }, 3000).unref();
+}
+
+process.on('SIGINT', () => handleShutdown('SIGINT'));
+process.on('SIGTERM', () => handleShutdown('SIGTERM'));
+

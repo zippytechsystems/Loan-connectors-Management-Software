@@ -6,7 +6,8 @@
   "type": "commonjs",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js",
+    "build": "node scripts/build.js",
+    "dev": "node --watch --watch-path=src --watch-path=public --watch-path=server.js server.js",
     "test": "node --test tests/api.test.js",
     "backup": "node scripts/backup.js",
     "restore": "node scripts/restore.js",
