@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- 1. Homepage: Multi-Party Loan Connector Platform -->
+  <url>
+    <loc>https://veridianconnector.com/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- 2. Local SEO Focus: Hyderabad & Nacharam Loan Connector Network -->
+  <url>
+    <loc>https://veridianconnector.com/hyderabad-nacharam</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- 3. Connector & DSA Network Partner Onboarding -->
+  <url>
+    <loc>https://veridianconnector.com/connector-network</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- 4. Loan Products Catalog & Eligibility Guidelines -->
+  <url>
+    <loc>https://veridianconnector.com/loan-products</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- 5. About Platform & Institutional Lender Disclaimers -->
+  <url>
+    <loc>https://veridianconnector.com/about</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- 6. Contact & Regional Operational Desk -->
+  <url>
+    <loc>https://veridianconnector.com/contact</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- 7. DPDP Act 2023 Privacy Policy -->
+  <url>
+    <loc>https://veridianconnector.com/privacy-policy</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.50</priority>
+  </url>
+
+  <!-- 8. Terms of Service & Partner Agreement -->
+  <url>
+    <loc>https://veridianconnector.com/terms</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.50</priority>
+  </url>
+
+</urlset>

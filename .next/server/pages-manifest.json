@@ -1,0 +1,5 @@
+{
+  "/": "pages/index.html",
+  "/app": "pages/app.html",
+  "/404": "pages/404.html"
+}

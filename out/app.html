@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zippy Enterprises — Loan Connector Management Platform</title>
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="description" content="Zippy Enterprises Loan Connector Network OS: Multi-party loan routing, partner governance, and commission reconciliation platform.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="zippy-theme-body">
+
+  <!-- Screen Reader Live Region & Skip Link -->
+  <a href="#zippy-dashboard-grid" class="skip-to-content">Skip to dashboard grid</a>
+  <div id="a11y-announcer" class="sr-only" role="status" aria-live="polite"></div>
+
+  <!-- =========================================================================
+       ZIPPY ENTERPRISES — DASHBOARD SCREEN (EXACT SCREENSHOT IMPLEMENTATION)
+       Royal Midnight Sapphire Blue, Glowing Neon Cyan, 3-Column Image Card Grid
+       ========================================================================= -->
+  <section id="zippy-dashboard-screen" class="zippy-app-wrapper" aria-label="Zippy Enterprises Loan Connector Dashboard">
+    <div class="zippy-main-container">
+      
+      <!-- Top App Header -->
+      <header class="zippy-header">
+        <div class="zippy-header-logo-wrap" id="zippy-logo-btn" title="Zippy Enterprises">
+          <div class="zippy-logo-badge">
+            <img src="img/dashboard/logo.svg" alt="Zippy Enterprises" width="44" height="44">
+          </div>
+        </div>
+        <h1 class="zippy-header-title">Dashboard</h1>
+        <div class="zippy-header-actions">
+          <button type="button" class="zippy-circle-btn zippy-btn-theme" id="zippy-btn-theme" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+            </svg>
+          </button>
+          <button type="button" class="zippy-circle-btn zippy-btn-power" id="zippy-btn-power" title="Sign Out Current Session" aria-label="Sign Out">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+              <line x1="12" y1="2" x2="12" y2="12"></line>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Luminous Neon Cyan Divider Line -->
+      <div class="zippy-neon-divider"></div>
+
+      <!-- Sub-Brand Banner & Console Switcher -->
+      <div class="zippy-brand-banner">
+        <span class="zippy-brand-tag"><span class="active-dot"></span> Zippy Enterprises • Connector OS</span>
+        <button type="button" class="zippy-view-switch-btn" id="zippy-toggle-console" title="Open Full Operations Console">
+          <span>📊</span> <span>Operations Console</span>
+        </button>
+      </div>
+
+      <!-- 3-Column Grid of 15 Loan Connector Option Boxes -->
+      <div class="zippy-grid" id="zippy-dashboard-grid" role="navigation" aria-label="Loan Connector Option Modules">
+        
+        <!-- Row 1: Profile | Partners | Feed Back -->
+        <!-- 1. Profile -->
+        <button type="button" class="zippy-card-item" id="card-profile" aria-label="Connector Profile & Settings">
+          <div class="zippy-box">
+            <img src="img/dashboard/profile.svg" alt="Profile" loading="lazy">
+          </div>
+          <span class="zippy-label">Profile</span>
+        </button>
+
+        <!-- 2. Partners -->
+        <button type="button" class="zippy-card-item" id="card-partners" aria-label="Partner Network Directory">
+          <div class="zippy-box">
+            <img src="img/dashboard/outings.svg" alt="Partners" loading="lazy">
+          </div>
+          <span class="zippy-label">Partners</span>
+        </button>
+
+        <!-- 3. Feed Back -->
+        <button type="button" class="zippy-card-item" id="card-feedback" aria-label="Connector Feedback & Support">
+          <div class="zippy-box">
+            <img src="img/dashboard/feedback.svg" alt="Feed Back" loading="lazy">
+          </div>
+          <span class="zippy-label">Feed Back</span>
+        </button>
+
+        <!-- Row 2: Reminders | Lender Match | AI Underwriter -->
+        <!-- 4. Reminders -->
+        <button type="button" class="zippy-card-item" id="card-reminders" aria-label="SLA Tasks & Timetable">
+          <div class="zippy-box">
+            <img src="img/dashboard/timetable.svg" alt="Reminders" loading="lazy">
+          </div>
+          <span class="zippy-label">Reminders</span>
+        </button>
+
+        <!-- 5. Lender Match -->
+        <button type="button" class="zippy-card-item" id="card-lender-match" aria-label="Bank and NBFC Sanction Matrix">
+          <div class="zippy-box">
+            <img src="img/dashboard/admissions.svg" alt="Lender Match" loading="lazy">
+          </div>
+          <span class="zippy-label">Lender Match</span>
+        </button>
+
+        <!-- 6. AI Underwriter -->
+        <button type="button" class="zippy-card-item" id="card-ai-underwriter" aria-label="AI Loan Eligibility Calculator">
+          <div class="zippy-box">
+            <img src="img/dashboard/ai_awareness.svg" alt="AI Underwriter" loading="lazy">
+          </div>
+          <span class="zippy-label">AI Underwriter</span>
+        </button>
+
+        <!-- Row 3: New Lead | Lead Queue | Payouts -->
+        <!-- 7. New Lead -->
+        <button type="button" class="zippy-card-item" id="card-new-lead" aria-label="Consented Loan Intake">
+          <div class="zippy-box">
+            <img src="img/dashboard/new_lead.svg" alt="New Lead" loading="lazy">
+          </div>
+          <span class="zippy-label">New Lead</span>
+        </button>
+
+        <!-- 8. Lead Queue -->
+        <button type="button" class="zippy-card-item" id="card-lead-queue" aria-label="Active Leads Pipeline">
+          <div class="zippy-box">
+            <img src="img/dashboard/jobs.svg" alt="Lead Queue" loading="lazy">
+          </div>
+          <span class="zippy-label">Lead Queue</span>
+        </button>
+
+        <!-- 9. Payouts -->
+        <button type="button" class="zippy-card-item" id="card-payouts" aria-label="Payout Settlement & NEFT UTR">
+          <div class="zippy-box">
+            <img src="img/dashboard/payments.svg" alt="Payouts" loading="lazy">
+          </div>
+          <span class="zippy-label">Payouts</span>
+        </button>
+
+        <!-- Row 4: Commissions | Analytics | Doc Review -->
+        <!-- 10. Commissions -->
+        <button type="button" class="zippy-card-item" id="card-commissions" aria-label="Commission Ledger & Slabs">
+          <div class="zippy-box">
+            <img src="img/dashboard/commissions.svg" alt="Commissions" loading="lazy">
+          </div>
+          <span class="zippy-label">Commissions</span>
+        </button>
+
+        <!-- 11. Analytics -->
+        <button type="button" class="zippy-card-item" id="card-analytics" aria-label="Disbursals & Performance KPIs">
+          <div class="zippy-box">
+            <img src="img/dashboard/results.svg" alt="Analytics" loading="lazy">
+          </div>
+          <span class="zippy-label">Analytics</span>
+        </button>
+
+        <!-- 12. Doc Review -->
+        <button type="button" class="zippy-card-item" id="card-doc-review" aria-label="Underwriter Review Queue">
+          <div class="zippy-box">
+            <img src="img/dashboard/assignment.svg" alt="Doc Review" loading="lazy">
+          </div>
+          <span class="zippy-label">Doc Review</span>
+        </button>
+
+        <!-- Row 5: Circulars | Loan Products | Doc Vault -->
+        <!-- 13. Circulars -->
+        <button type="button" class="zippy-card-item" id="card-circulars" aria-label="RBI Policy Circulars & Norms">
+          <div class="zippy-box">
+            <img src="img/dashboard/circulars.svg" alt="Circulars" loading="lazy">
+          </div>
+          <span class="zippy-label">Circulars</span>
+        </button>
+
+        <!-- 14. Loan Products -->
+        <button type="button" class="zippy-card-item" id="card-products" aria-label="Loan Products Catalog">
+          <div class="zippy-box">
+            <img src="img/dashboard/products.svg" alt="Loan Products" loading="lazy">
+          </div>
+          <span class="zippy-label">Loan Products</span>
+        </button>
+
+        <!-- 15. Doc Vault -->
+        <button type="button" class="zippy-card-item" id="card-doc-vault" aria-label="AES-256 Encrypted KYC Vault">
+          <div class="zippy-box">
+            <img src="img/dashboard/doc_vault.svg" alt="Doc Vault" loading="lazy">
+          </div>
+          <span class="zippy-label">Doc Vault</span>
+        </button>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       ENTERPRISE OPERATIONS CONSOLE (FULL MULTI-TENANT WORKSPACE)
+       Toggled on demand via "Operations Console" button
+       ========================================================================= -->
+  <div id="enterprise-console-wrapper" style="display: none;">
+    <div style="background: #08132d; padding: 10px 18px; border-bottom: 1.5px solid rgba(56, 189, 248, 0.4); display: flex; justify-content: space-between; align-items: center;">
+      <span style="color: #38bdf8; font-family: 'Times New Roman', Georgia, serif; font-size: 15px; font-weight: 700;">Zippy Enterprises • Operations Console</span>
+      <button type="button" class="btn btn-secondary btn-sm" id="btn-return-zippy-dash" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.6); background: rgba(15, 23, 42, 0.8);">
+        📱 Return to Zippy Dashboard
+      </button>
+    </div>
+
+    <!-- 1. Top Persona Switcher Bar for Real-time Role & Tenant Testing -->
+    <aside class="persona-bar" aria-label="Role Simulation and Tenant Testing Switcher">
+      <div class="persona-bar-info">
+        <span class="persona-env-tag">DEMO SANDBOX</span>
+        <span class="persona-bar-text">Switch Persona &amp; Tenant Boundary:</span>
+      </div>
+      <div class="persona-selector" role="group" aria-label="Available Personas">
+        <button type="button" class="persona-btn active" data-role="admin" title="System Administrator (Global Network Scope)">Admin</button>
+        <button type="button" class="persona-btn" data-role="operations" title="Operations Desk (Routing &amp; Governance)">Operations Mgr</button>
+        <button type="button" class="persona-btn" data-role="connector" title="Connector Tenant: Northstar Connect">Connector 1 (Northstar)</button>
+        <button type="button" class="persona-btn" data-role="connector2" title="Connector Tenant: Apex Financial Advisors">Connector 2 (Apex)</button>
+        <button type="button" class="persona-btn" data-role="lender" title="Institutional Lender: Riverbend Capital Ltd">Lender Liaison</button>
+        <button type="button" class="persona-btn" data-role="reviewer" title="Reviewer Role (Underwriting &amp; KYC Verification)">Reviewer</button>
+        <button type="button" class="persona-btn" data-role="finance" title="Finance Role (Commissions &amp; Settlement)">Finance</button>
+        <button type="button" class="persona-btn" data-role="auditor" title="Independent Compliance Auditor (Masked PII)">Auditor (Masked PII)</button>
+      </div>
+    </aside>
+
+    <!-- 2. Application Header -->
+    <header class="app-header">
+      <div class="brand-wrap">
+        <div class="brand-logo" aria-hidden="true">Z</div>
+        <div class="brand-title">
+          <h1>Zippy Enterprises</h1>
+          <p>Loan Lead Routing &amp; Partner Network Platform</p>
+        </div>
+      </div>
+
+    <div class="header-user-badge">
+      <div class="user-meta">
+        <span id="header-user-name" class="user-name">Vikram Singhania</span>
+        <span id="header-user-role" class="role-badge">ADMIN</span>
+      </div>
+      <span id="tenant-scope-indicator" class="tenant-scope-pill">Network Scope (Global)</span>
+      <button id="btn-open-login" class="btn btn-secondary btn-sm" title="Sign In or Apply as Connector" type="button">Sign In / Register</button>
+      <button id="btn-logout" class="btn btn-secondary btn-sm" title="Sign out current session" type="button">Sign Out</button>
+    </div>
+  </header>
+
+  <!-- 3. Navigation Tabs -->
+  <nav class="nav-tabs" id="main-nav-tabs" aria-label="Platform Views">
+    <button type="button" class="tab-link active" data-view="view-overview" role="tab" aria-selected="true">
+      <span class="tab-icon">📊</span>
+      <span>Overview</span>
+    </button>
+    <button type="button" class="tab-link" data-view="view-leads" role="tab" aria-selected="false">
+      <span class="tab-icon">📥</span>
+      <span>Lead Queue</span>
+      <span class="tab-badge" id="badge-leads-count">0</span>
+    </button>
+    <button type="button" class="tab-link" data-view="view-partners" role="tab" aria-selected="false">
+      <span class="tab-icon">🏢</span>
+      <span>Partner Directory</span>
+      <span class="tab-badge" id="badge-partners-count">0</span>
+    </button>
+    <button type="button" class="tab-link" data-view="view-simulator" role="tab" aria-selected="false">
+      <span class="tab-icon">⚙️</span>
+      <span>Routing Simulator</span>
+    </button>
+    <button type="button" class="tab-link" data-view="view-commissions" role="tab" aria-selected="false">
+      <span class="tab-icon">💰</span>
+      <span>Commission Ledger</span>
+    </button>
+    <button type="button" class="tab-link" data-view="view-catalog" role="tab" aria-selected="false">
+      <span class="tab-icon">🏦</span>
+      <span>Lender &amp; Products</span>
+    </button>
+    <button type="button" class="tab-link" data-view="view-audit" role="tab" aria-selected="false">
+      <span class="tab-icon">🔒</span>
+      <span>Audit &amp; Reports</span>
+    </button>
+  </nav>
+
+  <!-- 4. Main Body Container -->
+  <main class="main-content" id="main-content-area">
+
+    <!-- Notice Banner for Review Environment -->
+    <div class="notice-banner" role="region" aria-label="Environment Notice">
+      <div class="notice-icon" aria-hidden="true">🛡️</div>
+      <div class="notice-text">
+        <strong>Independent Multi-Party Connector Platform:</strong> Operates with its own isolated database, scrypt credentials, and encrypted private KYC vault. Synthetic records are used. DPDP Act 2023 customer consent and PII segregation are enforced at every boundary.
+      </div>
+    </div>
+
+    <!-- ================= VIEW 1: OVERVIEW ================= -->
+    <section id="view-overview" class="view-section active" aria-labelledby="heading-overview">
+      <div class="view-header">
+        <div class="view-title">
+          <div class="view-title-row">
+            <h2 id="heading-overview">Network Operations Overview</h2>
+            <div class="network-sla-badge" id="overview-sla-badge" aria-label="Network Health Status">
+              <span class="sla-status-dot" aria-hidden="true"></span>
+              <span>All Systems Operational • 99.8% On-Time SLA</span>
+            </div>
+          </div>
+          <p id="overview-subtext">Real-time lead routing volume, partner conversion velocity, and commission settlement pipeline.</p>
+        </div>
+        <div class="view-actions">
+          <span class="overview-current-date" id="overview-current-date">Today</span>
+          <button class="btn btn-secondary btn-sm" id="btn-refresh-overview" type="button" title="Refresh all network data">↻ Refresh</button>
+          <button class="btn btn-primary" id="btn-quick-intake" type="button">+ Consented Lead Intake</button>
+        </div>
+      </div>
+
+      <!-- Action Hub / Next Action Banner -->
+      <div class="action-hub-card" id="overview-next-action-card">
+        <div class="action-hub-icon">⚡</div>
+        <div class="action-hub-content">
+          <div class="action-hub-title" id="action-hub-title">Operational Attention Required</div>
+          <div class="action-hub-desc" id="action-hub-desc">Evaluating operational queue state across network partners...</div>
+        </div>
+        <div class="action-hub-cta">
+          <button type="button" class="btn btn-primary btn-sm" id="btn-action-hub">View Pending Leads</button>
+        </div>
+      </div>
+
+      <!-- KPI Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-label">Active / Total Leads</div>
+            <span class="stat-trend neutral">Operational</span>
+          </div>
+          <div class="stat-value" id="kpi-total-leads">—</div>
+          <div class="stat-subtext" id="kpi-leads-sub">In operational funnel</div>
+        </div>
+
+        <div class="stat-card gold">
+          <div class="stat-header">
+            <div class="stat-label">Approved Partners</div>
+            <span class="stat-trend success">Active</span>
+          </div>
+          <div class="stat-value" id="kpi-active-partners">—</div>
+          <div class="stat-subtext" id="kpi-partners-sub">Connectors &amp; DSA partners</div>
+        </div>
+
+        <div class="stat-card blue">
+          <div class="stat-header">
+            <div class="stat-label">Disbursed Volume</div>
+            <span class="stat-trend info">Settled</span>
+          </div>
+          <div class="stat-value" id="kpi-disbursed-volume">—</div>
+          <div class="stat-subtext" id="kpi-conversion-rate">Conversion Rate: —%</div>
+        </div>
+
+        <div class="stat-card emerald">
+          <div class="stat-header">
+            <div class="stat-label">Total Commission Pipeline</div>
+            <span class="stat-trend gold">Escrow Protected</span>
+          </div>
+          <div class="stat-value" id="kpi-total-commissions">—</div>
+          <div class="stat-subtext" id="kpi-commissions-sub">Escrow Holdback: —</div>
+        </div>
+      </div>
+
+      <!-- Funnel Chart + Recent Events -->
+      <div class="dashboard-grid">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-titles">
+              <h3>Lead Lifecycle Funnel</h3>
+              <span class="card-subtitle">Real-time status breakdown from intake to disbursal</span>
+            </div>
+            <span class="badge-subtle">Deterministic Routing</span>
+          </div>
+          <div class="card-body">
+            <div class="funnel-steps" id="funnel-container" aria-label="Lead conversion stages">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-titles">
+              <h3>Live Activity Stream</h3>
+              <span class="card-subtitle">Append-only immutable audit events</span>
+            </div>
+            <span class="badge-subtle">Live Stream</span>
+          </div>
+          <div class="card-body">
+            <div class="timeline" id="recent-timeline-container" aria-label="Recent activity stream">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VIEW 2: LEAD QUEUE ================= -->
+    <section id="view-leads" class="view-section" aria-labelledby="heading-leads">
+      <div class="view-header">
+        <div class="view-title">
+          <h2 id="heading-leads">Routed Lead Operations Queue</h2>
+          <p>Consented customer referrals with deterministic routing status, SLA countdowns, and partner assignments.</p>
+        </div>
+        <div class="view-actions">
+          <button class="btn btn-primary" id="btn-open-intake-modal" type="button">+ New Lead Intake</button>
+        </div>
+      </div>
+
+      <!-- Filters Strip -->
+      <div class="card filter-card">
+        <div class="card-body filter-card-body">
+          <div class="filter-strip">
+            <div class="filter-search-wrap">
+              <span class="search-icon" aria-hidden="true">🔍</span>
+              <input type="search" id="lead-search-input" class="form-input search-input" placeholder="Search customer, ref, city, partner, or product..." aria-label="Search leads">
+            </div>
+            <div class="filter-select-wrap">
+              <label for="lead-status-filter" class="sr-only">Filter by status</label>
+              <select id="lead-status-filter" class="form-select">
+                <option value="ALL">All Statuses (Full Pipeline)</option>
+                <option value="Eligible">Eligible (Ready for Routing)</option>
+                <option value="Offered">Offered (Under 24h SLA)</option>
+                <option value="Accepted">Accepted by Partner</option>
+                <option value="Contacted">Contacted Customer</option>
+                <option value="Referred">Referred to Institutional Lender</option>
+                <option value="Lender Review">Underwriting &amp; Bureau Review</option>
+                <option value="Sanctioned">Sanctioned Offer</option>
+                <option value="Disbursed">Disbursed (Closed Won)</option>
+                <option value="Declined">Declined</option>
+              </select>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="btn-reset-lead-filters" type="button">Reset Filters</button>
+            <span class="filter-count-badge" id="lead-filtered-count">Showing all leads</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Leads Presentation: Desktop Table & Mobile Card List -->
+      <div class="card">
+        <!-- Desktop / Tablet Table View -->
+        <div class="table-wrap desktop-table-wrap">
+          <table aria-label="Lead Operations Queue">
+            <thead>
+              <tr>
+                <th scope="col">Lead Reference</th>
+                <th scope="col">Customer Identity</th>
+                <th scope="col">Loan Product</th>
+                <th scope="col" class="text-right">Requested Amt</th>
+                <th scope="col">Lifecycle Status</th>
+                <th scope="col">Assigned Partner</th>
+                <th scope="col">Target Lender</th>
+                <th scope="col">Offer SLA Timer</th>
+                <th scope="col">Last Updated</th>
+                <th scope="col" class="text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody id="leads-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Mobile Compact Card/List View -->
+        <div class="mobile-card-list" id="leads-mobile-list" aria-label="Leads list for mobile view">
+          <!-- Dynamically populated for mobile viewports -->
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination-wrap" id="leads-pagination-wrap">
+          <span id="leads-pagination-info">Showing page 1 of 1 (0 leads)</span>
+          <div class="pagination-controls">
+            <button type="button" class="page-btn" id="leads-prev-page" disabled>&larr; Previous</button>
+            <span class="page-indicator" id="leads-current-page">1</span>
+            <button type="button" class="page-btn" id="leads-next-page" disabled>Next &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VIEW 3: PARTNER DIRECTORY ================= -->
+    <section id="view-partners" class="view-section" aria-labelledby="heading-partners">
+      <div class="view-header">
+        <div class="view-title">
+          <h2 id="heading-partners">Partner Directory &amp; Governance</h2>
+          <p>Onboarded connector networks, DSA partners, product authorizations, and capacity utilization limits.</p>
+        </div>
+        <div class="view-actions">
+          <button class="btn btn-primary" id="btn-open-partner-modal" type="button">+ Onboard New Partner</button>
+        </div>
+      </div>
+
+      <!-- Partner Search Filter -->
+      <div class="card filter-card">
+        <div class="card-body filter-card-body">
+          <div class="filter-strip">
+            <div class="filter-search-wrap">
+              <span class="search-icon" aria-hidden="true">🔍</span>
+              <input type="search" id="partner-search-input" class="form-input search-input" placeholder="Search partner name, territory, tier, or product..." aria-label="Search partners">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <!-- Desktop Table View -->
+        <div class="table-wrap desktop-table-wrap">
+          <table aria-label="Partner Directory Table">
+            <thead>
+              <tr>
+                <th scope="col">Partner Organization</th>
+                <th scope="col">Type</th>
+                <th scope="col">Status</th>
+                <th scope="col">Tier</th>
+                <th scope="col">Territory Coverage</th>
+                <th scope="col">Authorized Products</th>
+                <th scope="col">Capacity Headroom</th>
+                <th scope="col">Contact</th>
+                <th scope="col" class="text-center">Governance</th>
+              </tr>
+            </thead>
+            <tbody id="partners-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Mobile Compact Card List -->
+        <div class="mobile-card-list" id="partners-mobile-list" aria-label="Partners list for mobile view">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VIEW 4: ROUTING SIMULATOR ================= -->
+    <section id="view-simulator" class="view-section" aria-labelledby="heading-simulator">
+      <div class="view-header">
+        <div class="view-title">
+          <h2 id="heading-simulator">Routing Rule Simulator &amp; Explainability Engine</h2>
+          <p>Test candidate matching, scoring weights, territory verification, and partner headroom under rule engine <code class="code-badge">RULE-v2.4-AUTO</code>.</p>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Simulator Input -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-titles">
+              <h3>Test Lead Ingestion Criteria</h3>
+              <span class="card-subtitle">Simulate multi-variable matching algorithm without writing database records</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <form id="form-simulate-routing" novalidate>
+              <div class="form-group">
+                <label class="form-label" for="sim-product-id">Target Loan Product Category</label>
+                <select id="sim-product-id" class="form-select">
+                  <!-- Populated from products -->
+                </select>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="sim-amount">Requested Loan Amount (₹)</label>
+                  <input type="number" id="sim-amount" class="form-input num-tabular" value="1200000" step="50000" min="50000">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="sim-city">Applicant City</label>
+                  <input type="text" id="sim-city" class="form-input" value="Hyderabad">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="sim-state">Operating State / Region</label>
+                <select id="sim-state" class="form-select">
+                  <option value="Telangana">Telangana</option>
+                  <option value="Andhra Pradesh">Andhra Pradesh</option>
+                  <option value="Karnataka">Karnataka</option>
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="Tamil Nadu">Tamil Nadu</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%;">⚡ Run Rule Simulator &amp; Explainability Check</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Simulator Result -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-titles">
+              <h3>Evaluation Breakdown &amp; Match Trace</h3>
+              <span class="card-subtitle">Transparent scoring and disqualification explanation</span>
+            </div>
+          </div>
+          <div class="card-body" id="simulator-output-container">
+            <div class="empty-state-notice">
+              <span class="empty-state-icon">⚙️</span>
+              <p>Click <strong>"Run Rule Simulator"</strong> to evaluate all registered network partners against active authorization, capacity limits, territory boundaries, and priority tier scoring.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VIEW 5: COMMISSIONS ================= -->
+    <section id="view-commissions" class="view-section" aria-labelledby="heading-commissions">
+      <div class="view-header">
+        <div class="view-title">
+          <h2 id="heading-commissions">Commission Ledger &amp; Payout Reconciliation</h2>
+          <p>Versioned commercial plans, lifecycle trigger events, escrow holdbacks, approval workflows, and immutable ledger entries.</p>
+        </div>
+        <div class="view-actions">
+          <button class="btn btn-secondary" id="btn-view-statement" type="button">📄 Reconciliation Statement</button>
+          <button class="btn btn-primary" id="btn-open-plan-modal" type="button">+ New Versioned Plan</button>
+        </div>
+      </div>
+
+      <!-- Commission Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-label">Accrued (Pending Approval)</div>
+            <span class="stat-trend neutral">Review Queue</span>
+          </div>
+          <div class="stat-value num-tabular" id="comm-accrued-val">₹0</div>
+          <div class="stat-subtext">Awaiting operator sign-off</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-header">
+            <div class="stat-label">Approved (Ready for Payout)</div>
+            <span class="stat-trend info">Approved</span>
+          </div>
+          <div class="stat-value num-tabular" id="comm-approved-val">₹0</div>
+          <div class="stat-subtext">Queued for settlement batch</div>
+        </div>
+        <div class="stat-card emerald">
+          <div class="stat-header">
+            <div class="stat-label">Settled / Paid Payouts</div>
+            <span class="stat-trend success">Disbursed</span>
+          </div>
+          <div class="stat-value num-tabular" id="comm-paid-val">₹0</div>
+          <div class="stat-subtext">Completed bank settlements</div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-header">
+            <div class="stat-label">Escrow Holdback Balance</div>
+            <span class="stat-trend gold">Escrow</span>
+          </div>
+          <div class="stat-value num-tabular" id="comm-holdback-val">₹0</div>
+          <div class="stat-subtext">Early foreclosure buffer</div>
+        </div>
+      </div>
+
+      <!-- Ledger Table -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-titles">
+            <h3>Immutable Commission Ledger</h3>
+            <span class="card-subtitle">Append-only financial records with reference-linked reversals</span>
+          </div>
+        </div>
+        
+        <!-- Desktop Table View -->
+        <div class="table-wrap desktop-table-wrap">
+          <table aria-label="Commission Ledger Table">
+            <thead>
+              <tr>
+                <th scope="col">Ledger Code</th>
+                <th scope="col">Lead Ref</th>
+                <th scope="col">Beneficiary Partner</th>
+                <th scope="col">Trigger Event</th>
+                <th scope="col" class="text-right">Gross (₹)</th>
+                <th scope="col" class="text-right">Holdback (₹)</th>
+                <th scope="col" class="text-right">Net Payable (₹)</th>
+                <th scope="col">Status</th>
+                <th scope="col">Plan Applied</th>
+                <th scope="col">Payout Ref</th>
+                <th scope="col" class="text-center">Ledger Action</th>
+              </tr>
+            </thead>
+            <tbody id="commission-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Mobile Compact Card List -->
+        <div class="mobile-card-list" id="commissions-mobile-list" aria-label="Commissions list for mobile view">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination-wrap" id="commissions-pagination-wrap">
+          <span id="commissions-pagination-info">Showing page 1 of 1 (0 entries)</span>
+          <div class="pagination-controls">
+            <button type="button" class="page-btn" id="commissions-prev-page" disabled>&larr; Previous</button>
+            <span class="page-indicator" id="commissions-current-page">1</span>
+            <button type="button" class="page-btn" id="commissions-next-page" disabled>Next &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VIEW 6: CATALOG ================= -->
+    <section id="view-catalog" class="view-section" aria-labelledby="heading-catalog">
+      <div class="view-header">
+        <div class="view-title">
+          <h2 id="heading-catalog">Institutional Lenders &amp; Product Catalog</h2>
+          <p>Partner financial institutions, loan category boundaries, CIBIL eligibility thresholds, and document requirements.</p>
+        </div>
+        <div class="view-actions">
+          <button class="btn btn-primary" id="btn-open-product-modal" type="button">+ Add Loan Product</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="table-wrap">
+          <table aria-label="Loan Products Catalog">
+            <thead>
+              <tr>
+                <th scope="col">Product Name</th>
+                <th scope="col">Category</th>
+                <th scope="col">Institutional Lender</th>
+                <th scope="col">Loan Limits</th>
+                <th scope="col">Interest Range</th>
+                <th scope="col">Min CIBIL / Income</th>
+                <th scope="col">Underwriting SLA</th>
+                <th scope="col">Document Checklist</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody id="products-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VIEW 7: AUDIT & REPORTS ================= -->
+    <section id="view-audit" class="view-section" aria-labelledby="heading-audit">
+      <div class="view-header">
+        <div class="view-title">
+          <h2 id="heading-audit">Security Audit Trail &amp; Regulatory Compliance</h2>
+          <p>Immutable append-only system events, PII access verification, consent logs, and permission-aware data export.</p>
+        </div>
+        <div class="view-actions">
+          <button class="btn btn-secondary" id="btn-export-csv" type="button">📥 Export Audit Report (CSV)</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-titles">
+            <h3>System Audit Events (Immutable Log)</h3>
+            <span class="card-subtitle">DPDP Act 2023 &amp; RBI Master Directions Compliance Track • Secrets &amp; PII Redacted</span>
+          </div>
+          <div class="audit-filter-wrap">
+            <label for="audit-role-filter" class="sr-only">Filter audit by role</label>
+            <select id="audit-role-filter" class="form-select form-select-sm">
+              <option value="ALL">All Roles</option>
+              <option value="admin">Admin Events</option>
+              <option value="operations">Operations Events</option>
+              <option value="connector">Connector Events</option>
+              <option value="lender">Lender Events</option>
+              <option value="auditor">Auditor Events</option>
+              <option value="system">System Background</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table aria-label="Audit Events Trail">
+            <thead>
+              <tr>
+                <th scope="col">Timestamp</th>
+                <th scope="col">Actor</th>
+                <th scope="col">Role</th>
+                <th scope="col">Event Type</th>
+                <th scope="col">Resource</th>
+                <th scope="col">Summary</th>
+                <th scope="col">Sanitized Details</th>
+              </tr>
+            </thead>
+            <tbody id="audit-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  </div> <!-- End enterprise-console-wrapper -->
+
+  <!-- ================= MODALS & SLIDE-OVER DRAWERS ================= -->
+
+  <!-- 1. Modal: Consent-Aware Lead Intake -->
+  <div class="modal-backdrop" id="modal-intake" role="dialog" aria-modal="true" aria-labelledby="intake-modal-title">
+    <div class="modal-card lg">
+      <div class="modal-header">
+        <div class="modal-header-text">
+          <h3 id="intake-modal-title">Consent-Aware Lead Intake</h3>
+          <p class="modal-header-desc">Record verified customer consent and ingest lead under strict DPDP Act boundaries.</p>
+        </div>
+        <button class="modal-close-btn" data-close="modal-intake" aria-label="Close intake dialog">&times;</button>
+      </div>
+      <form id="form-lead-intake" novalidate>
+        <div class="modal-body">
+          <div class="consent-agreement-box">
+            <span class="consent-icon" aria-hidden="true">📝</span>
+            <div>
+              <strong>DPDP Act 2023 Mandatory Consent Notice:</strong> Customer PII will be encrypted at rest (AES-256-GCM) into an isolated identity store with keyed HMAC deduplication. Consent receipt will be timestamped and verifiable.
+            </div>
+          </div>
+
+          <h4 class="form-section-title">Customer Identity Information (PII)</h4>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="intake-name">Customer Full Name *</label>
+              <input type="text" id="intake-name" class="form-input" required placeholder="e.g. Suresh Kumar" autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="intake-phone">Mobile Phone Number *</label>
+              <input type="tel" id="intake-phone" class="form-input" required placeholder="+91 98765 43210" autocomplete="tel">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="intake-email">Email Address</label>
+              <input type="email" id="intake-email" class="form-input" placeholder="suresh.k@domain.com" autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="intake-pan">PAN Number *</label>
+              <input type="text" id="intake-pan" class="form-input" required placeholder="ABCDE1234F" style="text-transform: uppercase;" maxlength="10">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="intake-employment">Employment Profile</label>
+              <select id="intake-employment" class="form-select">
+                <option value="Salaried">Salaried Employee</option>
+                <option value="Self-Employed Professional">Self-Employed Professional</option>
+                <option value="Business Owner">Business Owner / MSME</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="intake-income">Monthly Income / Turnover (₹)</label>
+              <input type="number" id="intake-income" class="form-input num-tabular" value="75000" step="5000" min="10000">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="intake-city">City *</label>
+              <input type="text" id="intake-city" class="form-input" required value="Hyderabad">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="intake-state">Operating State *</label>
+              <select id="intake-state" class="form-select">
+                <option value="Telangana">Telangana</option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+              </select>
+            </div>
+          </div>
+
+          <h4 class="form-section-title">Loan Application Requirements</h4>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="intake-product-id">Target Loan Product Category *</label>
+              <select id="intake-product-id" class="form-select" required>
+                <!-- Populated via JS -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="intake-amount">Requested Loan Amount (₹) *</label>
+              <input type="number" id="intake-amount" class="form-input num-tabular" required value="500000" step="25000" min="25000">
+            </div>
+          </div>
+
+          <div class="consent-checkbox-wrap">
+            <input type="checkbox" id="intake-consent-check" required checked>
+            <label for="intake-consent-check" class="consent-check-label">
+              Customer has explicitly consented to consent terms <strong>v1.2-2026-CONSENT</strong> for loan connector matching and lender underwriting review under DPDP Act 2023.
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close="modal-intake">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-intake">Ingest Consented Lead</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. Slide-Over Drawer: Lead Details & Lifecycle Transition -->
+  <div class="modal-backdrop drawer-backdrop" id="modal-lead-detail" role="dialog" aria-modal="true" aria-labelledby="detail-lead-ref">
+    <div class="drawer-card">
+      <div class="modal-header">
+        <div class="detail-header-left">
+          <h3 id="detail-lead-ref">Lead Details</h3>
+          <span id="detail-lead-status-pill" class="status-pill status-Eligible">Eligible</span>
+        </div>
+        <button class="modal-close-btn" data-close="modal-lead-detail" aria-label="Close lead drawer">&times;</button>
+      </div>
+
+      <div class="modal-body drawer-body">
+
+        <!-- Customer Profile & Loan Summary Grid -->
+        <div class="detail-summary-grid">
+          <div class="detail-card">
+            <div class="detail-card-header">
+              <h4>Customer Identity Profile</h4>
+              <span id="detail-pii-mask-badge" class="pii-badge">PII Masked</span>
+            </div>
+            <div class="detail-lead-name" id="detail-cust-name">—</div>
+            <div class="detail-info-list">
+              <div class="detail-row">
+                <span class="detail-label">📞 Phone</span>
+                <span class="detail-val num-tabular" id="detail-cust-phone">—</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">✉️ Email</span>
+                <span class="detail-val" id="detail-cust-email">—</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">🪪 PAN</span>
+                <span class="detail-val num-tabular" id="detail-cust-pan">—</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">💼 Profile</span>
+                <span class="detail-val"><span id="detail-cust-emp">—</span> (₹<span id="detail-cust-inc" class="num-tabular">—</span>/mo)</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">📍 Location</span>
+                <span class="detail-val" id="detail-cust-location">—</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="detail-card">
+            <div class="detail-card-header">
+              <h4>Loan &amp; Routing Placement</h4>
+              <span class="badge-subtle">Routing State</span>
+            </div>
+            <div class="detail-lead-amount num-tabular" id="detail-loan-amount">—</div>
+            <div class="detail-info-list">
+              <div class="detail-row">
+                <span class="detail-label">Category</span>
+                <span class="detail-val" id="detail-loan-category">—</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Product</span>
+                <span class="detail-val" id="detail-loan-product">—</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Assigned Partner</span>
+                <span class="detail-val"><strong id="detail-assigned-partner">—</strong></span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Target Lender</span>
+                <span class="detail-val"><strong id="detail-assigned-lender">—</strong></span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Offer SLA Expiry</span>
+                <span class="detail-val num-tabular" id="detail-offer-sla">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lifecycle Transition Action Bar -->
+        <div class="detail-card transition-card" id="transition-section-card">
+          <h4>Advance Lifecycle State</h4>
+          <form id="form-transition-state" class="transition-form" novalidate>
+            <div class="form-group mb-0">
+              <label class="form-label" for="trans-target-status">Next Permitted State</label>
+              <select id="trans-target-status" class="form-select">
+                <!-- Dynamically populated based on role & lead status -->
+              </select>
+            </div>
+            <div class="form-group mb-0">
+              <label class="form-label" for="trans-notes">Progression Notes / Credit Memo</label>
+              <input type="text" id="trans-notes" class="form-input" placeholder="e.g. Underwriting bureau check passed at 11.25%">
+            </div>
+            <button type="submit" class="btn btn-primary" id="btn-submit-transition">Update State</button>
+          </form>
+        </div>
+
+        <!-- KYC Documents Vault -->
+        <div class="detail-card">
+          <div class="detail-card-header">
+            <h4>Private KYC Vault Documents</h4>
+            <button class="btn btn-secondary btn-sm" id="btn-upload-kyc-doc" type="button">+ Upload Document</button>
+          </div>
+          <div id="detail-kyc-documents-list" class="kyc-doc-list">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Operational Reminders & Tasks -->
+        <div class="detail-card">
+          <div class="detail-card-header">
+            <h4>Follow-Up Tasks &amp; Reminders</h4>
+            <button class="btn btn-secondary btn-sm" id="btn-toggle-reminder-form" type="button">+ Add Task</button>
+          </div>
+          
+          <form id="form-add-reminder" class="form-add-reminder" style="display: none; padding: 10px; background: var(--surface-bg); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); margin-top: 8px; margin-bottom: 10px;" novalidate>
+            <div class="form-group mb-8">
+              <label class="form-label" for="rem-title">Task Description</label>
+              <input type="text" id="rem-title" class="form-input" placeholder="e.g. Call applicant for October salary slip" required>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <div class="form-group mb-8">
+                <label class="form-label" for="rem-type">Type</label>
+                <select id="rem-type" class="form-select">
+                  <option value="Follow Up">Customer Follow-Up</option>
+                  <option value="Document Collection">Document Collection</option>
+                  <option value="Lender Verification">Lender Verification</option>
+                  <option value="Disbursement Check">Disbursement Check</option>
+                </select>
+              </div>
+              <div class="form-group mb-8">
+                <label class="form-label" for="rem-date">Due Date</label>
+                <input type="date" id="rem-date" class="form-input">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm" id="btn-save-reminder">Save Reminder</button>
+          </form>
+
+          <div id="detail-reminders-list" class="reminders-list" style="margin-top: 8px;">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Append-Only Timeline of Events -->
+        <div class="detail-card">
+          <div class="detail-card-header">
+            <h4>Append-Only Event Timeline</h4>
+            <span class="badge-subtle">Audit Chain</span>
+          </div>
+          <div class="timeline" id="detail-lead-timeline" aria-label="Lead lifecycle history">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-close="modal-lead-detail">Close Drawer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Modal: Dispatch Lead Offer -->
+  <div class="modal-backdrop" id="modal-route-dispatch" role="dialog" aria-modal="true" aria-labelledby="dispatch-modal-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-header-text">
+          <h3 id="dispatch-modal-title">Dispatch Lead Offer</h3>
+          <p class="modal-header-desc">Offer lead to verified connector partner with 24-hour SLA acceptance deadline.</p>
+        </div>
+        <button class="modal-close-btn" data-close="modal-route-dispatch" aria-label="Close dispatch dialog">&times;</button>
+      </div>
+      <form id="form-dispatch-offer" novalidate>
+        <div class="modal-body">
+          <input type="hidden" id="dispatch-lead-id">
+          <p class="modal-prompt-text">
+            Select an approved network connector partner. The selected partner must confirm acceptance within <strong>24 hours</strong> before automatic SLA fallback rerouting triggers.
+          </p>
+
+          <div class="form-group">
+            <label class="form-label" for="dispatch-partner-select">Eligible Partner Candidates (Ranked by Match Score)</label>
+            <select id="dispatch-partner-select" class="form-select" required>
+              <!-- Populated via simulator -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="dispatch-method-select">Routing Method</label>
+            <select id="dispatch-method-select" class="form-select">
+              <option value="Priority">Priority Tier Scoring</option>
+              <option value="Weighted Round-Robin">Capacity-Weighted Round-Robin</option>
+              <option value="Manual Dispatch">Manual Operator Dispatch</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close="modal-route-dispatch">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-dispatch">Dispatch Offer Now</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. Modal: Onboard Partner Organization -->
+  <div class="modal-backdrop" id="modal-partner" role="dialog" aria-modal="true" aria-labelledby="partner-modal-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-header-text">
+          <h3 id="partner-modal-title">Onboard Partner Organization</h3>
+          <p class="modal-header-desc">Authorize connector network or DSA partner with territory and capacity limits.</p>
+        </div>
+        <button class="modal-close-btn" data-close="modal-partner" aria-label="Close partner onboarding dialog">&times;</button>
+      </div>
+      <form id="form-onboard-partner" novalidate>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="partner-name">Organization Legal Name *</label>
+            <input type="text" id="partner-name" class="form-input" required placeholder="e.g. Apex Wealth Connectors">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="partner-type">Partner Type</label>
+              <select id="partner-type" class="form-select">
+                <option value="Connector">Connector (Sourcing Partner)</option>
+                <option value="DSA Partner">DSA Partner (Direct Selling Agent)</option>
+                <option value="Fintech Aggregator">Fintech Aggregator</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="partner-tier">Priority Tier</label>
+              <select id="partner-tier" class="form-select">
+                <option value="Tier 1 Platinum">Tier 1 Platinum (High Priority)</option>
+                <option value="Tier 2 Gold">Tier 2 Gold (Standard Priority)</option>
+                <option value="Tier 3 Silver">Tier 3 Silver (Standard)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="partner-territory">Territory Coverage *</label>
+              <input type="text" id="partner-territory" class="form-input" required value="Telangana, Andhra Pradesh">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="partner-capacity">Active Lead Capacity Limit</label>
+              <input type="number" id="partner-capacity" class="form-input num-tabular" value="40" min="5" max="200">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="partner-products">Authorized Loan Products *</label>
+            <input type="text" id="partner-products" class="form-input" required value="Personal Loan, Business Loan, Home Loan">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="partner-contact-person">Primary Contact Person</label>
+              <input type="text" id="partner-contact-person" class="form-input" placeholder="Ramesh Rao">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="partner-contact-email">Contact Email</label>
+              <input type="email" id="partner-contact-email" class="form-input" placeholder="ramesh@apexwealth.in">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close="modal-partner">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-partner">Onboard &amp; Activate Partner</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. Modal: Partner Settlement Reconciliation Statement -->
+  <div class="modal-backdrop" id="modal-statement" role="dialog" aria-modal="true" aria-labelledby="statement-title">
+    <div class="modal-card lg">
+      <div class="modal-header">
+        <div class="modal-header-text">
+          <h3 id="statement-title">Monthly Commission Reconciliation Statement</h3>
+          <p class="modal-header-desc">Immutable calculation breakdown with escrow holdbacks and net payable totals.</p>
+        </div>
+        <button class="modal-close-btn" data-close="modal-statement" aria-label="Close reconciliation statement">&times;</button>
+      </div>
+      <div class="modal-body" id="statement-content">
+        <!-- Dynamically rendered statement -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-close="modal-statement">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Consequential Action Confirmation Modal (Replaces browser prompt/confirm) -->
+  <div class="modal-backdrop" id="modal-confirm" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <div class="modal-card sm">
+      <div class="modal-header">
+        <h3 id="confirm-title">Confirm Consequential Action</h3>
+        <button class="modal-close-btn" data-close="modal-confirm" aria-label="Cancel confirmation">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="confirm-message" class="confirm-message-text">Please confirm this action.</p>
+        <div id="confirm-input-group" class="form-group mt-12" style="display: none;">
+          <label class="form-label" id="confirm-input-label" for="confirm-input">Reason / Reference:</label>
+          <input type="text" id="confirm-input" class="form-input" placeholder="">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="btn-confirm-cancel" data-close="modal-confirm">Cancel</button>
+        <button type="button" class="btn btn-primary" id="btn-confirm-submit">Confirm Action</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Authentication & Sign-In Modal -->
+  <div class="modal-backdrop" id="modal-auth-login" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
+    <div class="modal-card sm">
+      <div class="modal-header">
+        <div>
+          <h3 id="auth-modal-title">Sign In to Veridian Workspace</h3>
+          <p class="modal-header-desc" id="auth-modal-desc">Access loan connector operations with your credentials or Google account.</p>
+        </div>
+        <button class="modal-close-btn" data-close="modal-auth-login" aria-label="Close sign-in">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="auth-tabs" role="tablist">
+          <button type="button" class="auth-tab-btn active" id="tab-auth-signin" role="tab" aria-selected="true">Sign In</button>
+          <button type="button" class="auth-tab-btn" id="tab-auth-register" role="tab" aria-selected="false">Apply as Connector</button>
+        </div>
+
+        <div id="auth-error-banner" style="display: none; padding: 10px; margin-bottom: 12px; font-size: 12px; border-radius: var(--radius-sm); background: #FFEBEE; color: #C62828; border: 1px solid #FFCDD2;"></div>
+
+        <!-- Panel 1: Sign In -->
+        <div id="panel-auth-signin">
+          <form id="form-login" novalidate>
+            <div class="form-group mb-12">
+              <label class="form-label" for="login-username">Username or Email</label>
+              <input type="text" id="login-username" class="form-input" placeholder="e.g. admin or partner" required autocomplete="username">
+            </div>
+            <div class="form-group mb-16">
+              <label class="form-label" for="login-password">Password</label>
+              <input type="password" id="login-password" class="form-input" placeholder="Enter your password" required autocomplete="current-password">
+            </div>
+            <button type="submit" class="btn btn-primary" id="btn-login-submit" style="width: 100%;">Sign In</button>
+          </form>
+
+          <div class="auth-divider"><span>or continue with</span></div>
+
+          <button type="button" class="btn-google" id="btn-google-signin">
+            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+              <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.616z"/>
+              <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/>
+              <path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z"/>
+              <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/>
+            </svg>
+            <span>Sign in with Google / Gmail</span>
+          </button>
+        </div>
+
+        <!-- Panel 2: Register Connector -->
+        <div id="panel-auth-register" style="display: none;">
+          <form id="form-register-connector" novalidate>
+            <div class="form-group mb-8">
+              <label class="form-label" for="reg-fullname">Full Name</label>
+              <input type="text" id="reg-fullname" class="form-input" placeholder="e.g. Ramesh Reddy" required>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <div class="form-group mb-8">
+                <label class="form-label" for="reg-username">Preferred Username</label>
+                <input type="text" id="reg-username" class="form-input" placeholder="e.g. ramesh_reddy" required>
+              </div>
+              <div class="form-group mb-8">
+                <label class="form-label" for="reg-phone">Mobile Phone</label>
+                <input type="tel" id="reg-phone" class="form-input" placeholder="+91 98765 43210" required>
+              </div>
+            </div>
+            <div class="form-group mb-8">
+              <label class="form-label" for="reg-email">Email (Gmail / Corporate)</label>
+              <input type="email" id="reg-email" class="form-input" placeholder="ramesh@gmail.com" required>
+            </div>
+            <div class="form-group mb-8">
+              <label class="form-label" for="reg-password">Password</label>
+              <input type="password" id="reg-password" class="form-input" placeholder="At least 8 characters" required>
+            </div>
+            <div class="form-group mb-8">
+              <label class="form-label" for="reg-business">Business / Agency Name</label>
+              <input type="text" id="reg-business" class="form-input" placeholder="e.g. Sri Krishna Financial Services" required>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <div class="form-group mb-8">
+                <label class="form-label" for="reg-pangst">PAN or GSTIN</label>
+                <input type="text" id="reg-pangst" class="form-input" placeholder="ABCDE1234F">
+              </div>
+              <div class="form-group mb-8">
+                <label class="form-label" for="reg-territory">Territory</label>
+                <input type="text" id="reg-territory" class="form-input" value="Telangana (Hyderabad / Nacharam)">
+              </div>
+            </div>
+            <div class="form-group mb-12">
+              <label class="form-label" for="reg-bank">Bank Account &amp; IFSC (for Commission Payouts)</label>
+              <input type="text" id="reg-bank" class="form-input" placeholder="e.g. HDFC0001234 - A/C 501002345678">
+            </div>
+            <button type="submit" class="btn btn-primary" id="btn-register-submit" style="width: 100%;">Complete Connector Onboarding</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= ZIPPY ENTERPRISES INTERACTIVE MODALS ================= -->
+
+  <!-- Modal 1: Zippy Connector Profile -->
+  <div class="zippy-modal" id="modal-zippy-profile" role="dialog" aria-modal="true" aria-labelledby="zippy-prof-title">
+    <div class="zippy-modal-card">
+      <div class="zippy-modal-header">
+        <h3 class="zippy-modal-title" id="zippy-prof-title">👤 Connector Profile &amp; Tenant</h3>
+        <button type="button" class="zippy-modal-close" data-close="modal-zippy-profile" aria-label="Close">&times;</button>
+      </div>
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="width: 72px; height: 72px; border-radius: 50%; background: #1e293b; border: 2px solid #38bdf8; margin: 0 auto 10px auto; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+          <img src="img/dashboard/profile.svg" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <h4 id="zippy-prof-name" style="font-size: 18px; margin: 0 0 4px 0; color: #ffffff;">Vikram Singhania</h4>
+        <div id="zippy-prof-role" style="font-size: 12px; color: #38bdf8; font-weight: 700; text-transform: uppercase;">ADMINISTRATOR</div>
+      </div>
+      <div style="background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 14px; border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 20px; font-size: 13px;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+          <span style="color: #94a3b8;">Company:</span>
+          <span style="color: #ffffff; font-weight: 700;">Zippy Enterprises</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+          <span style="color: #94a3b8;">Network Scope:</span>
+          <span style="color: #ffffff;" id="zippy-prof-scope">Global Admin Scope</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+          <span style="color: #94a3b8;">Territory:</span>
+          <span style="color: #ffffff;">Telangana (Hyderabad / Nacharam IDA)</span>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span style="color: #94a3b8;">Security:</span>
+          <span style="color: #22c55e; font-weight: 700;">✓ Scrypt Salted Hash • AES-256</span>
+        </div>
+      </div>
+      <div style="margin-bottom: 16px;">
+        <div style="font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 8px;">SWITCH ACTIVE ROLE (DEMO SANDBOX):</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <button type="button" class="btn btn-secondary btn-sm persona-quick-btn" data-role="connector" style="color: #38bdf8;">Northstar Connector</button>
+          <button type="button" class="btn btn-secondary btn-sm persona-quick-btn" data-role="connector2" style="color: #38bdf8;">Apex Connector</button>
+          <button type="button" class="btn btn-secondary btn-sm persona-quick-btn" data-role="reviewer" style="color: #38bdf8;">Reviewer Role</button>
+          <button type="button" class="btn btn-secondary btn-sm persona-quick-btn" data-role="finance" style="color: #38bdf8;">Finance Role</button>
+        </div>
+      </div>
+      <button type="button" class="btn btn-danger" id="zippy-prof-logout" style="width: 100%;">Sign Out of Session</button>
+    </div>
+  </div>
+
+  <!-- Modal 2: AI Underwriting & Eligibility Calculator -->
+  <div class="zippy-modal" id="modal-zippy-ai" role="dialog" aria-modal="true" aria-labelledby="zippy-ai-title">
+    <div class="zippy-modal-card">
+      <div class="zippy-modal-header">
+        <h3 class="zippy-modal-title" id="zippy-ai-title">🤖 AI Loan Underwriter &amp; Eligibility</h3>
+        <button type="button" class="zippy-modal-close" data-close="modal-zippy-ai" aria-label="Close">&times;</button>
+      </div>
+      <p style="font-size: 13px; color: #94a3b8; margin-top: 0; margin-bottom: 16px;">
+        Zippy Smart Underwriter analyzes debt-to-income (DTI) ratio, CIBIL score, and lender credit policies to calculate instant approval likelihood.
+      </p>
+      <form id="form-ai-calc" novalidate>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+          <div class="form-group">
+            <label class="form-label" for="ai-income">Monthly Net Income (₹)</label>
+            <input type="number" id="ai-income" class="form-input" value="150000" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ai-loan-amt">Requested Loan (₹)</label>
+            <input type="number" id="ai-loan-amt" class="form-input" value="2500000" required>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+          <div class="form-group">
+            <label class="form-label" for="ai-emi">Existing Monthly EMI (₹)</label>
+            <input type="number" id="ai-emi" class="form-input" value="20000" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ai-cibil">CIBIL / Credit Score</label>
+            <input type="number" id="ai-cibil" class="form-input" value="765" min="300" max="900" required>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" id="btn-run-ai-calc" style="width: 100%; margin-bottom: 16px;">Run AI Underwriting Assessment</button>
+      </form>
+      <!-- Results Card -->
+      <div id="ai-result-card" style="background: rgba(14, 165, 233, 0.12); border: 1.5px solid #0284c7; border-radius: 12px; padding: 16px; margin-top: 8px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <span style="font-weight: 700; color: #38bdf8; font-size: 14px;">Assessment Verdict:</span>
+          <span id="ai-verdict-badge" style="background: #22c55e; color: #ffffff; font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 10px;">STRONG APPROVAL (94%)</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12.5px; margin-bottom: 12px;">
+          <div>
+            <span style="color: #94a3b8;">Debt-to-Income (DTI):</span>
+            <div id="ai-dti-val" style="color: #ffffff; font-weight: 700;">13.3% (Safe &lt; 50%)</div>
+          </div>
+          <div>
+            <span style="color: #94a3b8;">Max Loan Eligibility:</span>
+            <div id="ai-max-loan" style="color: #22c55e; font-weight: 700;">₹ 48,00,000</div>
+          </div>
+        </div>
+        <div style="background: rgba(15, 23, 42, 0.6); padding: 10px; border-radius: 8px; font-size: 12px; border: 1px solid rgba(255, 255, 255, 0.1);">
+          <div style="color: #facc15; font-weight: 700; margin-bottom: 4px;">Top Recommended Lenders:</div>
+          <div>• <strong>HDFC Bank:</strong> MSME Secured (10.25% ROI, Est. EMI: ₹53,400)</div>
+          <div>• <strong>Riverbend Capital:</strong> Machinery Term Loan (11.00% ROI, 5-yr Tenor)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Lender Matrix -->
+  <div class="zippy-modal" id="modal-zippy-lenders" role="dialog" aria-modal="true" aria-labelledby="zippy-lender-title">
+    <div class="zippy-modal-card">
+      <div class="zippy-modal-header">
+        <h3 class="zippy-modal-title" id="zippy-lender-title">🏦 Bank &amp; NBFC Sanction Matrix</h3>
+        <button type="button" class="zippy-modal-close" data-close="modal-zippy-lenders" aria-label="Close">&times;</button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <strong style="color: #38bdf8; font-size: 15px;">HDFC Bank (Commercial Credit)</strong>
+            <span style="background: #22c55e; color: #ffffff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">ACTIVE LENDER</span>
+          </div>
+          <div style="font-size: 12.5px; color: #cbd5e1; line-height: 1.5;">
+            • Ticket Size: ₹25 Lakh to ₹10 Crore<br>
+            • Interest Rate: 9.75% – 12.50% p.a.<br>
+            • Products: Machinery Financing, Working Capital Limits<br>
+            • SLA Turnaround: 48 – 72 Hours
+          </div>
+        </div>
+
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <strong style="color: #38bdf8; font-size: 15px;">ICICI Bank (MSME Desk)</strong>
+            <span style="background: #22c55e; color: #ffffff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">ACTIVE LENDER</span>
+          </div>
+          <div style="font-size: 12.5px; color: #cbd5e1; line-height: 1.5;">
+            • Ticket Size: ₹15 Lakh to ₹7.5 Crore<br>
+            • Interest Rate: 10.15% – 13.00% p.a.<br>
+            • Products: Overdraft, Letter of Credit, Bank Guarantee
+          </div>
+        </div>
+
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <strong style="color: #38bdf8; font-size: 15px;">State Bank of India (SBI)</strong>
+            <span style="background: #22c55e; color: #ffffff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">ACTIVE LENDER</span>
+          </div>
+          <div style="font-size: 12.5px; color: #cbd5e1; line-height: 1.5;">
+            • Ticket Size: ₹10 Lakh to ₹5 Crore (CGTMSE Collateral Free)<br>
+            • Interest Rate: 9.25% – 11.50% p.a.<br>
+            • Products: Term Loans &amp; MSME Working Capital
+          </div>
+        </div>
+
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <strong style="color: #38bdf8; font-size: 15px;">Riverbend Capital Ltd (NBFC)</strong>
+            <span style="background: #22c55e; color: #ffffff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">ACTIVE LENDER</span>
+          </div>
+          <div style="font-size: 12.5px; color: #cbd5e1; line-height: 1.5;">
+            • Ticket Size: Up to ₹15 Crore<br>
+            • Products: Loan Against Property (LAP) &amp; Nacharam Industrial Mortgages
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: KYC Vault & Security Status -->
+  <div class="zippy-modal" id="modal-zippy-vault" role="dialog" aria-modal="true" aria-labelledby="zippy-vault-title">
+    <div class="zippy-modal-card">
+      <div class="zippy-modal-header">
+        <h3 class="zippy-modal-title" id="zippy-vault-title">🔒 Encrypted KYC Document Vault</h3>
+        <button type="button" class="zippy-modal-close" data-close="modal-zippy-vault" aria-label="Close">&times;</button>
+      </div>
+      <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+        <div style="color: #22c55e; font-weight: 700; font-size: 13.5px; margin-bottom: 8px;">
+          ✓ AES-256-GCM Vault Active &amp; Online
+        </div>
+        <div style="font-size: 12px; color: #94a3b8; line-height: 1.5;">
+          All customer Aadhaar, PAN, GST, and bank records are encrypted at rest with unique 12-byte initialization vectors. Anti-malware scanning quarantines unauthorized signatures automatically.
+        </div>
+      </div>
+      <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 10px;">RECENT VAULT DOCUMENTS:</div>
+      <div style="display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; margin-bottom: 18px;">
+        <div style="padding: 10px; background: rgba(15, 23, 42, 0.6); border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="color: #ffffff; font-weight: 600;">Suresh_Aadhaar_KYC.pdf</div>
+            <div style="font-size: 11px; color: #22c55e;">Status: Clean • Lead #1</div>
+          </div>
+          <span style="font-size: 11px; background: rgba(56, 189, 248, 0.2); color: #38bdf8; padding: 2px 6px; border-radius: 4px;">AES-256-GCM</span>
+        </div>
+        <div style="padding: 10px; background: rgba(15, 23, 42, 0.6); border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="color: #ffffff; font-weight: 600;">GST_Return_Nacharam_Unit.pdf</div>
+            <div style="font-size: 11px; color: #22c55e;">Status: Clean • Lead #2</div>
+          </div>
+          <span style="font-size: 11px; background: rgba(56, 189, 248, 0.2); color: #38bdf8; padding: 2px 6px; border-radius: 4px;">AES-256-GCM</span>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" id="btn-vault-go-leads" style="width: 100%;">View Document Queue in Leads</button>
+    </div>
+  </div>
+
+  <!-- Modal 5: Payouts & NEFT Reconciliation -->
+  <div class="zippy-modal" id="modal-zippy-payouts" role="dialog" aria-modal="true" aria-labelledby="zippy-payout-title">
+    <div class="zippy-modal-card">
+      <div class="zippy-modal-header">
+        <h3 class="zippy-modal-title" id="zippy-payout-title">💳 Payout Reconciliation &amp; NEFT</h3>
+        <button type="button" class="zippy-modal-close" data-close="modal-zippy-payouts" aria-label="Close">&times;</button>
+      </div>
+      <div style="background: rgba(16, 185, 129, 0.12); border: 1px solid #10b981; border-radius: 12px; padding: 14px; margin-bottom: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="color: #94a3b8; font-size: 11.5px;">Accrued / Approved Commissions:</div>
+            <div style="color: #ffffff; font-size: 22px; font-weight: 800; font-family: monospace;">₹ 1,75,400</div>
+          </div>
+          <span style="background: #10b981; color: #ffffff; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 6px;">READY FOR NEFT</span>
+        </div>
+      </div>
+      <form id="form-quick-payout" novalidate style="margin-bottom: 16px;">
+        <div class="form-group mb-8">
+          <label class="form-label" for="payout-utr">Bank UTR Reference Number</label>
+          <input type="text" id="payout-utr" class="form-input" placeholder="e.g. HDFC20261101994827" required>
+        </div>
+        <div class="form-group mb-12">
+          <label class="form-label" for="payout-target-partner">Beneficiary Partner</label>
+          <select id="payout-target-partner" class="form-select">
+            <option value="1">Northstar Connect (HDFC0001234 A/C 5010098765)</option>
+            <option value="2">Apex Financial Advisors (ICIC0000456 A/C 0045012345)</option>
+          </select>
+        </div>
+        <button type="button" class="btn btn-primary" id="btn-submit-quick-payout" style="width: 100%;">Record Bank NEFT Settlement</button>
+      </form>
+      <button type="button" class="btn btn-secondary btn-sm" id="btn-payout-go-ledger" style="width: 100%; border-color: rgba(56, 189, 248, 0.4); color: #38bdf8;">Open Full Commission Ledger</button>
+    </div>
+  </div>
+
+  <!-- Modal 6: Reminders & SLA Timetable -->
+  <div class="zippy-modal" id="modal-zippy-reminders" role="dialog" aria-modal="true" aria-labelledby="zippy-rem-title">
+    <div class="zippy-modal-card">
+      <div class="zippy-modal-header">
+        <h3 class="zippy-modal-title" id="zippy-rem-title">⏰ SLA Tasks &amp; Timetable</h3>
+        <button type="button" class="zippy-modal-close" data-close="modal-zippy-reminders" aria-label="Close">&times;</button>
+      </div>
+      <div style="font-size: 12.5px; color: #94a3b8; margin-bottom: 12px;">Active operational tasks and customer follow-up schedule:</div>
+      <div id="zippy-reminders-list" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+        <div style="padding: 10px; background: rgba(15, 23, 42, 0.7); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="color: #ffffff; font-weight: 600; font-size: 13px;">Follow-up on Nacharam MSME GST Returns</div>
+            <div style="color: #94a3b8; font-size: 11px;">Lead #1 (Suresh Kumar) • Document Collection</div>
+          </div>
+          <span style="background: rgba(245, 158, 11, 0.2); color: #f59e0b; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">DUE TODAY</span>
+        </div>
+        <div style="padding: 10px; background: rgba(15, 23, 42, 0.7); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="color: #ffffff; font-weight: 600; font-size: 13px;">HDFC Bank Credit Manager Sanction Call</div>
+            <div style="color: #94a3b8; font-size: 11px;">Lead #2 (Mallapur Units) • Lender Verification</div>
+          </div>
+          <span style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">TOMORROW</span>
+        </div>
+      </div>
+      <button type="button" class="btn btn-secondary btn-sm" id="btn-quick-new-lead-rem" style="width: 100%; border-color: rgba(56, 189, 248, 0.4); color: #38bdf8;">+ Schedule New Task in Lead Queue</button>
+    </div>
+  </div>
+
+  <!-- Modal 7: Policy Circulars & Guidelines -->
+  <div class="zippy-modal" id="modal-zippy-circulars" role="dialog" aria-modal="true" aria-labelledby="zippy-circ-title">
+    <div class="zippy-modal-card">
+      <div class="zippy-modal-header">
+        <h3 class="zippy-modal-title" id="zippy-circ-title">📜 Lender Circulars &amp; Guidelines</h3>
+        <button type="button" class="zippy-modal-close" data-close="modal-zippy-circulars" aria-label="Close">&times;</button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 14px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+            <strong style="color: #38bdf8; font-size: 14px;">Circular #2026/04 — RBI MSME Norms</strong>
+            <span style="color: #94a3b8; font-size: 11px;">Nov 2026</span>
+          </div>
+          <div style="font-size: 12px; color: #cbd5e1; line-height: 1.5;">
+            Standard 100% risk weight applied on secured MSME credit. No penal interest on pre-closure of floating rate business loans.
+          </div>
+        </div>
+
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 14px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+            <strong style="color: #38bdf8; font-size: 14px;">TSIIC Nacharam IDA Industrial Scheme</strong>
+            <span style="color: #94a3b8; font-size: 11px;">Nov 2026</span>
+          </div>
+          <div style="font-size: 12px; color: #cbd5e1; line-height: 1.5;">
+            15% capital subsidy on new CNC and manufacturing machinery loans for registered units in Nacharam and Mallapur industrial zones.
+          </div>
+        </div>
+
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 14px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+            <strong style="color: #38bdf8; font-size: 14px;">Zippy Gold Connector Slabs Upgrade</strong>
+            <span style="color: #94a3b8; font-size: 11px;">Q4 2026</span>
+          </div>
+          <div style="font-size: 12px; color: #cbd5e1; line-height: 1.5;">
+            Connectors achieving &gt;₹3 Crore disbursal in a quarter automatically upgrade to Gold tier with 2.5% commission rate and 10% holdback.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 8: Feed Back & Support -->
+  <div class="zippy-modal" id="modal-zippy-feedback" role="dialog" aria-modal="true" aria-labelledby="zippy-feed-title">
+    <div class="zippy-modal-card">
+      <div class="zippy-modal-header">
+        <h3 class="zippy-modal-title" id="zippy-feed-title">⭐ Connector Feed Back &amp; Rating</h3>
+        <button type="button" class="zippy-modal-close" data-close="modal-zippy-feedback" aria-label="Close">&times;</button>
+      </div>
+      <p style="font-size: 13px; color: #94a3b8; margin-top: 0; margin-bottom: 14px;">
+        Help us improve Zippy Enterprises Loan Connector OS. Rate your experience and send operational feedback:
+      </p>
+      <form id="form-zippy-feedback" novalidate>
+        <div style="text-align: center; margin-bottom: 16px;">
+          <div style="font-size: 12px; color: #94a3b8; margin-bottom: 8px;">RATE YOUR WORKSPACE EXPERIENCE:</div>
+          <div id="star-rating-group" style="display: inline-flex; gap: 8px; font-size: 28px; cursor: pointer;">
+            <span class="star-rating active" data-rating="1" style="color: #facc15;">★</span>
+            <span class="star-rating active" data-rating="2" style="color: #facc15;">★</span>
+            <span class="star-rating active" data-rating="3" style="color: #facc15;">★</span>
+            <span class="star-rating active" data-rating="4" style="color: #facc15;">★</span>
+            <span class="star-rating active" data-rating="5" style="color: #facc15;">★</span>
+          </div>
+        </div>
+        <div class="form-group mb-12">
+          <label class="form-label" for="feed-category">Category</label>
+          <select id="feed-category" class="form-select">
+            <option value="portal_uiux">Dashboard &amp; UI/UX</option>
+            <option value="lead_processing">Lead Routing &amp; Processing Speed</option>
+            <option value="commissions">Commission Accuracy &amp; Payouts</option>
+            <option value="general">General Suggestion</option>
+          </select>
+        </div>
+        <div class="form-group mb-16">
+          <label class="form-label" for="feed-comments">Your Feedback / Comments</label>
+          <textarea id="feed-comments" class="form-textarea" rows="3" placeholder="Share your experience or suggestions for Zippy Enterprises..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" id="btn-submit-feedback" style="width: 100%;">Submit Feedback</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 8. Toast Notifications Container -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
+

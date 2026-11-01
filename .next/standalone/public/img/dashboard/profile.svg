@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#cbd5e1"/>
+      <stop offset="60%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#64748b"/>
+    </linearGradient>
+    <linearGradient id="skinGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fed7aa"/>
+      <stop offset="100%" stop-color="#fba86c"/>
+    </linearGradient>
+    <linearGradient id="shirtGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1e3a8a"/>
+    </linearGradient>
+    <clipPath id="circleClip">
+      <rect x="0" y="0" width="200" height="200" rx="36"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#circleClip)">
+    <!-- Background building / campus blurred -->
+    <rect width="200" height="200" fill="url(#bgGrad)"/>
+    <!-- Campus pillars in background -->
+    <rect x="15" y="10" width="30" height="180" fill="#e2e8f0" opacity="0.6"/>
+    <rect x="155" y="10" width="30" height="180" fill="#e2e8f0" opacity="0.6"/>
+    <rect x="75" y="25" width="50" height="80" fill="#cbd5e1" opacity="0.4"/>
+
+    <!-- Backpack straps -->
+    <path d="M48 115 Q38 150 42 200" stroke="#0f172a" stroke-width="16" stroke-linecap="round" fill="none"/>
+    <path d="M152 115 Q162 150 158 200" stroke="#0f172a" stroke-width="16" stroke-linecap="round" fill="none"/>
+
+    <!-- Torso / Shirt -->
+    <path d="M50 135 C50 120 70 115 100 115 C130 115 150 120 150 135 L165 200 L35 200 Z" fill="url(#shirtGrad)"/>
+    <!-- Collar & White T-shirt underneath -->
+    <path d="M88 115 L100 145 L112 115 Z" fill="#ffffff"/>
+    <path d="M72 120 L96 150 L84 165 L60 128 Z" fill="#2563eb"/>
+    <path d="M128 120 L104 150 L116 165 L140 128 Z" fill="#2563eb"/>
+
+    <!-- Neck -->
+    <rect x="88" y="90" width="24" height="30" fill="url(#skinGrad)" rx="6"/>
+
+    <!-- Head -->
+    <ellipse cx="100" cy="74" rx="26" ry="32" fill="url(#skinGrad)"/>
+
+    <!-- Smile & Facial Features -->
+    <path d="M92 84 Q100 92 108 84" stroke="#c2410c" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <circle cx="89" cy="68" r="3.5" fill="#0f172a"/>
+    <circle cx="111" cy="68" r="3.5" fill="#0f172a"/>
+    <!-- Eyebrows -->
+    <path d="M84 62 Q90 59 96 62" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <path d="M104 62 Q110 59 116 62" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+    <!-- Hair -->
+    <path d="M70 65 C68 40 85 30 100 30 C115 30 132 40 130 65 C124 50 118 45 100 45 C82 45 76 50 70 65 Z" fill="#0f172a"/>
+    <!-- Side hair / ears -->
+    <circle cx="73" cy="74" r="6" fill="url(#skinGrad)"/>
+    <circle cx="127" cy="74" r="6" fill="url(#skinGrad)"/>
+  </g>
+</svg>

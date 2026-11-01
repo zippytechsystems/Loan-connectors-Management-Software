@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <clipPath id="leadClip">
+      <rect x="0" y="0" width="200" height="200" rx="36"/>
+    </clipPath>
+    <linearGradient id="leadBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eff6ff"/>
+      <stop offset="100%" stop-color="#dbeafe"/>
+    </linearGradient>
+  </defs>
+  <g clip-path="url(#leadClip)">
+    <rect width="200" height="200" fill="url(#leadBg)"/>
+
+    <!-- Document Application Form in Center -->
+    <rect x="45" y="25" width="110" height="150" rx="8" fill="#ffffff" stroke="#93c5fd" stroke-width="2"/>
+    
+    <!-- Top Blue Header -->
+    <rect x="55" y="38" width="90" height="14" rx="4" fill="#2563eb"/>
+    <text x="100" y="48" text-anchor="middle" font-family="system-ui, sans-serif" font-size="8" font-weight="900" fill="#ffffff">LOAN INTAKE</text>
+
+    <!-- Form Field Lines -->
+    <rect x="55" y="62" width="25" height="6" rx="2" fill="#64748b"/>
+    <rect x="85" y="60" width="60" height="10" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+
+    <rect x="55" y="78" width="25" height="6" rx="2" fill="#64748b"/>
+    <rect x="85" y="76" width="60" height="10" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+
+    <rect x="55" y="94" width="25" height="6" rx="2" fill="#64748b"/>
+    <rect x="85" y="92" width="60" height="10" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+
+    <!-- Checkbox Consent Row -->
+    <rect x="55" y="112" width="10" height="10" rx="2" fill="#22c55e"/>
+    <polyline points="57,117 60,120 63,114" fill="none" stroke="#ffffff" stroke-width="2"/>
+    <rect x="72" y="114" width="65" height="6" rx="2" fill="#94a3b8"/>
+
+    <!-- Big Green Action Plus / Submit Button -->
+    <circle cx="150" cy="150" r="26" fill="#16a34a" stroke="#ffffff" stroke-width="3"/>
+    <line x1="150" y1="138" x2="150" y2="162" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+    <line x1="138" y1="150" x2="162" y2="150" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- Rupee Currency Symbol Badge -->
+    <circle cx="35" cy="45" r="16" fill="#f59e0b"/>
+    <text x="35" y="52" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" font-weight="900" fill="#ffffff">₹</text>
+  </g>
+</svg>

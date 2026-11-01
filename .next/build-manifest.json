@@ -1,0 +1,12 @@
+{
+  "polyfillFiles": [],
+  "devFiles": [],
+  "ampDevFiles": [],
+  "lowPriorityFiles": [],
+  "rootMainFiles": [],
+  "pages": {
+    "/": [],
+    "/app": []
+  },
+  "ampFirstPages": []
+}

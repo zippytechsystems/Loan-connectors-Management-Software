@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <clipPath id="feedClip">
+      <rect x="0" y="0" width="200" height="200" rx="36"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#feedClip)">
+    <rect width="200" height="200" fill="#091838"/>
+    <!-- Central White Circle Container -->
+    <circle cx="100" cy="100" r="92" fill="#ffffff"/>
+
+    <!-- Purple Rating Banner in Center -->
+    <rect x="30" y="80" width="140" height="34" rx="8" fill="#818cf8"/>
+    
+    <!-- 5 Golden Stars -->
+    <g fill="#facc15" stroke="#eab308" stroke-width="1">
+      <!-- Star 1 -->
+      <polygon points="45,97 49,87 53,97 43,91 55,91"/>
+      <!-- Star 2 -->
+      <polygon points="68,97 72,87 76,97 66,91 78,91"/>
+      <!-- Star 3 -->
+      <polygon points="91,97 95,87 99,97 89,91 101,91"/>
+      <!-- Star 4 -->
+      <polygon points="114,97 118,87 122,97 112,91 124,91"/>
+      <!-- Star 5 -->
+      <polygon points="137,97 141,87 145,97 135,91 147,91"/>
+    </g>
+
+    <!-- Figures / People giving feedback -->
+    <!-- Person 1 (Standing next to stars) -->
+    <circle cx="140" cy="65" r="7" fill="#f43f5e"/>
+    <path d="M133 74 C133 70 147 70 147 74 L149 110 L131 110 Z" fill="#e11d48"/>
+    <!-- Person 2 (With megaphone) -->
+    <circle cx="165" cy="58" r="6" fill="#3b82f6"/>
+    <path d="M158 66 C158 63 172 63 172 66 L174 95 L156 95 Z" fill="#2563eb"/>
+    <!-- Megaphone -->
+    <polygon points="152,65 142,60 142,70" fill="#f59e0b"/>
+    <!-- Speech bubble -->
+    <path d="M48 55 C48 48 70 48 70 55 C70 60 62 62 60 66 L55 62 C50 62 48 59 48 55 Z" fill="#38bdf8"/>
+    <!-- Tiny figures at bottom -->
+    <circle cx="65" cy="130" r="6" fill="#10b981"/>
+    <rect x="60" y="137" width="10" height="20" rx="3" fill="#059669"/>
+    <circle cx="100" cy="126" r="6" fill="#f59e0b"/>
+    <rect x="95" y="133" width="10" height="24" rx="3" fill="#d97706"/>
+    <circle cx="135" cy="130" r="6" fill="#ec4899"/>
+    <rect x="130" y="137" width="10" height="20" rx="3" fill="#db2777"/>
+  </g>
+</svg>

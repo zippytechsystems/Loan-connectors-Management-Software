@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="40%" stop-color="#38bdf8"/>
+      <stop offset="80%" stop-color="#bae6fd"/>
+      <stop offset="100%" stop-color="#e0f2fe"/>
+    </linearGradient>
+  </defs>
+  <!-- Bright Celebration Sky Background -->
+  <rect width="200" height="200" rx="20" fill="url(#skyGrad)"/>
+  
+  <!-- Confetti Elements in Sky -->
+  <circle cx="30" cy="30" r="2.5" fill="#facc15"/>
+  <circle cx="80" cy="20" r="3" fill="#ec4899"/>
+  <circle cx="160" cy="35" r="2.5" fill="#34d399"/>
+  <rect x="120" y="25" width="5" height="5" rx="1" fill="#f97316" transform="rotate(25 122 27)"/>
+  <rect x="45" y="45" width="6" height="3" rx="1" fill="#a855f7" transform="rotate(-30 48 46)"/>
+  <rect x="175" y="60" width="5" height="5" rx="1" fill="#eab308" transform="rotate(45 177 62)"/>
+
+  <!-- Tossing Graduation Caps in the Air -->
+  <!-- Cap 1 Left -->
+  <g transform="translate(45, 30) rotate(-18)">
+    <polygon points="0,8 16,0 32,8 16,16" fill="#1e1b4b"/>
+    <path d="M10 10 L10 16 A 12 6 0 0 0 22 16 L22 10" fill="#312e81"/>
+    <line x1="16" y1="8" x2="30" y2="20" stroke="#facc15" stroke-width="1.5"/>
+  </g>
+  
+  <!-- Cap 2 Center High -->
+  <g transform="translate(85, 12) rotate(12)">
+    <polygon points="0,8 16,0 32,8 16,16" fill="#0f172a"/>
+    <path d="M10 10 L10 16 A 12 6 0 0 0 22 16 L22 10" fill="#1e293b"/>
+    <line x1="16" y1="8" x2="6" y2="20" stroke="#facc15" stroke-width="1.5"/>
+  </g>
+  
+  <!-- Cap 3 Right -->
+  <g transform="translate(130, 24) rotate(24)">
+    <polygon points="0,8 16,0 32,8 16,16" fill="#1e1b4b"/>
+    <path d="M10 10 L10 16 A 12 6 0 0 0 22 16 L22 10" fill="#312e81"/>
+    <line x1="16" y1="8" x2="26" y2="20" stroke="#facc15" stroke-width="1.5"/>
+  </g>
+
+  <!-- Celebrating Graduates Bottom -->
+  <!-- Graduate 1 Left (Blue Gown) -->
+  <g>
+    <!-- Raised Hand -->
+    <path d="M48 100 L56 65 L64 68 L58 105 Z" fill="#2563eb"/>
+    <circle cx="60" cy="115" r="16" fill="#fed7aa"/>
+    <path d="M46 110 Q60 88 74 110 Z" fill="#451a03"/>
+    <path d="M35 150 C35 130 85 130 85 150 L90 200 L30 200 Z" fill="#1d4ed8"/>
+    <!-- Yellow Stole / Sash -->
+    <path d="M52 135 L56 180 M68 135 L64 180" stroke="#facc15" stroke-width="3"/>
+  </g>
+  
+  <!-- Graduate 2 Center (Red Gown, Looking Up Cheering) -->
+  <g>
+    <!-- Both Arms Raised in V Victory -->
+    <path d="M85 110 L75 75 L83 72 L95 110 Z" fill="#dc2626"/>
+    <path d="M115 110 L125 75 L117 72 L105 110 Z" fill="#dc2626"/>
+    <circle cx="100" cy="108" r="17" fill="#fde68a"/>
+    <path d="M84 102 Q100 80 116 102 Z" fill="#18181b"/>
+    <path d="M72 145 C72 125 128 125 128 145 L132 200 L68 200 Z" fill="#b91c1c"/>
+    <!-- White Collar -->
+    <polygon points="94,130 106,130 100,140" fill="#ffffff"/>
+  </g>
+  
+  <!-- Graduate 3 Right (Yellow / Gold Gown) -->
+  <g>
+    <!-- Raised Hand -->
+    <path d="M142 100 L136 65 L144 68 L152 105 Z" fill="#eab308"/>
+    <circle cx="140" cy="115" r="16" fill="#fed7aa"/>
+    <path d="M126 110 Q140 88 154 110 Z" fill="#3b0764"/>
+    <path d="M115 150 C115 130 165 130 165 150 L170 200 L110 200 Z" fill="#ca8a04"/>
+    <!-- Blue Stole -->
+    <path d="M132 135 L136 180 M148 135 L144 180" stroke="#0284c7" stroke-width="3"/>
+  </g>
+</svg>
