@@ -71,7 +71,7 @@ const server = http.createServer(async (req, res) => {
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
         return res.end(JSON.stringify({
           status: 'ok',
-          service: 'veridian-connector-os',
+          service: 'zippy-loan-connector-loan-software-application',
           version: '1.0.0',
           environment: config.NODE_ENV,
           uptimeSeconds: Math.floor(process.uptime()),
@@ -120,7 +120,7 @@ const server = http.createServer(async (req, res) => {
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
         return res.end(JSON.stringify({
           status: 'ok',
-          service: 'veridian-connector-os',
+          service: 'zippy-loan-connector-loan-software-application',
           version: '1.0.0',
           uptimeSeconds: Math.floor(process.uptime()),
           nodeVersion: process.version,
@@ -284,7 +284,7 @@ server.on('error', (err) => {
 
 server.listen(config.PORT, config.HOST, () => {
   console.log(`=======================================================`);
-  console.log(`  Veridian Loan Connector Network OS (Standalone)      `);
+  console.log(`  Zippy Loan Connector Loan Software Application       `);
   console.log(`  Status: Running at http://${config.HOST}:${config.PORT} `);
   console.log(`  Database: ${config.DB_FILE}                          `);
   console.log(`  Environment: ${config.NODE_ENV}                      `);
@@ -307,7 +307,7 @@ function handleShutdown(signal) {
   }
   server.close(() => {
     try { db.close(); } catch (e) {}
-    console.log('Veridian Network OS shutdown cleanly.');
+    console.log('Zippy Loan Connector Loan Software Application shutdown cleanly.');
     process.exit(0);
   });
   setTimeout(() => {

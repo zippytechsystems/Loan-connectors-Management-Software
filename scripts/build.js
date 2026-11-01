@@ -1,14 +1,16 @@
 #!/usr/bin/env node
 /**
- * Veridian Loan Connector OS — Production Build & Packaging Script
- * Compatible with both standalone Node.js and Next.js PaaS runners (Hostinger, Cloud, VPS)
+ * Zippy Loan Connector Loan Software Application
+ * Production Build & Packaging Script
+ * Compatible with standalone Node.js and Next.js PaaS runners (Hostinger, Cloud, VPS)
  */
 
 const fs = require('node:fs');
 const path = require('node:path');
 
 console.log('=======================================================');
-console.log('  Veridian Loan Connector OS — Production Build Check ');
+console.log('  Zippy Loan Connector Loan Software Application       ');
+console.log('  Production Build & Standalone Packaging Check         ');
 console.log('=======================================================');
 
 const ROOT_DIR = path.resolve(__dirname, '..');
@@ -58,21 +60,50 @@ if (errors > 0) {
 // -------------------------------------------------------------
 console.log('\n[Build] Generating standalone server & static export compatibility bundles...');
 
+// Ensure next.config.js exists at root
+const nextConfigPath = path.join(ROOT_DIR, 'next.config.js');
+if (!fs.existsSync(nextConfigPath)) {
+  const nextConfigContent = `/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: 'standalone',
+  distDir: '.next',
+  poweredByHeader: false,
+};
+
+module.exports = nextConfig;
+`;
+  fs.writeFileSync(nextConfigPath, nextConfigContent, 'utf8');
+  console.log('[Build] Generated next.config.js with output: standalone');
+}
+
 const nextDir = path.join(ROOT_DIR, '.next');
 const standaloneDir = path.join(nextDir, 'standalone');
+const standaloneNextDir = path.join(standaloneDir, '.next');
+const standaloneNextServerDir = path.join(standaloneNextDir, 'server');
 const nextServerDir = path.join(nextDir, 'server');
 const nextServerPagesDir = path.join(nextServerDir, 'pages');
 const nextStaticDir = path.join(nextDir, 'static');
 const outDir = path.join(ROOT_DIR, 'out');
 const publicDir = path.join(ROOT_DIR, 'public');
 
-// Ensure directories
-[nextDir, standaloneDir, nextServerDir, nextServerPagesDir, nextStaticDir, outDir].forEach((d) => {
+// Ensure all compatibility directories
+[
+  nextDir,
+  standaloneDir,
+  standaloneNextDir,
+  standaloneNextServerDir,
+  nextServerDir,
+  nextServerPagesDir,
+  nextStaticDir,
+  outDir
+].forEach((d) => {
   fs.mkdirSync(d, { recursive: true });
 });
 
 // 1. .next/BUILD_ID
-fs.writeFileSync(path.join(nextDir, 'BUILD_ID'), 'veridian-connector-os-v1', 'utf8');
+const buildId = 'zippy-connector-build-v1';
+fs.writeFileSync(path.join(nextDir, 'BUILD_ID'), buildId, 'utf8');
+fs.writeFileSync(path.join(standaloneNextDir, 'BUILD_ID'), buildId, 'utf8');
 
 // 2. .next/standalone/server.js (Hostinger Next.js standalone runner executes this)
 const standaloneServerCode = `// Standalone runner compatibility for Hostinger Next.js deployment
@@ -103,7 +134,9 @@ const requiredServerFiles = {
     '.next/prerender-manifest.json'
   ]
 };
-fs.writeFileSync(path.join(nextDir, 'required-server-files.json'), JSON.stringify(requiredServerFiles, null, 2), 'utf8');
+const reqFilesJson = JSON.stringify(requiredServerFiles, null, 2);
+fs.writeFileSync(path.join(nextDir, 'required-server-files.json'), reqFilesJson, 'utf8');
+fs.writeFileSync(path.join(standaloneNextDir, 'required-server-files.json'), reqFilesJson, 'utf8');
 
 // 5. .next/routes-manifest.json
 const routesManifest = {
@@ -156,7 +189,9 @@ const pagesManifest = {
   '/app': 'pages/app.html',
   '/404': 'pages/404.html'
 };
-fs.writeFileSync(path.join(nextServerDir, 'pages-manifest.json'), JSON.stringify(pagesManifest, null, 2), 'utf8');
+const pagesManifestJson = JSON.stringify(pagesManifest, null, 2);
+fs.writeFileSync(path.join(nextServerDir, 'pages-manifest.json'), pagesManifestJson, 'utf8');
+fs.writeFileSync(path.join(standaloneNextServerDir, 'pages-manifest.json'), pagesManifestJson, 'utf8');
 
 // 9. Copy public HTML pages into .next/server/pages/
 fs.copyFileSync(path.join(publicDir, 'index.html'), path.join(nextServerPagesDir, 'index.html'));
@@ -168,12 +203,13 @@ try {
   fs.cpSync(publicDir, outDir, { recursive: true });
   fs.cpSync(publicDir, path.join(standaloneDir, 'public'), { recursive: true });
   fs.cpSync(publicDir, nextStaticDir, { recursive: true });
-  console.log('[Build] Static assets mirrored to out/ and .next/standalone/public');
+  console.log('[Build] Static assets mirrored to out/, .next/static/, and .next/standalone/public');
 } catch (err) {
   console.warn('[Build Warning] Asset mirror error:', err.message);
 }
 
 console.log('✅ Generated standalone server: .next/standalone/server.js');
+console.log('✅ Generated standalone metadata: .next/standalone/.next/');
 console.log('✅ Generated static export bundle: out/ (with index.html, app.html)');
 console.log('\n✅ Build completed successfully! Production bundle ready for Hostinger.');
 console.log('=======================================================');

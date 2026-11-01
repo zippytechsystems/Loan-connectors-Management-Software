@@ -1,7 +1,7 @@
 {
   "name": "loan-connector-management-software",
   "version": "1.0.0",
-  "description": "Independent multi-party loan lead routing and partner network platform (Zippy Enterprises Connector OS)",
+  "description": "Zippy Loan Connector Loan Software Application — Independent multi-party loan lead routing and partner network platform (Zippy Enterprises)",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
