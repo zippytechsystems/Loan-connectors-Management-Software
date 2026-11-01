@@ -2,10 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zippy Loan Connector Loan Software Application</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Zippy Loan Connector Software</title>
   <meta name="robots" content="noindex, nofollow, noarchive">
-  <meta name="description" content="Zippy Loan Connector Loan Software Application: Multi-party loan routing, partner governance, and commission reconciliation platform.">
+  <meta name="description" content="Zippy Loan Connector Software: Multi-party loan routing, partner governance, and commission reconciliation platform.">
+  <meta name="theme-color" content="#0a1b42">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png">
+  <link rel="apple-touch-icon" href="/img/icon-512.png">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="zippy-theme-body">
@@ -75,6 +82,15 @@
         <div class="zippy-drawer-header">
           <h2 class="zippy-drawer-title">Sign In to Zippy Software</h2>
           <button type="button" class="zippy-drawer-close" id="btn-close-auth-drawer" aria-label="Close">&times;</button>
+        </div>
+
+        <!-- Active Session Resume Banner -->
+        <div id="drawer-resume-session" style="display: none; background: rgba(34, 197, 94, 0.15); border: 1.5px solid #22c55e; border-radius: 12px; padding: 12px; margin-bottom: 14px; text-align: center;">
+          <div style="font-size: 11px; color: #86efac; font-weight: 700; text-transform: uppercase;">Active Session Detected</div>
+          <div id="drawer-resume-user" style="font-size: 13.5px; font-weight: 700; color: #ffffff; margin: 4px 0 8px 0;">Logged In</div>
+          <button type="button" id="btn-drawer-resume" class="btn btn-primary" style="width: 100%; height: 38px; font-size: 13px; font-weight: 700; background: linear-gradient(180deg, #16a34a 0%, #15803d 100%);">
+            🚀 Launch Business Dashboard
+          </button>
         </div>
 
         <!-- 1-Click Quick Demo Sign-In (Instant Access for All 8 Personas) -->

@@ -2,10 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zippy Loan Connector Loan Software Application</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Zippy Loan Connector Software</title>
   <meta name="robots" content="noindex, nofollow, noarchive">
-  <meta name="description" content="Zippy Loan Connector Loan Software Application: Multi-party loan routing, partner governance, and commission reconciliation platform.">
+  <meta name="description" content="Zippy Loan Connector Software: Multi-party loan routing, partner governance, and commission reconciliation platform.">
+  <meta name="theme-color" content="#0a1b42">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png">
+  <link rel="apple-touch-icon" href="/img/icon-512.png">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="zippy-theme-body">
@@ -15,17 +22,181 @@
   <div id="a11y-announcer" class="sr-only" role="status" aria-live="polite"></div>
 
   <!-- =========================================================================
-       ZIPPY ENTERPRISES — DASHBOARD SCREEN (EXACT SCREENSHOT IMPLEMENTATION)
+       ZIPPY ENTERPRISES — WELCOME & LOGIN ONBOARDING SCREEN (EXACT SCREENSHOT REPLICA)
+       Smiling Girl in yellow top & Boy in navy plaid shirt at laptop,
+       Purple-Pink gradient logo badge, "Welcome to Zippy Loan Connector",
+       "The Next-Gen Loan Connector Platform", Golden "Get Started" button
+       ========================================================================= -->
+  <section id="screen-welcome-login" class="zippy-welcome-screen" aria-label="Zippy Welcome and Login Screen">
+    <div class="zippy-phone-frame">
+      <!-- Background Photo of Girl & Boy at Laptop -->
+      <img src="img/onboarding_bg.jpg" alt="Zippy Loan Connector Workspace" class="zippy-welcome-bg" id="welcome-hero-img">
+      
+      <!-- Gradient & Vignette Overlay -->
+      <div class="zippy-welcome-overlay"></div>
+
+      <!-- Top Phone Status Bar (Exact Simulation from Screenshot) -->
+      <div class="zippy-status-bar">
+        <span class="status-time" id="welcome-status-time">9:22</span>
+        <div class="status-icons">
+          <span>VoWiFi</span>
+          <span>📶</span>
+          <span>🔋 60%</span>
+        </div>
+      </div>
+
+      <!-- Center Top App Logo Badge (Purple-Pink Gradient with Stylized Z and Sparkle) -->
+      <div class="zippy-welcome-logo-wrap">
+        <div class="zippy-welcome-logo-badge" id="btn-welcome-logo" title="Zippy Enterprises Loan Connector Platform">
+          <div class="zippy-badge-symbol">
+            Z
+            <span class="zippy-badge-sparkle">✦</span>
+          </div>
+          <span class="zippy-badge-text">ZIPPY.AI</span>
+        </div>
+      </div>
+
+      <!-- Lower Content Area (Welcome Title & Get Started CTA) -->
+      <div class="zippy-welcome-content">
+        <h1 class="zippy-welcome-title">
+          Welcome to <span class="brand-accent">Zippy Loan Connector</span>
+        </h1>
+        <p class="zippy-welcome-subtitle">
+          The <span class="highlight-text">Next-Gen</span> Loan Connector Platform
+        </p>
+
+        <!-- Golden Amber "Get Started" CTA Button -->
+        <button type="button" class="zippy-btn-get-started" id="btn-get-started" aria-label="Get Started and Sign In">
+          Get Started
+        </button>
+
+        <!-- Copyright Footer -->
+        <div class="zippy-welcome-footer">
+          &copy; 2026 Zippy Enterprises. All rights reserved.
+        </div>
+      </div>
+
+      <!-- Interactive Slide-Up Auth Drawer -->
+      <div class="zippy-auth-drawer" id="welcome-auth-drawer" aria-label="Sign In and Quick Persona Access">
+        <div class="zippy-drawer-handle" id="btn-drawer-handle" title="Drag or Click to Close"></div>
+        <div class="zippy-drawer-header">
+          <h2 class="zippy-drawer-title">Sign In to Zippy Software</h2>
+          <button type="button" class="zippy-drawer-close" id="btn-close-auth-drawer" aria-label="Close">&times;</button>
+        </div>
+
+        <!-- Active Session Resume Banner -->
+        <div id="drawer-resume-session" style="display: none; background: rgba(34, 197, 94, 0.15); border: 1.5px solid #22c55e; border-radius: 12px; padding: 12px; margin-bottom: 14px; text-align: center;">
+          <div style="font-size: 11px; color: #86efac; font-weight: 700; text-transform: uppercase;">Active Session Detected</div>
+          <div id="drawer-resume-user" style="font-size: 13.5px; font-weight: 700; color: #ffffff; margin: 4px 0 8px 0;">Logged In</div>
+          <button type="button" id="btn-drawer-resume" class="btn btn-primary" style="width: 100%; height: 38px; font-size: 13px; font-weight: 700; background: linear-gradient(180deg, #16a34a 0%, #15803d 100%);">
+            🚀 Launch Business Dashboard
+          </button>
+        </div>
+
+        <!-- 1-Click Quick Demo Sign-In (Instant Access for All 8 Personas) -->
+        <div style="margin-bottom: 14px;">
+          <div style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
+            ⚡ 1-Click Instant Persona Sign-In:
+          </div>
+          <div class="quick-role-chips">
+            <button type="button" class="quick-role-btn" data-role="admin">
+              <span class="role-tag">👑 ADMIN</span>
+              <span class="role-name">Vikram Singhania</span>
+            </button>
+            <button type="button" class="quick-role-btn" data-role="connector">
+              <span class="role-tag">🤝 CONNECTOR 1</span>
+              <span class="role-name">Northstar Connect</span>
+            </button>
+            <button type="button" class="quick-role-btn" data-role="connector2">
+              <span class="role-tag">💼 CONNECTOR 2</span>
+              <span class="role-name">Apex Wealth</span>
+            </button>
+            <button type="button" class="quick-role-btn" data-role="ops">
+              <span class="role-tag">⚡ OPERATIONS</span>
+              <span class="role-name">Operations Desk</span>
+            </button>
+            <button type="button" class="quick-role-btn" data-role="lender">
+              <span class="role-tag">🏦 LENDER</span>
+              <span class="role-name">Riverbend Capital</span>
+            </button>
+            <button type="button" class="quick-role-btn" data-role="reviewer">
+              <span class="role-tag">🔍 REVIEWER</span>
+              <span class="role-name">KYC Underwriter</span>
+            </button>
+            <button type="button" class="quick-role-btn" data-role="finance">
+              <span class="role-tag">💰 FINANCE</span>
+              <span class="role-name">Payouts &amp; UTR</span>
+            </button>
+            <button type="button" class="quick-role-btn" data-role="auditor">
+              <span class="role-tag">🛡️ AUDITOR</span>
+              <span class="role-name">Compliance Audit</span>
+            </button>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin: 12px 0 14px 0; position: relative;">
+          <span style="background: #09132b; padding: 0 10px; color: #64748b; font-size: 11px; text-transform: uppercase;">or enter credentials</span>
+          <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.1); z-index: -1;"></div>
+        </div>
+
+        <!-- Credentials Form -->
+        <form id="form-drawer-login" novalidate>
+          <div id="drawer-login-error" style="display: none; padding: 8px 12px; margin-bottom: 12px; font-size: 12px; border-radius: 8px; background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4);"></div>
+
+          <div class="form-group mb-12">
+            <label class="form-label" for="drawer-username" style="font-size: 12px; color: #cbd5e1;">Username or Email</label>
+            <input type="text" id="drawer-username" class="form-input" placeholder="e.g. admin or partner" value="admin" required autocomplete="username" style="background: rgba(15, 23, 42, 0.8); border-color: rgba(56, 189, 248, 0.4); color: #fff;">
+          </div>
+
+          <div class="form-group mb-16">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <label class="form-label" for="drawer-password" style="font-size: 12px; color: #cbd5e1; margin-bottom: 0;">Password</label>
+              <button type="button" id="btn-toggle-pwd" style="background: none; border: none; color: #38bdf8; font-size: 11px; cursor: pointer; padding: 0;">Show</button>
+            </div>
+            <input type="password" id="drawer-password" class="form-input" placeholder="Enter password" value="ConnectorDemo!26" required autocomplete="current-password" style="background: rgba(15, 23, 42, 0.8); border-color: rgba(56, 189, 248, 0.4); color: #fff;">
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="btn-drawer-submit" style="width: 100%; height: 44px; font-size: 14px; font-weight: 700; background: linear-gradient(180deg, #0284c7 0%, #0369a1 100%);">
+            Sign In &amp; Launch Home Page
+          </button>
+        </form>
+
+        <!-- Self-Onboard Link -->
+        <div style="text-align: center; margin-top: 14px; font-size: 12px; color: #94a3b8;">
+          New Loan Connector or DSA?
+          <button type="button" id="btn-drawer-open-reg" style="background: none; border: none; color: #f59e0b; font-weight: 700; cursor: pointer; text-decoration: underline; margin-left: 4px;">
+            Apply for Onboarding
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       ZIPPY ENTERPRISES — DASHBOARD / HOME SCREEN (15 LOAN CONNECTOR MODULES)
        Royal Midnight Sapphire Blue, Glowing Neon Cyan, 3-Column Image Card Grid
        ========================================================================= -->
-  <section id="zippy-dashboard-screen" class="zippy-app-wrapper" aria-label="Zippy Loan Connector Loan Software Application Dashboard">
+  <section id="zippy-dashboard-screen" class="zippy-app-wrapper" style="display: none;" aria-label="Zippy Loan Connector Loan Software Application Dashboard">
     <div class="zippy-main-container">
       
+      <!-- Top Mobile Status Bar (9:22 | VoWiFi | 60%) -->
+      <div class="zippy-status-bar zippy-dash-status-bar">
+        <span class="status-time" id="dashboard-status-time">9:22</span>
+        <div class="status-icons">
+          <span class="status-icon" title="Connected">🔗</span>
+          <span class="status-icon" title="DND">🌙</span>
+          <span class="status-icon" title="Network">📶</span>
+          <span class="status-vowifi">Vo WiFi</span>
+          <span class="status-icon" title="Wi-Fi">🛜</span>
+          <span class="status-battery" title="Battery 60%">60% 🔋</span>
+        </div>
+      </div>
+
       <!-- Top App Header -->
       <header class="zippy-header">
         <div class="zippy-header-logo-wrap" id="zippy-logo-btn" title="Zippy Loan Connector Loan Software Application">
           <div class="zippy-logo-badge">
-            <img src="img/dashboard/logo.svg" alt="Zippy Loan Connector Loan Software Application" width="44" height="44">
+            <img src="img/dashboard/logo.svg" alt="Zippy Loan Connector Software" width="44" height="44">
           </div>
         </div>
         <h1 class="zippy-header-title">Dashboard</h1>
@@ -62,7 +233,7 @@
         <!-- 1. Profile -->
         <button type="button" class="zippy-card-item" id="card-profile" aria-label="Connector Profile & Settings">
           <div class="zippy-box">
-            <img src="img/dashboard/profile.svg" alt="Profile" loading="lazy">
+            <img src="img/dashboard/card_profile.png" alt="Profile" loading="lazy">
           </div>
           <span class="zippy-label">Profile</span>
         </button>
@@ -70,7 +241,7 @@
         <!-- 2. Partners -->
         <button type="button" class="zippy-card-item" id="card-partners" aria-label="Partner Network Directory">
           <div class="zippy-box">
-            <img src="img/dashboard/outings.svg" alt="Partners" loading="lazy">
+            <img src="img/dashboard/card_partners.png" alt="Partners" loading="lazy">
           </div>
           <span class="zippy-label">Partners</span>
         </button>
@@ -78,7 +249,7 @@
         <!-- 3. Feed Back -->
         <button type="button" class="zippy-card-item" id="card-feedback" aria-label="Connector Feedback & Support">
           <div class="zippy-box">
-            <img src="img/dashboard/feedback.svg" alt="Feed Back" loading="lazy">
+            <img src="img/dashboard/card_feedback.png" alt="Feed Back" loading="lazy">
           </div>
           <span class="zippy-label">Feed Back</span>
         </button>
@@ -87,7 +258,7 @@
         <!-- 4. Reminders -->
         <button type="button" class="zippy-card-item" id="card-reminders" aria-label="SLA Tasks & Timetable">
           <div class="zippy-box">
-            <img src="img/dashboard/timetable.svg" alt="Reminders" loading="lazy">
+            <img src="img/dashboard/card_reminders.png" alt="Reminders" loading="lazy">
           </div>
           <span class="zippy-label">Reminders</span>
         </button>
@@ -95,7 +266,7 @@
         <!-- 5. Lender Match -->
         <button type="button" class="zippy-card-item" id="card-lender-match" aria-label="Bank and NBFC Sanction Matrix">
           <div class="zippy-box">
-            <img src="img/dashboard/admissions.svg" alt="Lender Match" loading="lazy">
+            <img src="img/dashboard/card_lender_match.png" alt="Lender Match" loading="lazy">
           </div>
           <span class="zippy-label">Lender Match</span>
         </button>
@@ -103,7 +274,7 @@
         <!-- 6. AI Underwriter -->
         <button type="button" class="zippy-card-item" id="card-ai-underwriter" aria-label="AI Loan Eligibility Calculator">
           <div class="zippy-box">
-            <img src="img/dashboard/ai_awareness.svg" alt="AI Underwriter" loading="lazy">
+            <img src="img/dashboard/card_ai_underwriter.png" alt="AI Underwriter" loading="lazy">
           </div>
           <span class="zippy-label">AI Underwriter</span>
         </button>
@@ -112,7 +283,7 @@
         <!-- 7. New Lead -->
         <button type="button" class="zippy-card-item" id="card-new-lead" aria-label="Consented Loan Intake">
           <div class="zippy-box">
-            <img src="img/dashboard/new_lead.svg" alt="New Lead" loading="lazy">
+            <img src="img/dashboard/card_new_lead.png" alt="New Lead" loading="lazy">
           </div>
           <span class="zippy-label">New Lead</span>
         </button>
@@ -120,7 +291,7 @@
         <!-- 8. Lead Queue -->
         <button type="button" class="zippy-card-item" id="card-lead-queue" aria-label="Active Leads Pipeline">
           <div class="zippy-box">
-            <img src="img/dashboard/jobs.svg" alt="Lead Queue" loading="lazy">
+            <img src="img/dashboard/card_lead_queue.png" alt="Lead Queue" loading="lazy">
           </div>
           <span class="zippy-label">Lead Queue</span>
         </button>
@@ -128,7 +299,7 @@
         <!-- 9. Payouts -->
         <button type="button" class="zippy-card-item" id="card-payouts" aria-label="Payout Settlement & NEFT UTR">
           <div class="zippy-box">
-            <img src="img/dashboard/payments.svg" alt="Payouts" loading="lazy">
+            <img src="img/dashboard/card_payouts.png" alt="Payouts" loading="lazy">
           </div>
           <span class="zippy-label">Payouts</span>
         </button>
@@ -137,7 +308,7 @@
         <!-- 10. Commissions -->
         <button type="button" class="zippy-card-item" id="card-commissions" aria-label="Commission Ledger & Slabs">
           <div class="zippy-box">
-            <img src="img/dashboard/commissions.svg" alt="Commissions" loading="lazy">
+            <img src="img/dashboard/card_commissions.png" alt="Commissions" loading="lazy">
           </div>
           <span class="zippy-label">Commissions</span>
         </button>
@@ -145,7 +316,7 @@
         <!-- 11. Analytics -->
         <button type="button" class="zippy-card-item" id="card-analytics" aria-label="Disbursals & Performance KPIs">
           <div class="zippy-box">
-            <img src="img/dashboard/results.svg" alt="Analytics" loading="lazy">
+            <img src="img/dashboard/card_analytics.png" alt="Analytics" loading="lazy">
           </div>
           <span class="zippy-label">Analytics</span>
         </button>
@@ -153,7 +324,7 @@
         <!-- 12. Doc Review -->
         <button type="button" class="zippy-card-item" id="card-doc-review" aria-label="Underwriter Review Queue">
           <div class="zippy-box">
-            <img src="img/dashboard/assignment.svg" alt="Doc Review" loading="lazy">
+            <img src="img/dashboard/card_doc_review.png" alt="Doc Review" loading="lazy">
           </div>
           <span class="zippy-label">Doc Review</span>
         </button>
@@ -162,7 +333,7 @@
         <!-- 13. Circulars -->
         <button type="button" class="zippy-card-item" id="card-circulars" aria-label="RBI Policy Circulars & Norms">
           <div class="zippy-box">
-            <img src="img/dashboard/circulars.svg" alt="Circulars" loading="lazy">
+            <img src="img/dashboard/card_circulars.png" alt="Circulars" loading="lazy">
           </div>
           <span class="zippy-label">Circulars</span>
         </button>
@@ -170,7 +341,7 @@
         <!-- 14. Loan Products -->
         <button type="button" class="zippy-card-item" id="card-products" aria-label="Loan Products Catalog">
           <div class="zippy-box">
-            <img src="img/dashboard/products.svg" alt="Loan Products" loading="lazy">
+            <img src="img/dashboard/card_products.png" alt="Loan Products" loading="lazy">
           </div>
           <span class="zippy-label">Loan Products</span>
         </button>
@@ -178,12 +349,36 @@
         <!-- 15. Doc Vault -->
         <button type="button" class="zippy-card-item" id="card-doc-vault" aria-label="AES-256 Encrypted KYC Vault">
           <div class="zippy-box">
-            <img src="img/dashboard/doc_vault.svg" alt="Doc Vault" loading="lazy">
+            <img src="img/dashboard/card_doc_vault.png" alt="Doc Vault" loading="lazy">
           </div>
           <span class="zippy-label">Doc Vault</span>
         </button>
 
       </div>
+
+      <!-- Bottom Ambient Glowing Blue Waves & Mobile Home Indicator -->
+      <div class="zippy-bottom-ambient-waves" aria-hidden="true">
+        <svg viewBox="0 0 450 140" preserveAspectRatio="none" width="100%" height="140">
+          <defs>
+            <linearGradient id="waveGradLeft" x1="0%" y1="100%" x2="50%" y2="0%">
+              <stop offset="0%" stop-color="#1e40af" stop-opacity="0.95"/>
+              <stop offset="50%" stop-color="#2563eb" stop-opacity="0.6"/>
+              <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="waveGradRight" x1="100%" y1="100%" x2="50%" y2="0%">
+              <stop offset="0%" stop-color="#1d4ed8" stop-opacity="0.9"/>
+              <stop offset="60%" stop-color="#3b82f6" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#0284c7" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M-20 140 Q60 80 130 110 T240 140 Z" fill="url(#waveGradLeft)"/>
+          <path d="M-10 140 C50 60 100 50 160 110 L160 140 Z" fill="url(#waveGradLeft)" opacity="0.65"/>
+          <path d="M470 140 Q380 70 310 105 T200 140 Z" fill="url(#waveGradRight)"/>
+          <path d="M480 140 C410 40 350 60 280 120 L280 140 Z" fill="url(#waveGradRight)" opacity="0.75"/>
+        </svg>
+      </div>
+      <div class="zippy-home-indicator-bar" aria-hidden="true"></div>
+
     </div>
   </section>
 

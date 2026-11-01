@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.zippy.loanconnector",
+      "sha256_cert_fingerprints": [
+        "14:6D:E9:7F:02:8F:CE:CE:F6:A9:A7:47:44:16:BC:AA:4F:2E:37:37:F5:2E:4A:8D:84:4F:33:F9:6E:9E:59:75"
+      ]
+    }
+  }
+]

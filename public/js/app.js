@@ -187,19 +187,28 @@
     setupWelcomeScreen();
     updateLiveDate();
 
+    // Register Service Worker for Android Play Store PWA / TWA installability
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch((err) => {
+        console.log('ServiceWorker registration skipped:', err.message);
+      });
+    }
+
     const hash = window.location.hash;
-    const isLoginRoute = window.location.pathname === '/login' || hash === '#login';
+    const directDashboardRequested = hash === '#dashboard' || hash === '#console';
 
     try {
       await fetchCurrentUser();
       await refreshAllData();
-      if (isLoginRoute) {
-        showWelcomeScreen();
-      } else {
+      if (directDashboardRequested) {
         showDashboardScreen();
+      } else {
+        // Android App Launch Flow: Always open the starting Home Onboarding screen first.
+        // User clicks "Get Started" -> logs in -> opens Business Dashboard with all 15 boxes.
+        showWelcomeScreen();
       }
     } catch (err) {
-      console.log('Unauthenticated session, showing Welcome & Login Onboarding screen.');
+      console.log('Unauthenticated session, showing Welcome Home screen.');
       showWelcomeScreen();
     }
   }
@@ -2366,7 +2375,25 @@
     // Open Auth Drawer on "Get Started"
     if (btnGetStarted && authDrawer) {
       btnGetStarted.addEventListener('click', () => {
+        const resumeBox = document.getElementById('drawer-resume-session');
+        const resumeUser = document.getElementById('drawer-resume-user');
+        if (state.currentUser && resumeBox && resumeUser) {
+          resumeBox.style.display = 'block';
+          resumeUser.textContent = `${state.currentUser.fullName || state.currentUser.username} (${(state.currentUser.role || 'user').toUpperCase()})`;
+        } else if (resumeBox) {
+          resumeBox.style.display = 'none';
+        }
         authDrawer.classList.add('open');
+      });
+    }
+
+    // Resume into Business Dashboard
+    const btnDrawerResume = document.getElementById('btn-drawer-resume');
+    if (btnDrawerResume && authDrawer) {
+      btnDrawerResume.addEventListener('click', () => {
+        authDrawer.classList.remove('open');
+        showDashboardScreen();
+        showToast('Business Dashboard', `Welcome back, ${state.currentUser?.fullName || 'Connector'}! All 15 modules active.`, 'success');
       });
     }
 
