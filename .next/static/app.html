@@ -66,7 +66,7 @@
         </p>
 
         <!-- Golden Amber "Get Started" CTA Button -->
-        <button type="button" class="zippy-btn-get-started" id="btn-get-started" aria-label="Get Started and Sign In">
+        <button type="button" class="zippy-btn-get-started" id="btn-get-started" onclick="window.launchZippyDashboard && window.launchZippyDashboard(event)" aria-label="Get Started and Launch Dashboard">
           Get Started
         </button>
 
@@ -1757,10 +1757,40 @@
           <span style="color: #ffffff;">Telangana (Hyderabad / Nacharam IDA)</span>
         </div>
         <div style="display: flex; justify-content: space-between;">
-          <span style="color: #94a3b8;">Security:</span>
-          <span style="color: #22c55e; font-weight: 700;">✓ Scrypt Salted Hash • AES-256</span>
+      <!-- Interactive Profile & Bank Settlement Data Entry Form -->
+      <form id="form-zippy-update-profile" style="background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 14px; border: 1px solid rgba(56, 189, 248, 0.25); margin-bottom: 16px;">
+        <div style="font-size: 12px; font-weight: 700; color: #38bdf8; text-transform: uppercase; margin-bottom: 10px;">
+          ✏️ Edit Profile &amp; Bank Settlement Details
         </div>
-      </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+          <div class="form-group">
+            <label class="form-label" for="prof-agency-name" style="font-size: 11px;">Agency / Business Name</label>
+            <input type="text" id="prof-agency-name" class="form-input" value="Sri Krishna Financial Solutions" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="prof-phone" style="font-size: 11px;">Contact Phone (+91)</label>
+            <input type="tel" id="prof-phone" class="form-input" value="98490 54321" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+          <div class="form-group">
+            <label class="form-label" for="prof-bank-acc" style="font-size: 11px;">Bank Account Number</label>
+            <input type="text" id="prof-bank-acc" class="form-input" value="50100987654321" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="prof-bank-ifsc" style="font-size: 11px;">Bank IFSC Code</label>
+            <input type="text" id="prof-bank-ifsc" class="form-input" value="HDFC0000456" style="text-transform: uppercase; font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+        </div>
+        <div class="form-group mb-10">
+          <label class="form-label" for="prof-upi-id" style="font-size: 11px;">UPI ID for Instant Commission Disbursals</label>
+          <input type="text" id="prof-upi-id" class="form-input" value="krishna.loans@okhdfcbank" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm" id="btn-save-profile" style="width: 100%; font-size: 12px; font-weight: 700; background: linear-gradient(180deg, #0284c7 0%, #0369a1 100%);">
+          💾 Save Profile &amp; Settlement Details
+        </button>
+      </form>
+
       <div style="margin-bottom: 16px;">
         <div style="font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 8px;">SWITCH ACTIVE ROLE (DEMO SANDBOX):</div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
@@ -1839,6 +1869,45 @@
         <h3 class="zippy-modal-title" id="zippy-lender-title">🏦 Bank &amp; NBFC Sanction Matrix</h3>
         <button type="button" class="zippy-modal-close" data-close="modal-zippy-lenders" aria-label="Close">&times;</button>
       </div>
+      <!-- Interactive Smart Lender Match Calculator -->
+      <form id="form-lender-match-calc" style="background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 14px; border: 1px solid rgba(56, 189, 248, 0.3); margin-bottom: 14px;">
+        <div style="font-size: 12px; font-weight: 700; color: #38bdf8; text-transform: uppercase; margin-bottom: 10px;">
+          🎯 Enter Borrower Parameters to Match Lenders
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+          <div class="form-group">
+            <label class="form-label" for="match-loan-amt" style="font-size: 11px;">Requested Loan (₹)</label>
+            <input type="number" id="match-loan-amt" class="form-input" value="3500000" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="match-cibil" style="font-size: 11px;">Borrower CIBIL Score</label>
+            <input type="number" id="match-cibil" class="form-input" value="775" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+          <div class="form-group">
+            <label class="form-label" for="match-prod-type" style="font-size: 11px;">Product Preference</label>
+            <select id="match-prod-type" class="form-select" style="font-size: 11.5px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+              <option value="business">MSME Business Loan</option>
+              <option value="machinery">Machinery Loan (Nacharam)</option>
+              <option value="lap">Loan Against Property (LAP)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="match-vintage" style="font-size: 11px;">Business Vintage</label>
+            <select id="match-vintage" class="form-select" style="font-size: 11.5px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+              <option value="3+">3+ Years (Standard)</option>
+              <option value="5+">5+ Years (Preferred Prime)</option>
+              <option value="1-2">1-2 Years (Startup/Emerging)</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm" id="btn-run-lender-match" style="width: 100%; font-size: 12px; font-weight: 700; background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);">
+          🔍 Find &amp; Rank Top Matched Lenders
+        </button>
+        <div id="lender-match-result" style="display: none; margin-top: 10px; padding: 10px; border-radius: 8px; background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.4); color: #86efac; font-size: 12px; font-weight: 600; text-align: center;"></div>
+      </form>
+
       <div style="display: flex; flex-direction: column; gap: 12px;">
         <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 14px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
@@ -1906,6 +1975,36 @@
           All customer Aadhaar, PAN, GST, and bank records are encrypted at rest with unique 12-byte initialization vectors. Anti-malware scanning quarantines unauthorized signatures automatically.
         </div>
       </div>
+      <!-- Interactive File Encryption & Upload Form -->
+      <form id="form-zippy-vault-upload" style="background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 14px; border: 1px solid rgba(56, 189, 248, 0.3); margin-bottom: 16px;">
+        <div style="font-size: 12px; font-weight: 700; color: #38bdf8; text-transform: uppercase; margin-bottom: 10px;">
+          📤 Upload &amp; Encrypt Borrower KYC Document
+        </div>
+        <div class="form-group mb-8">
+          <label class="form-label" for="vault-doc-borrower" style="font-size: 11px;">Borrower Full Name / Reference</label>
+          <input type="text" id="vault-doc-borrower" class="form-input" placeholder="e.g. Suresh Kumar (Lead #1)" required style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+          <div class="form-group">
+            <label class="form-label" for="vault-doc-type" style="font-size: 11px;">Document Type</label>
+            <select id="vault-doc-type" class="form-select" style="font-size: 11.5px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+              <option value="Aadhaar KYC">Aadhaar Card KYC</option>
+              <option value="PAN Card">PAN Card KYC</option>
+              <option value="GST Returns">3B GST Returns (12 Months)</option>
+              <option value="Bank Statement">Current Account Statement</option>
+              <option value="Property Title">Property Deed / Title (LAP)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="vault-doc-file" style="font-size: 11px;">Select File (PDF/Image)</label>
+            <input type="file" id="vault-doc-file" class="form-input" style="font-size: 11px; background: rgba(15,23,42,0.8); color: #94a3b8; border-color: rgba(56,189,248,0.3); padding: 4px;">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm" id="btn-encrypt-upload" style="width: 100%; font-size: 12px; font-weight: 700; background: linear-gradient(180deg, #0284c7 0%, #0369a1 100%);">
+          🔐 Encrypt with AES-256 &amp; Save to Vault
+        </button>
+      </form>
+
       <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 10px;">RECENT VAULT DOCUMENTS:</div>
       <div style="display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; margin-bottom: 18px;">
         <div style="padding: 10px; background: rgba(15, 23, 42, 0.6); border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center;">
@@ -1968,7 +2067,35 @@
         <h3 class="zippy-modal-title" id="zippy-rem-title">⏰ SLA Tasks &amp; Timetable</h3>
         <button type="button" class="zippy-modal-close" data-close="modal-zippy-reminders" aria-label="Close">&times;</button>
       </div>
-      <div style="font-size: 12.5px; color: #94a3b8; margin-bottom: 12px;">Active operational tasks and customer follow-up schedule:</div>
+      <!-- Interactive Schedule Task Form -->
+      <form id="form-zippy-add-reminder" style="background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 12px; border: 1px solid rgba(56, 189, 248, 0.3); margin-bottom: 14px;">
+        <div style="font-size: 12px; font-weight: 700; color: #38bdf8; text-transform: uppercase; margin-bottom: 8px;">
+          ➕ Schedule Customer Follow-Up or Lender Task
+        </div>
+        <div class="form-group mb-8">
+          <label class="form-label" for="rem-task-title" style="font-size: 11px;">Task Title / Action Item *</label>
+          <input type="text" id="rem-task-title" class="form-input" placeholder="e.g. Call borrower for property title deeds" required style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+          <div class="form-group">
+            <label class="form-label" for="rem-due-date" style="font-size: 11px;">Due Date / Time</label>
+            <input type="text" id="rem-due-date" class="form-input" value="Today, 4:30 PM" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="rem-priority" style="font-size: 11px;">Priority</label>
+            <select id="rem-priority" class="form-select" style="font-size: 11.5px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+              <option value="DUE TODAY">High (Due Today)</option>
+              <option value="TOMORROW">Medium (Tomorrow)</option>
+              <option value="UPCOMING">Normal (This Week)</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm" id="btn-save-reminder" style="width: 100%; font-size: 12px; font-weight: 700; background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);">
+          ⏰ Save Task to Timetable
+        </button>
+      </form>
+
+      <div style="font-size: 12.5px; color: #94a3b8; margin-bottom: 10px;">Active operational tasks and customer follow-up schedule:</div>
       <div id="zippy-reminders-list" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
         <div style="padding: 10px; background: rgba(15, 23, 42, 0.7); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center;">
           <div>
@@ -1996,6 +2123,26 @@
         <h3 class="zippy-modal-title" id="zippy-circ-title">📜 Lender Circulars &amp; Guidelines</h3>
         <button type="button" class="zippy-modal-close" data-close="modal-zippy-circulars" aria-label="Close">&times;</button>
       </div>
+
+      <!-- Interactive Search & Inquiry Form -->
+      <form id="form-zippy-ask-compliance" style="background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 12px; border: 1px solid rgba(56, 189, 248, 0.3); margin-bottom: 14px;">
+        <div style="font-size: 12px; font-weight: 700; color: #38bdf8; text-transform: uppercase; margin-bottom: 8px;">
+          ⚖️ Ask Regulatory &amp; Policy Compliance Desk
+        </div>
+        <div class="form-group mb-8">
+          <label class="form-label" for="circ-borrower-case" style="font-size: 11px;">Borrower Profile / Scenario *</label>
+          <input type="text" id="circ-borrower-case" class="form-input" placeholder="e.g. Nacharam unit seeking 15% TSIIC Machinery subsidy" required style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+        </div>
+        <div class="form-group mb-8">
+          <label class="form-label" for="circ-query-desc" style="font-size: 11px;">Policy Question / Clarification Required</label>
+          <input type="text" id="circ-query-desc" class="form-input" placeholder="e.g. Is CGTMSE guarantee applicable for second-hand CNC machines?" required style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm" id="btn-submit-circ-query" style="width: 100%; font-size: 12px; font-weight: 700; background: linear-gradient(180deg, #0284c7 0%, #0369a1 100%);">
+          📨 Submit Query to Compliance Officer
+        </button>
+        <div id="circ-query-feedback" style="display: none; margin-top: 8px; padding: 8px; border-radius: 6px; background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3); color: #86efac; font-size: 11.5px; text-align: center;"></div>
+      </form>
+
       <div style="display: flex; flex-direction: column; gap: 12px;">
         <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 14px;">
           <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
@@ -2078,8 +2225,46 @@
       </div>
       <div style="margin-bottom: 12px; display: flex; gap: 8px;">
         <input type="text" id="zippy-partner-search" class="form-input" placeholder="🔍 Search partner or territory..." style="font-size: 13px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
-        <button type="button" class="btn btn-primary btn-sm" id="btn-zippy-open-onboard-partner" style="white-space: nowrap; font-size: 12px; font-weight: 700;">+ Onboard</button>
+        <button type="button" class="btn btn-primary btn-sm" id="btn-zippy-open-onboard-partner" style="white-space: nowrap; font-size: 12px; font-weight: 700;">+ Add Partner</button>
       </div>
+
+      <!-- Interactive Onboard Partner Form (Toggleable) -->
+      <form id="form-zippy-onboard-partner" style="display: none; background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 12px; border: 1px solid rgba(56, 189, 248, 0.3); margin-bottom: 14px;">
+        <div style="font-size: 12px; font-weight: 700; color: #38bdf8; text-transform: uppercase; margin-bottom: 8px;">
+          🏢 Onboard New Lending Partner or Connector
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;" class="mb-8">
+          <div class="form-group">
+            <label class="form-label" for="onboard-p-name" style="font-size: 11px;">Partner Organization Name *</label>
+            <input type="text" id="onboard-p-name" class="form-input" placeholder="e.g. Kotak Mahindra MSME" required style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="onboard-p-type" style="font-size: 11px;">Partner Type</label>
+            <select id="onboard-p-type" class="form-select" style="font-size: 11.5px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+              <option value="Institutional Lender">Institutional Lender (Bank/NBFC)</option>
+              <option value="Connector">Loan Connector / DSA</option>
+            </select>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;" class="mb-8">
+          <div class="form-group">
+            <label class="form-label" for="onboard-p-territory" style="font-size: 11px;">Territory</label>
+            <input type="text" id="onboard-p-territory" class="form-input" value="Nacharam & Hyderabad, Telangana" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="onboard-p-capacity" style="font-size: 11px;">Active Lead Capacity</label>
+            <input type="number" id="onboard-p-capacity" class="form-input" value="50" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+        </div>
+        <div class="form-group mb-10">
+          <label class="form-label" for="onboard-p-email" style="font-size: 11px;">Contact Email</label>
+          <input type="email" id="onboard-p-email" class="form-input" placeholder="credit.desk@kotak.com" required style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm" id="btn-submit-onboard-partner" style="width: 100%; font-size: 12px; font-weight: 700; background: linear-gradient(180deg, #16a34a 0%, #15803d 100%);">
+          ✨ Save &amp; Activate Partner in Directory
+        </button>
+      </form>
+
       <div id="zippy-partners-list" style="display: flex; flex-direction: column; gap: 10px; max-height: 52vh; overflow-y: auto;">
         <!-- Dynamically rendered -->
       </div>
@@ -2197,7 +2382,36 @@
           <div style="font-size: 10px; color: #94a3b8; text-transform: uppercase;">Escrow Hold</div>
           <div id="zippy-comm-hold" style="font-size: 15px; font-weight: 800; color: #f59e0b; font-family: monospace;">₹ 25,000</div>
         </div>
-      </div>
+      <!-- Interactive Accrue Commission Data Entry Form -->
+      <form id="form-zippy-accrue-comm" style="background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 12px; border: 1px solid rgba(56, 189, 248, 0.3); margin-bottom: 14px;">
+        <div style="font-size: 12px; font-weight: 700; color: #38bdf8; text-transform: uppercase; margin-bottom: 8px;">
+          💰 Calculate &amp; Accrue Disbursal Commission
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;" class="mb-8">
+          <div class="form-group">
+            <label class="form-label" for="comm-disbursed-amt" style="font-size: 11px;">Disbursed Loan Amount (₹) *</label>
+            <input type="number" id="comm-disbursed-amt" class="form-input" value="5000000" required style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="comm-lead-ref" style="font-size: 11px;">Borrower / Lead Ref</label>
+            <input type="text" id="comm-lead-ref" class="form-input" value="LEAD-2026-004 (Nacharam MSME)" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;" class="mb-10">
+          <div class="form-group">
+            <label class="form-label" for="comm-rate-pct" style="font-size: 11px;">Commission Slab (%)</label>
+            <input type="number" step="0.1" id="comm-rate-pct" class="form-input" value="2.0" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="comm-holdback-pct" style="font-size: 11px;">Escrow Holdback (%)</label>
+            <input type="number" step="1" id="comm-holdback-pct" class="form-input" value="10" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm" id="btn-submit-comm-accrue" style="width: 100%; font-size: 12px; font-weight: 700; background: linear-gradient(180deg, #16a34a 0%, #15803d 100%);">
+          ✨ Calculate &amp; Accrue into Ledger
+        </button>
+      </form>
+
       <div id="zippy-commissions-list" style="display: flex; flex-direction: column; gap: 8px; max-height: 50vh; overflow-y: auto;">
         <!-- Dynamically rendered commissions list -->
       </div>
@@ -2253,8 +2467,28 @@
               <div style="width: 18%; height: 100%; background: #22c55e;"></div>
             </div>
           </div>
-        </div>
       </div>
+
+      <!-- Interactive Goal & Revenue Simulator Form -->
+      <form id="form-zippy-simulate-analytics" style="background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 12px; border: 1px solid rgba(56, 189, 248, 0.3); margin-top: 10px;">
+        <div style="font-size: 12px; font-weight: 700; color: #38bdf8; text-transform: uppercase; margin-bottom: 8px;">
+          📈 Forecast &amp; Disbursal Target Simulator
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+          <div class="form-group">
+            <label class="form-label" for="sim-target-vol" style="font-size: 11px;">Monthly Target (₹)</label>
+            <input type="number" id="sim-target-vol" class="form-input" value="100000000" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="sim-avg-ticket" style="font-size: 11px;">Avg Ticket Size (₹)</label>
+            <input type="number" id="sim-avg-ticket" class="form-input" value="5000000" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm" id="btn-recalc-analytics" style="width: 100%; font-size: 12px; font-weight: 700; background: linear-gradient(180deg, #0284c7 0%, #0369a1 100%);">
+          📊 Calculate Projected Commissions &amp; SLA
+        </button>
+        <div id="sim-analytics-result" style="display: none; margin-top: 8px; padding: 8px; border-radius: 6px; background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3); color: #86efac; font-size: 11.5px; text-align: center;"></div>
+      </form>
     </div>
   </div>
 
@@ -2268,6 +2502,35 @@
       <div style="font-size: 12.5px; color: #94a3b8; margin-bottom: 12px;">
         Review borrower KYC &amp; financial records for underwriting sanction approval:
       </div>
+
+      <!-- Interactive Submit Review Decision Form -->
+      <form id="form-zippy-doc-decision" style="background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 12px; border: 1px solid rgba(56, 189, 248, 0.3); margin-bottom: 14px;">
+        <div style="font-size: 12px; font-weight: 700; color: #38bdf8; text-transform: uppercase; margin-bottom: 8px;">
+          ✍️ Log Underwriter Decision &amp; Sanction Stamp
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;" class="mb-8">
+          <div class="form-group">
+            <label class="form-label" for="review-lead-app" style="font-size: 11px;">Borrower / Application</label>
+            <input type="text" id="review-lead-app" class="form-input" value="Suresh Kumar (Nacharam IDA)" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="review-decision-status" style="font-size: 11px;">Underwriter Stamp</label>
+            <select id="review-decision-status" class="form-select" style="font-size: 11.5px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+              <option value="VERIFIED & SANCTIONED">✓ Verified &amp; Sanctioned</option>
+              <option value="QUERY RAISED">⚠️ Additional ITR Required</option>
+              <option value="REJECTED">❌ Policy Criteria Not Met</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group mb-10">
+          <label class="form-label" for="review-notes" style="font-size: 11px;">Underwriter Verification Remarks</label>
+          <input type="text" id="review-notes" class="form-input" value="CIBIL 780 verified, bank statements and GST 3B healthy for sanction" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm" id="btn-save-doc-review" style="width: 100%; font-size: 12px; font-weight: 700; background: linear-gradient(180deg, #16a34a 0%, #15803d 100%);">
+          ✓ Save Verification Decision
+        </button>
+      </form>
+
       <div id="zippy-review-queue-list" style="display: flex; flex-direction: column; gap: 10px; max-height: 52vh; overflow-y: auto;">
         <!-- Dynamically rendered review queue -->
       </div>
@@ -2281,6 +2544,37 @@
         <h3 class="zippy-modal-title" id="zippy-prod-title">📦 Loan Products Catalog</h3>
         <button type="button" class="zippy-modal-close" data-close="modal-zippy-products" aria-label="Close">&times;</button>
       </div>
+
+      <!-- Interactive Custom Scheme Creator Form -->
+      <form id="form-zippy-create-product" style="background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 12px; border: 1px solid rgba(56, 189, 248, 0.3); margin-bottom: 14px;">
+        <div style="font-size: 12px; font-weight: 700; color: #38bdf8; text-transform: uppercase; margin-bottom: 8px;">
+          ➕ Add Custom Institutional Loan Scheme
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;" class="mb-8">
+          <div class="form-group">
+            <label class="form-label" for="new-prod-name" style="font-size: 11px;">Product / Scheme Name *</label>
+            <input type="text" id="new-prod-name" class="form-input" placeholder="e.g. Nacharam Industrial Rooftop Solar" required style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="new-prod-rate" style="font-size: 11px;">Interest Rate (% p.a.)</label>
+            <input type="text" id="new-prod-rate" class="form-input" value="9.50% - 11.25% p.a." style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;" class="mb-10">
+          <div class="form-group">
+            <label class="form-label" for="new-prod-ticket" style="font-size: 11px;">Ticket Size</label>
+            <input type="text" id="new-prod-ticket" class="form-input" value="₹15 Lakh to ₹2 Crore" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="new-prod-tenor" style="font-size: 11px;">Max Tenor</label>
+            <input type="text" id="new-prod-tenor" class="form-input" value="Up to 84 Months" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm" id="btn-save-new-product" style="width: 100%; font-size: 12px; font-weight: 700; background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);">
+          ✨ Add Scheme to Active Catalog
+        </button>
+      </form>
+
       <div id="zippy-products-catalog-list" style="display: flex; flex-direction: column; gap: 12px; max-height: 55vh; overflow-y: auto;">
         <!-- Dynamically rendered products -->
       </div>

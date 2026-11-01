@@ -27,7 +27,18 @@ const checks = [
   { name: 'card-commissions opens inside modal', ok: js.includes('cardCommissions.addEventListener') && js.includes('modal-zippy-commissions') },
   { name: 'card-analytics opens inside modal', ok: js.includes('cardAnalytics.addEventListener') && js.includes('modal-zippy-analytics') },
   { name: 'card-doc-review opens inside modal', ok: js.includes('cardDocReview.addEventListener') && js.includes('modal-zippy-doc-review') },
-  { name: 'card-products opens inside modal', ok: js.includes('cardProducts.addEventListener') && js.includes('modal-zippy-products') }
+  { name: 'card-products opens inside modal', ok: js.includes('cardProducts.addEventListener') && js.includes('modal-zippy-products') },
+  { name: 'launchZippyDashboard directly opens dashboard', ok: js.includes('window.launchZippyDashboard =') && js.includes('btnGetStarted.addEventListener(\'click\', window.launchZippyDashboard)') },
+  { name: 'Profile Form (#form-zippy-update-profile)', ok: html.includes('id="form-zippy-update-profile"') && js.includes('form-zippy-update-profile') },
+  { name: 'Lender Match Form (#form-lender-match-calc)', ok: html.includes('id="form-lender-match-calc"') && js.includes('form-lender-match-calc') },
+  { name: 'Vault Upload Form (#form-zippy-vault-upload)', ok: html.includes('id="form-zippy-vault-upload"') && js.includes('form-zippy-vault-upload') },
+  { name: 'Add Reminder Form (#form-zippy-add-reminder)', ok: html.includes('id="form-zippy-add-reminder"') && js.includes('form-zippy-add-reminder') },
+  { name: 'Compliance Query Form (#form-zippy-ask-compliance)', ok: html.includes('id="form-zippy-ask-compliance"') && js.includes('form-zippy-ask-compliance') },
+  { name: 'Onboard Partner Form (#form-zippy-onboard-partner)', ok: html.includes('id="form-zippy-onboard-partner"') && js.includes('form-zippy-onboard-partner') },
+  { name: 'Accrue Commission Form (#form-zippy-accrue-comm)', ok: html.includes('id="form-zippy-accrue-comm"') && js.includes('form-zippy-accrue-comm') },
+  { name: 'Analytics Simulator Form (#form-zippy-simulate-analytics)', ok: html.includes('id="form-zippy-simulate-analytics"') && js.includes('form-zippy-simulate-analytics') },
+  { name: 'Underwriter Decision Form (#form-zippy-doc-decision)', ok: html.includes('id="form-zippy-doc-decision"') && js.includes('form-zippy-doc-decision') },
+  { name: 'Create Product Scheme Form (#form-zippy-create-product)', ok: html.includes('id="form-zippy-create-product"') && js.includes('form-zippy-create-product') }
 ];
 
 console.log('--- Static & DOM Verification Checks ---');
