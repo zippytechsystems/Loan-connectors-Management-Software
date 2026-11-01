@@ -34,6 +34,10 @@
       
       <!-- Gradient & Vignette Overlay -->
       <div class="zippy-welcome-overlay"></div>
+      <a href="index.html" class="zippy-welcome-website-btn" title="Back to Main Website">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        <span>← Back to Website</span>
+      </a>
 
       <!-- Top Phone Status Bar (Exact Simulation from Screenshot) -->
       <div class="zippy-status-bar">
@@ -432,7 +436,12 @@
             <img src="img/dashboard/logo.svg" alt="Zippy Loan Connector Software" width="44" height="44">
           </div>
         </div>
-        <h1 class="zippy-header-title">Dashboard</h1>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button type="button" class="zippy-dash-home-btn" onclick="window.backToWelcomeScreen && window.backToWelcomeScreen(event)" title="Back to Welcome Screen">
+            <span>←</span> <span>Home</span>
+          </button>
+          <h1 class="zippy-header-title" style="margin: 0;">Dashboard</h1>
+        </div>
         <div class="zippy-header-actions">
           <button type="button" class="zippy-circle-btn zippy-btn-theme" id="zippy-btn-theme" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -652,6 +661,9 @@
         <div class="brand-title">
           <h1>Zippy Enterprises</h1>
           <p>Loan Lead Routing &amp; Partner Network Platform</p>
+          <button type="button" id="btn-header-back-dash" class="btn btn-secondary btn-sm" onclick="window.backToDashboard && window.backToDashboard(event)" style="margin-top: 6px; color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); display: inline-flex; align-items: center; gap: 6px;">
+            <span>←</span> <span>Back to 15-Box Dashboard</span>
+          </button>
         </div>
       </div>
 
@@ -713,6 +725,14 @@
 
     <!-- ================= VIEW 1: OVERVIEW ================= -->
     <section id="view-overview" class="view-section active" aria-labelledby="heading-overview">
+      <!-- View Top Back Bar -->
+      <div class="zippy-view-back-bar">
+        <button type="button" class="zippy-btn-back-dash" onclick="window.backToDashboard && window.backToDashboard(event)" title="Back to 15-Box Dashboard">
+          <span>←</span> <span>Back to 15-Box Dashboard</span>
+        </button>
+        <span style="font-size: 12px; color: #38bdf8; font-weight: 700;">Zippy Loan Connector Platform</span>
+      </div>
+
       <div class="view-header">
         <div class="view-title">
           <div class="view-title-row">
@@ -818,6 +838,14 @@
 
     <!-- ================= VIEW 2: LEAD QUEUE ================= -->
     <section id="view-leads" class="view-section" aria-labelledby="heading-leads">
+      <!-- View Top Back Bar -->
+      <div class="zippy-view-back-bar">
+        <button type="button" class="zippy-btn-back-dash" onclick="window.backToDashboard && window.backToDashboard(event)" title="Back to 15-Box Dashboard">
+          <span>←</span> <span>Back to 15-Box Dashboard</span>
+        </button>
+        <span style="font-size: 12px; color: #38bdf8; font-weight: 700;">Zippy Loan Connector Platform</span>
+      </div>
+
       <div class="view-header">
         <div class="view-title">
           <h2 id="heading-leads">Routed Lead Operations Queue</h2>
@@ -901,6 +929,14 @@
 
     <!-- ================= VIEW 3: PARTNER DIRECTORY ================= -->
     <section id="view-partners" class="view-section" aria-labelledby="heading-partners">
+      <!-- View Top Back Bar -->
+      <div class="zippy-view-back-bar">
+        <button type="button" class="zippy-btn-back-dash" onclick="window.backToDashboard && window.backToDashboard(event)" title="Back to 15-Box Dashboard">
+          <span>←</span> <span>Back to 15-Box Dashboard</span>
+        </button>
+        <span style="font-size: 12px; color: #38bdf8; font-weight: 700;">Zippy Loan Connector Platform</span>
+      </div>
+
       <div class="view-header">
         <div class="view-title">
           <h2 id="heading-partners">Partner Directory &amp; Governance</h2>
@@ -955,6 +991,14 @@
 
     <!-- ================= VIEW 4: ROUTING SIMULATOR ================= -->
     <section id="view-simulator" class="view-section" aria-labelledby="heading-simulator">
+      <!-- View Top Back Bar -->
+      <div class="zippy-view-back-bar">
+        <button type="button" class="zippy-btn-back-dash" onclick="window.backToDashboard && window.backToDashboard(event)" title="Back to 15-Box Dashboard">
+          <span>←</span> <span>Back to 15-Box Dashboard</span>
+        </button>
+        <span style="font-size: 12px; color: #38bdf8; font-weight: 700;">Zippy Loan Connector Platform</span>
+      </div>
+
       <div class="view-header">
         <div class="view-title">
           <h2 id="heading-simulator">Routing Rule Simulator &amp; Explainability Engine</h2>
@@ -1027,6 +1071,14 @@
 
     <!-- ================= VIEW 5: COMMISSIONS ================= -->
     <section id="view-commissions" class="view-section" aria-labelledby="heading-commissions">
+      <!-- View Top Back Bar -->
+      <div class="zippy-view-back-bar">
+        <button type="button" class="zippy-btn-back-dash" onclick="window.backToDashboard && window.backToDashboard(event)" title="Back to 15-Box Dashboard">
+          <span>←</span> <span>Back to 15-Box Dashboard</span>
+        </button>
+        <span style="font-size: 12px; color: #38bdf8; font-weight: 700;">Zippy Loan Connector Platform</span>
+      </div>
+
       <div class="view-header">
         <div class="view-title">
           <h2 id="heading-commissions">Commission Ledger &amp; Payout Reconciliation</h2>
@@ -1126,6 +1178,14 @@
 
     <!-- ================= VIEW 6: CATALOG ================= -->
     <section id="view-catalog" class="view-section" aria-labelledby="heading-catalog">
+      <!-- View Top Back Bar -->
+      <div class="zippy-view-back-bar">
+        <button type="button" class="zippy-btn-back-dash" onclick="window.backToDashboard && window.backToDashboard(event)" title="Back to 15-Box Dashboard">
+          <span>←</span> <span>Back to 15-Box Dashboard</span>
+        </button>
+        <span style="font-size: 12px; color: #38bdf8; font-weight: 700;">Zippy Loan Connector Platform</span>
+      </div>
+
       <div class="view-header">
         <div class="view-title">
           <h2 id="heading-catalog">Institutional Lenders &amp; Product Catalog</h2>
@@ -1162,6 +1222,14 @@
 
     <!-- ================= VIEW 7: AUDIT & REPORTS ================= -->
     <section id="view-audit" class="view-section" aria-labelledby="heading-audit">
+      <!-- View Top Back Bar -->
+      <div class="zippy-view-back-bar">
+        <button type="button" class="zippy-btn-back-dash" onclick="window.backToDashboard && window.backToDashboard(event)" title="Back to 15-Box Dashboard">
+          <span>←</span> <span>Back to 15-Box Dashboard</span>
+        </button>
+        <span style="font-size: 12px; color: #38bdf8; font-weight: 700;">Zippy Loan Connector Platform</span>
+      </div>
+
       <div class="view-header">
         <div class="view-title">
           <h2 id="heading-audit">Security Audit Trail &amp; Regulatory Compliance</h2>
@@ -1221,6 +1289,9 @@
   <div class="modal-backdrop" id="modal-intake" role="dialog" aria-modal="true" aria-labelledby="intake-modal-title">
     <div class="modal-card lg">
       <div class="modal-header">
+        <button type="button" class="zippy-modal-back-btn" data-close="modal-intake" aria-label="Back to Dashboard" style="margin-right: 10px;">
+          <span>←</span> <span>Back</span>
+        </button>
         <div class="modal-header-text">
           <h3 id="intake-modal-title">Consent-Aware Lead Intake</h3>
           <p class="modal-header-desc">Record verified customer consent and ingest lead under strict DPDP Act boundaries.</p>
@@ -1324,6 +1395,9 @@
   <div class="modal-backdrop drawer-backdrop" id="modal-lead-detail" role="dialog" aria-modal="true" aria-labelledby="detail-lead-ref">
     <div class="drawer-card">
       <div class="modal-header">
+        <button type="button" class="zippy-modal-back-btn" data-close="modal-lead-detail" aria-label="Back to Lead Queue" style="margin-right: 10px;">
+          <span>←</span> <span>Back</span>
+        </button>
         <div class="detail-header-left">
           <h3 id="detail-lead-ref">Lead Details</h3>
           <span id="detail-lead-status-pill" class="status-pill status-Eligible">Eligible</span>
@@ -1482,6 +1556,9 @@
   <div class="modal-backdrop" id="modal-route-dispatch" role="dialog" aria-modal="true" aria-labelledby="dispatch-modal-title">
     <div class="modal-card">
       <div class="modal-header">
+        <button type="button" class="zippy-modal-back-btn" data-close="modal-route-dispatch" aria-label="Back to Leads" style="margin-right: 10px;">
+          <span>←</span> <span>Back</span>
+        </button>
         <div class="modal-header-text">
           <h3 id="dispatch-modal-title">Dispatch Lead Offer</h3>
           <p class="modal-header-desc">Offer lead to verified connector partner with 24-hour SLA acceptance deadline.</p>
@@ -1523,6 +1600,9 @@
   <div class="modal-backdrop" id="modal-partner" role="dialog" aria-modal="true" aria-labelledby="partner-modal-title">
     <div class="modal-card">
       <div class="modal-header">
+        <button type="button" class="zippy-modal-back-btn" data-close="modal-partner" aria-label="Back to Partners" style="margin-right: 10px;">
+          <span>←</span> <span>Back</span>
+        </button>
         <div class="modal-header-text">
           <h3 id="partner-modal-title">Onboard Partner Organization</h3>
           <p class="modal-header-desc">Authorize connector network or DSA partner with territory and capacity limits.</p>
@@ -1594,6 +1674,9 @@
   <div class="modal-backdrop" id="modal-statement" role="dialog" aria-modal="true" aria-labelledby="statement-title">
     <div class="modal-card lg">
       <div class="modal-header">
+        <button type="button" class="zippy-modal-back-btn" data-close="modal-statement" aria-label="Back to Commissions" style="margin-right: 10px;">
+          <span>←</span> <span>Back</span>
+        </button>
         <div class="modal-header-text">
           <h3 id="statement-title">Monthly Commission Reconciliation Statement</h3>
           <p class="modal-header-desc">Immutable calculation breakdown with escrow holdbacks and net payable totals.</p>
@@ -1733,6 +1816,9 @@
   <div class="zippy-modal" id="modal-zippy-profile" role="dialog" aria-modal="true" aria-labelledby="zippy-prof-title">
     <div class="zippy-modal-card">
       <div class="zippy-modal-header">
+        <button type="button" class="zippy-modal-back-btn" onclick="window.closeZippyModal('modal-zippy-profile', event)" aria-label="Back to Dashboard">
+          <span>←</span> <span>Back</span>
+        </button>
         <h3 class="zippy-modal-title" id="zippy-prof-title">👤 Connector Profile &amp; Tenant</h3>
         <button type="button" class="zippy-modal-close" data-close="modal-zippy-profile" aria-label="Close">&times;</button>
       </div>
@@ -1741,8 +1827,12 @@
           <img src="img/dashboard/profile.svg" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
         <h4 id="zippy-prof-name" style="font-size: 18px; margin: 0 0 4px 0; color: #ffffff;">Vikram Singhania</h4>
-        <div id="zippy-prof-role" style="font-size: 12px; color: #38bdf8; font-weight: 700; text-transform: uppercase;">ADMINISTRATOR</div>
-      </div>
+        <div id="zippy-prof-role" style="font-size: 12px; color: #38bdf8; font-weight: 700; text-transform: uppercase;">ADMINISTRATOR
+      <button type="button" class="zippy-btn-modal-back" onclick="window.closeZippyModal('modal-zippy-profile', event)">
+        <span>←</span> <span>Back to Dashboard</span>
+      </button>
+    </div>
+  </div>
       <div style="background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 14px; border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 20px; font-size: 13px;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
           <span style="color: #94a3b8;">Company:</span>
@@ -1813,6 +1903,9 @@
   <div class="zippy-modal" id="modal-zippy-ai" role="dialog" aria-modal="true" aria-labelledby="zippy-ai-title">
     <div class="zippy-modal-card">
       <div class="zippy-modal-header">
+        <button type="button" class="zippy-modal-back-btn" onclick="window.closeZippyModal('modal-zippy-ai', event)" aria-label="Back to Dashboard">
+          <span>←</span> <span>Back</span>
+        </button>
         <h3 class="zippy-modal-title" id="zippy-ai-title">🤖 AI Loan Underwriter &amp; Eligibility</h3>
         <button type="button" class="zippy-modal-close" data-close="modal-zippy-ai" aria-label="Close">&times;</button>
       </div>
@@ -1828,8 +1921,12 @@
           <div class="form-group">
             <label class="form-label" for="ai-loan-amt">Requested Loan (₹)</label>
             <input type="number" id="ai-loan-amt" class="form-input" value="2500000" required>
-          </div>
-        </div>
+          
+      <button type="button" class="zippy-btn-modal-back" onclick="window.closeZippyModal('modal-zippy-ai', event)">
+        <span>←</span> <span>Back to Dashboard</span>
+      </button>
+    </div>
+  </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
           <div class="form-group">
             <label class="form-label" for="ai-emi">Existing Monthly EMI (₹)</label>
@@ -1871,6 +1968,9 @@
   <div class="zippy-modal" id="modal-zippy-lenders" role="dialog" aria-modal="true" aria-labelledby="zippy-lender-title">
     <div class="zippy-modal-card">
       <div class="zippy-modal-header">
+        <button type="button" class="zippy-modal-back-btn" onclick="window.closeZippyModal('modal-zippy-lenders', event)" aria-label="Back to Dashboard">
+          <span>←</span> <span>Back</span>
+        </button>
         <h3 class="zippy-modal-title" id="zippy-lender-title">🏦 Bank &amp; NBFC Sanction Matrix</h3>
         <button type="button" class="zippy-modal-close" data-close="modal-zippy-lenders" aria-label="Close">&times;</button>
       </div>
@@ -1887,8 +1987,12 @@
           <div class="form-group">
             <label class="form-label" for="match-cibil" style="font-size: 11px;">Borrower CIBIL Score</label>
             <input type="number" id="match-cibil" class="form-input" value="775" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
-          </div>
-        </div>
+          
+      <button type="button" class="zippy-btn-modal-back" onclick="window.closeZippyModal('modal-zippy-lenders', event)">
+        <span>←</span> <span>Back to Dashboard</span>
+      </button>
+    </div>
+  </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
           <div class="form-group">
             <label class="form-label" for="match-prod-type" style="font-size: 11px;">Product Preference</label>
@@ -1969,6 +2073,9 @@
   <div class="zippy-modal" id="modal-zippy-vault" role="dialog" aria-modal="true" aria-labelledby="zippy-vault-title">
     <div class="zippy-modal-card">
       <div class="zippy-modal-header">
+        <button type="button" class="zippy-modal-back-btn" onclick="window.closeZippyModal('modal-zippy-vault', event)" aria-label="Back to Dashboard">
+          <span>←</span> <span>Back</span>
+        </button>
         <h3 class="zippy-modal-title" id="zippy-vault-title">🔒 Encrypted KYC Document Vault</h3>
         <button type="button" class="zippy-modal-close" data-close="modal-zippy-vault" aria-label="Close">&times;</button>
       </div>
@@ -1978,8 +2085,12 @@
         </div>
         <div style="font-size: 12px; color: #94a3b8; line-height: 1.5;">
           All customer Aadhaar, PAN, GST, and bank records are encrypted at rest with unique 12-byte initialization vectors. Anti-malware scanning quarantines unauthorized signatures automatically.
-        </div>
-      </div>
+        
+      <button type="button" class="zippy-btn-modal-back" onclick="window.closeZippyModal('modal-zippy-vault', event)">
+        <span>←</span> <span>Back to Dashboard</span>
+      </button>
+    </div>
+  </div>
       <!-- Interactive File Encryption & Upload Form -->
       <form id="form-zippy-vault-upload" style="background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 14px; border: 1px solid rgba(56, 189, 248, 0.3); margin-bottom: 16px;">
         <div style="font-size: 12px; font-weight: 700; color: #38bdf8; text-transform: uppercase; margin-bottom: 10px;">
@@ -2035,6 +2146,9 @@
   <div class="zippy-modal" id="modal-zippy-payouts" role="dialog" aria-modal="true" aria-labelledby="zippy-payout-title">
     <div class="zippy-modal-card">
       <div class="zippy-modal-header">
+        <button type="button" class="zippy-modal-back-btn" onclick="window.closeZippyModal('modal-zippy-payouts', event)" aria-label="Back to Dashboard">
+          <span>←</span> <span>Back</span>
+        </button>
         <h3 class="zippy-modal-title" id="zippy-payout-title">💳 Payout Reconciliation &amp; NEFT</h3>
         <button type="button" class="zippy-modal-close" data-close="modal-zippy-payouts" aria-label="Close">&times;</button>
       </div>
@@ -2042,8 +2156,12 @@
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <div>
             <div style="color: #94a3b8; font-size: 11.5px;">Accrued / Approved Commissions:</div>
-            <div style="color: #ffffff; font-size: 22px; font-weight: 800; font-family: monospace;">₹ 1,75,400</div>
-          </div>
+            <div style="color: #ffffff; font-size: 22px; font-weight: 800; font-family: monospace;">₹ 1,75,400
+      <button type="button" class="zippy-btn-modal-back" onclick="window.closeZippyModal('modal-zippy-payouts', event)">
+        <span>←</span> <span>Back to Dashboard</span>
+      </button>
+    </div>
+  </div>
           <span style="background: #10b981; color: #ffffff; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 6px;">READY FOR NEFT</span>
         </div>
       </div>
@@ -2069,6 +2187,9 @@
   <div class="zippy-modal" id="modal-zippy-reminders" role="dialog" aria-modal="true" aria-labelledby="zippy-rem-title">
     <div class="zippy-modal-card">
       <div class="zippy-modal-header">
+        <button type="button" class="zippy-modal-back-btn" onclick="window.closeZippyModal('modal-zippy-reminders', event)" aria-label="Back to Dashboard">
+          <span>←</span> <span>Back</span>
+        </button>
         <h3 class="zippy-modal-title" id="zippy-rem-title">⏰ SLA Tasks &amp; Timetable</h3>
         <button type="button" class="zippy-modal-close" data-close="modal-zippy-reminders" aria-label="Close">&times;</button>
       </div>
@@ -2093,8 +2214,12 @@
               <option value="TOMORROW">Medium (Tomorrow)</option>
               <option value="UPCOMING">Normal (This Week)</option>
             </select>
-          </div>
-        </div>
+          
+      <button type="button" class="zippy-btn-modal-back" onclick="window.closeZippyModal('modal-zippy-reminders', event)">
+        <span>←</span> <span>Back to Dashboard</span>
+      </button>
+    </div>
+  </div>
         <button type="submit" class="btn btn-primary btn-sm" id="btn-save-reminder" style="width: 100%; font-size: 12px; font-weight: 700; background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);">
           ⏰ Save Task to Timetable
         </button>
@@ -2125,6 +2250,9 @@
   <div class="zippy-modal" id="modal-zippy-circulars" role="dialog" aria-modal="true" aria-labelledby="zippy-circ-title">
     <div class="zippy-modal-card">
       <div class="zippy-modal-header">
+        <button type="button" class="zippy-modal-back-btn" onclick="window.closeZippyModal('modal-zippy-circulars', event)" aria-label="Back to Dashboard">
+          <span>←</span> <span>Back</span>
+        </button>
         <h3 class="zippy-modal-title" id="zippy-circ-title">📜 Lender Circulars &amp; Guidelines</h3>
         <button type="button" class="zippy-modal-close" data-close="modal-zippy-circulars" aria-label="Close">&times;</button>
       </div>
@@ -2156,8 +2284,12 @@
           </div>
           <div style="font-size: 12px; color: #cbd5e1; line-height: 1.5;">
             Standard 100% risk weight applied on secured MSME credit. No penal interest on pre-closure of floating rate business loans.
-          </div>
-        </div>
+          
+      <button type="button" class="zippy-btn-modal-back" onclick="window.closeZippyModal('modal-zippy-circulars', event)">
+        <span>←</span> <span>Back to Dashboard</span>
+      </button>
+    </div>
+  </div>
 
         <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 14px;">
           <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
@@ -2186,6 +2318,9 @@
   <div class="zippy-modal" id="modal-zippy-feedback" role="dialog" aria-modal="true" aria-labelledby="zippy-feed-title">
     <div class="zippy-modal-card">
       <div class="zippy-modal-header">
+        <button type="button" class="zippy-modal-back-btn" onclick="window.closeZippyModal('modal-zippy-feedback', event)" aria-label="Back to Dashboard">
+          <span>←</span> <span>Back</span>
+        </button>
         <h3 class="zippy-modal-title" id="zippy-feed-title">⭐ Connector Feed Back &amp; Rating</h3>
         <button type="button" class="zippy-modal-close" data-close="modal-zippy-feedback" aria-label="Close">&times;</button>
       </div>
@@ -2201,8 +2336,12 @@
             <span class="star-rating active" data-rating="3" style="color: #facc15;">★</span>
             <span class="star-rating active" data-rating="4" style="color: #facc15;">★</span>
             <span class="star-rating active" data-rating="5" style="color: #facc15;">★</span>
-          </div>
-        </div>
+          
+      <button type="button" class="zippy-btn-modal-back" onclick="window.closeZippyModal('modal-zippy-feedback', event)">
+        <span>←</span> <span>Back to Dashboard</span>
+      </button>
+    </div>
+  </div>
         <div class="form-group mb-12">
           <label class="form-label" for="feed-category">Category</label>
           <select id="feed-category" class="form-select">
@@ -2225,6 +2364,9 @@
   <div class="zippy-modal" id="modal-zippy-partners" role="dialog" aria-modal="true" aria-labelledby="zippy-part-title">
     <div class="zippy-modal-card">
       <div class="zippy-modal-header">
+        <button type="button" class="zippy-modal-back-btn" onclick="window.closeZippyModal('modal-zippy-partners', event)" aria-label="Back to Dashboard">
+          <span>←</span> <span>Back</span>
+        </button>
         <h3 class="zippy-modal-title" id="zippy-part-title">🏢 Verified Partner Directory</h3>
         <button type="button" class="zippy-modal-close" data-close="modal-zippy-partners" aria-label="Close">&times;</button>
       </div>
@@ -2249,8 +2391,12 @@
               <option value="Institutional Lender">Institutional Lender (Bank/NBFC)</option>
               <option value="Connector">Loan Connector / DSA</option>
             </select>
-          </div>
-        </div>
+          
+      <button type="button" class="zippy-btn-modal-back" onclick="window.closeZippyModal('modal-zippy-partners', event)">
+        <span>←</span> <span>Back to Dashboard</span>
+      </button>
+    </div>
+  </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;" class="mb-8">
           <div class="form-group">
             <label class="form-label" for="onboard-p-territory" style="font-size: 11px;">Territory</label>
@@ -2280,6 +2426,9 @@
   <div class="zippy-modal" id="modal-zippy-new-lead" role="dialog" aria-modal="true" aria-labelledby="zippy-lead-title">
     <div class="zippy-modal-card">
       <div class="zippy-modal-header">
+        <button type="button" class="zippy-modal-back-btn" onclick="window.closeZippyModal('modal-zippy-new-lead', event)" aria-label="Back to Dashboard">
+          <span>←</span> <span>Back</span>
+        </button>
         <h3 class="zippy-modal-title" id="zippy-lead-title">📝 Consented Lead Intake</h3>
         <button type="button" class="zippy-modal-close" data-close="modal-zippy-new-lead" aria-label="Close">&times;</button>
       </div>
@@ -2299,8 +2448,12 @@
           <div class="form-group">
             <label class="form-label" for="zippy-lead-pan" style="font-size: 12px; color: #cbd5e1;">PAN Number *</label>
             <input type="text" id="zippy-lead-pan" class="form-input" placeholder="ABCDE1234F" style="text-transform: uppercase; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);" required maxlength="10">
-          </div>
-        </div>
+          
+      <button type="button" class="zippy-btn-modal-back" onclick="window.closeZippyModal('modal-zippy-new-lead', event)">
+        <span>←</span> <span>Back to Dashboard</span>
+      </button>
+    </div>
+  </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;" class="mb-8">
           <div class="form-group">
             <label class="form-label" for="zippy-lead-product" style="font-size: 12px; color: #cbd5e1;">Loan Category *</label>
@@ -2344,6 +2497,9 @@
   <div class="zippy-modal" id="modal-zippy-lead-queue" role="dialog" aria-modal="true" aria-labelledby="zippy-queue-title">
     <div class="zippy-modal-card">
       <div class="zippy-modal-header">
+        <button type="button" class="zippy-modal-back-btn" onclick="window.closeZippyModal('modal-zippy-lead-queue', event)" aria-label="Back to Dashboard">
+          <span>←</span> <span>Back</span>
+        </button>
         <h3 class="zippy-modal-title" id="zippy-queue-title">📥 Active Lead Queue &amp; Pipeline</h3>
         <button type="button" class="zippy-modal-close" data-close="modal-zippy-lead-queue" aria-label="Close">&times;</button>
       </div>
@@ -2363,22 +2519,33 @@
       <div style="margin-top: 14px; display: flex; justify-content: space-between; align-items: center;">
         <button type="button" class="btn btn-primary btn-sm" id="btn-queue-add-lead">+ Intake New Lead</button>
         <span style="font-size: 11.5px; color: #94a3b8;" id="zippy-queue-summary">Tap any lead to inspect details</span>
-      </div>
+      
+      <button type="button" class="zippy-btn-modal-back" onclick="window.closeZippyModal('modal-zippy-lead-queue', event)">
+        <span>←</span> <span>Back to Dashboard</span>
+      </button>
     </div>
+  </div>
   </div>
 
   <!-- Modal 12: Commission Ledger & Earnings -->
   <div class="zippy-modal" id="modal-zippy-commissions" role="dialog" aria-modal="true" aria-labelledby="zippy-comm-title">
     <div class="zippy-modal-card">
       <div class="zippy-modal-header">
+        <button type="button" class="zippy-modal-back-btn" onclick="window.closeZippyModal('modal-zippy-commissions', event)" aria-label="Back to Dashboard">
+          <span>←</span> <span>Back</span>
+        </button>
         <h3 class="zippy-modal-title" id="zippy-comm-title">💰 Commission Ledger &amp; Earnings</h3>
         <button type="button" class="zippy-modal-close" data-close="modal-zippy-commissions" aria-label="Close">&times;</button>
       </div>
       <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px;">
         <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 10px; padding: 10px; text-align: center;">
           <div style="font-size: 10px; color: #94a3b8; text-transform: uppercase;">Total Accrued</div>
-          <div id="zippy-comm-total" style="font-size: 15px; font-weight: 800; color: #38bdf8; font-family: monospace;">₹ 1,75,400</div>
-        </div>
+          <div id="zippy-comm-total" style="font-size: 15px; font-weight: 800; color: #38bdf8; font-family: monospace;">₹ 1,75,400
+      <button type="button" class="zippy-btn-modal-back" onclick="window.closeZippyModal('modal-zippy-commissions', event)">
+        <span>←</span> <span>Back to Dashboard</span>
+      </button>
+    </div>
+  </div>
         <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; padding: 10px; text-align: center;">
           <div style="font-size: 10px; color: #94a3b8; text-transform: uppercase;">Paid / Settled</div>
           <div id="zippy-comm-settled" style="font-size: 15px; font-weight: 800; color: #22c55e; font-family: monospace;">₹ 1,15,000</div>
@@ -2429,6 +2596,9 @@
   <div class="zippy-modal" id="modal-zippy-analytics" role="dialog" aria-modal="true" aria-labelledby="zippy-ana-title">
     <div class="zippy-modal-card">
       <div class="zippy-modal-header">
+        <button type="button" class="zippy-modal-back-btn" onclick="window.closeZippyModal('modal-zippy-analytics', event)" aria-label="Back to Dashboard">
+          <span>←</span> <span>Back</span>
+        </button>
         <h3 class="zippy-modal-title" id="zippy-ana-title">📊 Disbursals &amp; Performance KPIs</h3>
         <button type="button" class="zippy-modal-close" data-close="modal-zippy-analytics" aria-label="Close">&times;</button>
       </div>
@@ -2436,8 +2606,12 @@
         <div style="background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 12px;">
           <div style="font-size: 11px; color: #94a3b8;">Routing SLA Uptime</div>
           <div style="font-size: 22px; font-weight: 800; color: #22c55e;">99.8%</div>
-          <div style="font-size: 11px; color: #64748b;">Avg Sanction: 42 hrs</div>
-        </div>
+          <div style="font-size: 11px; color: #64748b;">Avg Sanction: 42 hrs
+      <button type="button" class="zippy-btn-modal-back" onclick="window.closeZippyModal('modal-zippy-analytics', event)">
+        <span>←</span> <span>Back to Dashboard</span>
+      </button>
+    </div>
+  </div>
         <div style="background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 12px;">
           <div style="font-size: 11px; color: #94a3b8;">Disbursal Volume</div>
           <div style="font-size: 22px; font-weight: 800; color: #38bdf8; font-family: monospace;" id="zippy-stat-disbursed">₹ 8.45 Cr</div>
@@ -2504,6 +2678,9 @@
   <div class="zippy-modal" id="modal-zippy-doc-review" role="dialog" aria-modal="true" aria-labelledby="zippy-review-title">
     <div class="zippy-modal-card">
       <div class="zippy-modal-header">
+        <button type="button" class="zippy-modal-back-btn" onclick="window.closeZippyModal('modal-zippy-doc-review', event)" aria-label="Back to Dashboard">
+          <span>←</span> <span>Back</span>
+        </button>
         <h3 class="zippy-modal-title" id="zippy-review-title">🔍 Underwriter Document Review</h3>
         <button type="button" class="zippy-modal-close" data-close="modal-zippy-doc-review" aria-label="Close">&times;</button>
       </div>
@@ -2528,8 +2705,12 @@
               <option value="QUERY RAISED">⚠️ Additional ITR Required</option>
               <option value="REJECTED">❌ Policy Criteria Not Met</option>
             </select>
-          </div>
-        </div>
+          
+      <button type="button" class="zippy-btn-modal-back" onclick="window.closeZippyModal('modal-zippy-doc-review', event)">
+        <span>←</span> <span>Back to Dashboard</span>
+      </button>
+    </div>
+  </div>
         <div class="form-group mb-10">
           <label class="form-label" for="review-notes" style="font-size: 11px;">Underwriter Verification Remarks</label>
           <input type="text" id="review-notes" class="form-input" value="CIBIL 780 verified, bank statements and GST 3B healthy for sanction" style="font-size: 12px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
@@ -2549,6 +2730,9 @@
   <div class="zippy-modal" id="modal-zippy-products" role="dialog" aria-modal="true" aria-labelledby="zippy-prod-title">
     <div class="zippy-modal-card">
       <div class="zippy-modal-header">
+        <button type="button" class="zippy-modal-back-btn" onclick="window.closeZippyModal('modal-zippy-products', event)" aria-label="Back to Dashboard">
+          <span>←</span> <span>Back</span>
+        </button>
         <h3 class="zippy-modal-title" id="zippy-prod-title">📦 Loan Products Catalog</h3>
         <button type="button" class="zippy-modal-close" data-close="modal-zippy-products" aria-label="Close">&times;</button>
       </div>
@@ -2586,6 +2770,10 @@
       <div id="zippy-products-catalog-list" style="display: flex; flex-direction: column; gap: 12px; max-height: 55vh; overflow-y: auto;">
         <!-- Dynamically rendered products -->
       </div>
+
+      <button type="button" class="zippy-btn-modal-back" onclick="window.closeZippyModal('modal-zippy-products', event)">
+        <span>←</span> <span>Back to Dashboard</span>
+      </button>
     </div>
   </div>
 
@@ -2594,6 +2782,52 @@
 
   <script>
     // Global instant modal opener/closer immune to script load ordering
+    
+    window.backToDashboard = function(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      var consoleWrap = document.getElementById('enterprise-console-wrapper');
+      var zippyScreen = document.getElementById('zippy-dashboard-screen');
+      var welcomeScreen = document.getElementById('screen-welcome-login') || document.getElementById('zippy-welcome-screen');
+      var authScreen = document.getElementById('screen-zippy-auth');
+      if (consoleWrap) consoleWrap.style.display = 'none';
+      if (welcomeScreen) welcomeScreen.style.display = 'none';
+      if (authScreen) authScreen.style.display = 'none';
+      if (zippyScreen) zippyScreen.style.display = 'block';
+      document.querySelectorAll('.zippy-modal.active, .modal-backdrop.active').forEach(function(m) {
+        m.classList.remove('active');
+        m.style.display = 'none';
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    window.backToWelcomeScreen = function(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      var consoleWrap = document.getElementById('enterprise-console-wrapper');
+      var zippyScreen = document.getElementById('zippy-dashboard-screen');
+      var welcomeScreen = document.getElementById('screen-welcome-login') || document.getElementById('zippy-welcome-screen');
+      var authScreen = document.getElementById('screen-zippy-auth');
+      if (consoleWrap) consoleWrap.style.display = 'none';
+      if (zippyScreen) zippyScreen.style.display = 'none';
+      if (authScreen) authScreen.style.display = 'none';
+      if (welcomeScreen) welcomeScreen.style.display = 'block';
+      document.querySelectorAll('.zippy-modal.active, .modal-backdrop.active').forEach(function(m) {
+        m.classList.remove('active');
+        m.style.display = 'none';
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // Keyboard ESC key to go back
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        var activeModal = document.querySelector('.zippy-modal.active, .modal-backdrop.active');
+        if (activeModal) {
+          activeModal.classList.remove('active');
+          activeModal.style.display = 'none';
+        }
+      }
+    });
+
     window.openZippyModal = function(modalId, event) {
       if (event && event.preventDefault) event.preventDefault();
       if (event && event.stopPropagation) event.stopPropagation();
@@ -2620,25 +2854,41 @@
         el.style.display = 'none';
       }
     };
-    // Close on backdrop click
+    // Close on backdrop or data-close click
     document.addEventListener('click', function(e) {
       if (e.target && e.target.classList && e.target.classList.contains('zippy-modal')) {
         window.closeZippyModal(e.target.id, e);
       }
-      if (e.target && e.target.getAttribute && e.target.getAttribute('data-close')) {
-        window.closeZippyModal(e.target.getAttribute('data-close'), e);
+      var closeBtn = e.target.closest ? e.target.closest('[data-close]') : null;
+      if (closeBtn) {
+        var targetId = closeBtn.getAttribute('data-close');
+        var targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          targetEl.classList.remove('active');
+          targetEl.style.display = 'none';
+        }
       }
     });
-    // Direct switch to console module
+
+    // Direct switch to console module or back to dashboard
     window.showConsoleModule = function(viewId) {
       var consoleWrap = document.getElementById('enterprise-console-wrapper');
       var zippyScreen = document.getElementById('zippy-dashboard-screen');
+      if (viewId === 'dashboard') {
+        if (consoleWrap) consoleWrap.style.display = 'none';
+        if (zippyScreen) zippyScreen.style.display = 'block';
+        document.querySelectorAll('.zippy-modal.active, .modal-backdrop.active').forEach(function(m) {
+          m.classList.remove('active');
+          m.style.display = 'none';
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
       if (consoleWrap) consoleWrap.style.display = 'block';
       if (zippyScreen) zippyScreen.style.display = 'none';
       document.querySelectorAll('.zippy-modal.active').forEach(function(m) {
         m.classList.remove('active');
         m.style.display = 'none';
-      });
       if (window.showView) window.showView(viewId);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
