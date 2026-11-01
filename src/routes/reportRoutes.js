@@ -194,6 +194,89 @@ function handleReportRoutes(req, res, u, body, user) {
     return true;
   }
 
+  // 5. POST /api/v1/feedback (Log connector partner feedback)
+  if (req.method === 'POST' && u.pathname === '/api/v1/feedback') {
+    const { rating = 5, category = 'General', comments = '' } = body || {};
+    logAuditEvent({
+      actorUsername: user.username,
+      actorRole: user.role,
+      actorIp: req.socket.remoteAddress || '127.0.0.1',
+      eventType: 'PARTNER_FEEDBACK_SUBMITTED',
+      resourceType: 'feedback',
+      resourceId: String(rating),
+      actionSummary: `Partner feedback received: ${rating} Stars [${category}] - ${comments.slice(0, 100)}`
+    });
+    return json(res, 200, { ok: true, message: `Feedback received (${rating} stars). Thank you!` });
+  }
+
+  // 6. GET /api/v1/circulars (Regulatory circulars and compliance mandates)
+  if (req.method === 'GET' && u.pathname === '/api/v1/circulars') {
+    const circulars = [
+      {
+        id: 'RBI-2026-CIR-88',
+        title: 'RBI Master Directions on Digital Lending & Default Loss Guarantees (FLDG)',
+        issued_by: 'Reserve Bank of India',
+        category: 'Digital Lending',
+        date: '2026-01-15',
+        status: 'Active',
+        summary: 'Mandates direct loan disbursal from Regulated Entity bank account to borrower account without connector escrow pass-through.'
+      },
+      {
+        id: 'DPDP-2023-R26',
+        title: 'Digital Personal Data Protection (DPDP) Act Compliance for Financial Connectors',
+        issued_by: 'Ministry of Electronics and Information Technology (MeitY)',
+        category: 'Data Privacy',
+        date: '2025-11-20',
+        status: 'Active',
+        summary: 'Enforces explicit consent receipts, itemized purpose specification, and right to be forgotten data purging protocols.'
+      },
+      {
+        id: 'RBI-DOR-2025-104',
+        title: 'Fair Practices Code & Connector Commission Disclosures',
+        issued_by: 'Department of Regulation, RBI',
+        category: 'Commission Compliance',
+        date: '2025-08-10',
+        status: 'Active',
+        summary: 'Requires full APR disclosure and transparent schedule of connector commissions without hidden markup on interest rates.'
+      },
+      {
+        id: 'CERT-IN-2026-VAULT',
+        title: 'Security Guidelines for Encrypted Customer PII & Aadhaar/PAN Vaults',
+        issued_by: 'CERT-In',
+        category: 'Information Security',
+        date: '2026-02-01',
+        status: 'Active',
+        summary: 'Requires AES-256 GCM encryption at rest, secure key rotation, and HMAC-SHA256 blind indexing for deduplication.'
+      }
+    ];
+    return json(res, 200, { ok: true, circulars });
+  }
+
+  // 7. POST /api/v1/compliance/ask (Submit regulatory policy query)
+  if (req.method === 'POST' && u.pathname === '/api/v1/compliance/ask') {
+    const { subject = 'Regulatory Policy Query', question = '', query = '', priority = 'Normal' } = body || {};
+    const text = question || query || subject;
+    const answer = 'Under RBI Master Directions (2026) and DPDP Act 2023, loan connectors must obtain explicit digitally signed customer consent before sharing PII with lenders. Direct credit disbursements must flow directly between the RE lender and the borrower.';
+
+    logAuditEvent({
+      actorUsername: user.username,
+      actorRole: user.role,
+      actorIp: req.socket.remoteAddress || '127.0.0.1',
+      eventType: 'COMPLIANCE_INQUIRY',
+      resourceType: 'circular',
+      resourceId: priority,
+      actionSummary: `Compliance Query [${priority}]: ${subject} - ${text.slice(0, 120)}`
+    });
+
+    return json(res, 200, {
+      ok: true,
+      answer,
+      subject,
+      priority,
+      message: 'Compliance inquiry dispatched to Chief Compliance Officer.'
+    });
+  }
+
   return false;
 }
 

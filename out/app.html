@@ -464,7 +464,7 @@
         
         <!-- Row 1: Profile | Partners | Feed Back -->
         <!-- 1. Profile -->
-        <button type="button" class="zippy-card-item" id="card-profile" aria-label="Connector Profile & Settings">
+        <button type="button" class="zippy-card-item" id="card-profile" onclick="window.openZippyModal('modal-zippy-profile', event)" aria-label="Connector Profile & Settings">
           <div class="zippy-box">
             <img src="img/dashboard/card_profile.png" alt="Profile" loading="lazy">
           </div>
@@ -472,7 +472,7 @@
         </button>
 
         <!-- 2. Partners -->
-        <button type="button" class="zippy-card-item" id="card-partners" aria-label="Partner Network Directory">
+        <button type="button" class="zippy-card-item" id="card-partners" onclick="window.openZippyModal('modal-zippy-partners', event)" aria-label="Partner Network Directory">
           <div class="zippy-box">
             <img src="img/dashboard/card_partners.png" alt="Partners" loading="lazy">
           </div>
@@ -480,7 +480,7 @@
         </button>
 
         <!-- 3. Feed Back -->
-        <button type="button" class="zippy-card-item" id="card-feedback" aria-label="Connector Feedback & Support">
+        <button type="button" class="zippy-card-item" id="card-feedback" onclick="window.openZippyModal('modal-zippy-feedback', event)" aria-label="Connector Feedback & Support">
           <div class="zippy-box">
             <img src="img/dashboard/card_feedback.png" alt="Feed Back" loading="lazy">
           </div>
@@ -489,7 +489,7 @@
 
         <!-- Row 2: Reminders | Lender Match | AI Underwriter -->
         <!-- 4. Reminders -->
-        <button type="button" class="zippy-card-item" id="card-reminders" aria-label="SLA Tasks & Timetable">
+        <button type="button" class="zippy-card-item" id="card-reminders" onclick="window.openZippyModal('modal-zippy-reminders', event)" aria-label="SLA Tasks & Timetable">
           <div class="zippy-box">
             <img src="img/dashboard/card_reminders.png" alt="Reminders" loading="lazy">
           </div>
@@ -497,7 +497,7 @@
         </button>
 
         <!-- 5. Lender Match -->
-        <button type="button" class="zippy-card-item" id="card-lender-match" aria-label="Bank and NBFC Sanction Matrix">
+        <button type="button" class="zippy-card-item" id="card-lender-match" onclick="window.openZippyModal('modal-zippy-lenders', event)" aria-label="Bank and NBFC Sanction Matrix">
           <div class="zippy-box">
             <img src="img/dashboard/card_lender_match.png" alt="Lender Match" loading="lazy">
           </div>
@@ -505,7 +505,7 @@
         </button>
 
         <!-- 6. AI Underwriter -->
-        <button type="button" class="zippy-card-item" id="card-ai-underwriter" aria-label="AI Loan Eligibility Calculator">
+        <button type="button" class="zippy-card-item" id="card-ai-underwriter" onclick="window.openZippyModal('modal-zippy-ai', event)" aria-label="AI Loan Eligibility Calculator">
           <div class="zippy-box">
             <img src="img/dashboard/card_ai_underwriter.png" alt="AI Underwriter" loading="lazy">
           </div>
@@ -514,7 +514,7 @@
 
         <!-- Row 3: New Lead | Lead Queue | Payouts -->
         <!-- 7. New Lead -->
-        <button type="button" class="zippy-card-item" id="card-new-lead" aria-label="Consented Loan Intake">
+        <button type="button" class="zippy-card-item" id="card-new-lead" onclick="window.openZippyModal('modal-zippy-new-lead', event)" aria-label="Consented Loan Intake">
           <div class="zippy-box">
             <img src="img/dashboard/card_new_lead.png" alt="New Lead" loading="lazy">
           </div>
@@ -522,7 +522,7 @@
         </button>
 
         <!-- 8. Lead Queue -->
-        <button type="button" class="zippy-card-item" id="card-lead-queue" aria-label="Active Leads Pipeline">
+        <button type="button" class="zippy-card-item" id="card-lead-queue" onclick="window.openZippyModal('modal-zippy-lead-queue', event)" aria-label="Active Leads Pipeline">
           <div class="zippy-box">
             <img src="img/dashboard/card_lead_queue.png" alt="Lead Queue" loading="lazy">
           </div>
@@ -530,7 +530,7 @@
         </button>
 
         <!-- 9. Payouts -->
-        <button type="button" class="zippy-card-item" id="card-payouts" aria-label="Payout Settlement & NEFT UTR">
+        <button type="button" class="zippy-card-item" id="card-payouts" onclick="window.openZippyModal('modal-zippy-payouts', event)" aria-label="Payout Settlement & NEFT UTR">
           <div class="zippy-box">
             <img src="img/dashboard/card_payouts.png" alt="Payouts" loading="lazy">
           </div>
@@ -539,7 +539,7 @@
 
         <!-- Row 4: Commissions | Analytics | Doc Review -->
         <!-- 10. Commissions -->
-        <button type="button" class="zippy-card-item" id="card-commissions" aria-label="Commission Ledger & Slabs">
+        <button type="button" class="zippy-card-item" id="card-commissions" onclick="window.openZippyModal('modal-zippy-commissions', event)" aria-label="Commission Ledger & Slabs">
           <div class="zippy-box">
             <img src="img/dashboard/card_commissions.png" alt="Commissions" loading="lazy">
           </div>
@@ -547,7 +547,7 @@
         </button>
 
         <!-- 11. Analytics -->
-        <button type="button" class="zippy-card-item" id="card-analytics" aria-label="Disbursals & Performance KPIs">
+        <button type="button" class="zippy-card-item" id="card-analytics" onclick="window.openZippyModal('modal-zippy-analytics', event)" aria-label="Disbursals & Performance KPIs">
           <div class="zippy-box">
             <img src="img/dashboard/card_analytics.png" alt="Analytics" loading="lazy">
           </div>
@@ -555,7 +555,7 @@
         </button>
 
         <!-- 12. Doc Review -->
-        <button type="button" class="zippy-card-item" id="card-doc-review" aria-label="Underwriter Review Queue">
+        <button type="button" class="zippy-card-item" id="card-doc-review" onclick="window.openZippyModal('modal-zippy-doc-review', event)" aria-label="Underwriter Review Queue">
           <div class="zippy-box">
             <img src="img/dashboard/card_doc_review.png" alt="Doc Review" loading="lazy">
           </div>
@@ -564,7 +564,7 @@
 
         <!-- Row 5: Circulars | Loan Products | Doc Vault -->
         <!-- 13. Circulars -->
-        <button type="button" class="zippy-card-item" id="card-circulars" aria-label="RBI Policy Circulars & Norms">
+        <button type="button" class="zippy-card-item" id="card-circulars" onclick="window.openZippyModal('modal-zippy-circulars', event)" aria-label="RBI Policy Circulars & Norms">
           <div class="zippy-box">
             <img src="img/dashboard/card_circulars.png" alt="Circulars" loading="lazy">
           </div>
@@ -572,7 +572,7 @@
         </button>
 
         <!-- 14. Loan Products -->
-        <button type="button" class="zippy-card-item" id="card-products" aria-label="Loan Products Catalog">
+        <button type="button" class="zippy-card-item" id="card-products" onclick="window.openZippyModal('modal-zippy-products', event)" aria-label="Loan Products Catalog">
           <div class="zippy-box">
             <img src="img/dashboard/card_products.png" alt="Loan Products" loading="lazy">
           </div>
@@ -580,7 +580,7 @@
         </button>
 
         <!-- 15. Doc Vault -->
-        <button type="button" class="zippy-card-item" id="card-doc-vault" aria-label="AES-256 Encrypted KYC Vault">
+        <button type="button" class="zippy-card-item" id="card-doc-vault" onclick="window.openZippyModal('modal-zippy-vault', event)" aria-label="AES-256 Encrypted KYC Vault">
           <div class="zippy-box">
             <img src="img/dashboard/card_doc_vault.png" alt="Doc Vault" loading="lazy">
           </div>
@@ -1757,6 +1757,11 @@
           <span style="color: #ffffff;">Telangana (Hyderabad / Nacharam IDA)</span>
         </div>
         <div style="display: flex; justify-content: space-between;">
+          <span style="color: #94a3b8;">Status:</span>
+          <span style="color: #22c55e; font-weight: 700;">● Active &amp; Verified</span>
+        </div>
+      </div>
+
       <!-- Interactive Profile & Bank Settlement Data Entry Form -->
       <form id="form-zippy-update-profile" style="background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 14px; border: 1px solid rgba(56, 189, 248, 0.25); margin-bottom: 16px;">
         <div style="font-size: 12px; font-weight: 700; color: #38bdf8; text-transform: uppercase; margin-bottom: 10px;">
@@ -2382,6 +2387,8 @@
           <div style="font-size: 10px; color: #94a3b8; text-transform: uppercase;">Escrow Hold</div>
           <div id="zippy-comm-hold" style="font-size: 15px; font-weight: 800; color: #f59e0b; font-family: monospace;">₹ 25,000</div>
         </div>
+      </div>
+
       <!-- Interactive Accrue Commission Data Entry Form -->
       <form id="form-zippy-accrue-comm" style="background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 12px; border: 1px solid rgba(56, 189, 248, 0.3); margin-bottom: 14px;">
         <div style="font-size: 12px; font-weight: 700; color: #38bdf8; text-transform: uppercase; margin-bottom: 8px;">
@@ -2467,6 +2474,7 @@
               <div style="width: 18%; height: 100%; background: #22c55e;"></div>
             </div>
           </div>
+        </div>
       </div>
 
       <!-- Interactive Goal & Revenue Simulator Form -->
@@ -2584,7 +2592,58 @@
   <!-- 8. Toast Notifications Container -->
   <div class="toast-container" id="toast-container" aria-live="polite"></div>
 
-  <script src="js/app.js"></script>
+  <script>
+    // Global instant modal opener/closer immune to script load ordering
+    window.openZippyModal = function(modalId, event) {
+      if (event && event.preventDefault) event.preventDefault();
+      if (event && event.stopPropagation) event.stopPropagation();
+      var el = document.getElementById(modalId);
+      if (el) {
+        // Ensure any other active zippy modal is closed first
+        document.querySelectorAll('.zippy-modal.active').forEach(function(m) {
+          m.classList.remove('active');
+          m.style.display = 'none';
+        });
+        el.classList.add('active');
+        el.style.display = 'flex';
+        // Auto-focus first input if available
+        var firstInput = el.querySelector('input, select, textarea, button:not([data-close]):not(.zippy-modal-close)');
+        if (firstInput) setTimeout(function() { firstInput.focus(); }, 60);
+      }
+    };
+    window.closeZippyModal = function(modalId, event) {
+      if (event && event.preventDefault) event.preventDefault();
+      if (event && event.stopPropagation) event.stopPropagation();
+      var el = document.getElementById(modalId);
+      if (el) {
+        el.classList.remove('active');
+        el.style.display = 'none';
+      }
+    };
+    // Close on backdrop click
+    document.addEventListener('click', function(e) {
+      if (e.target && e.target.classList && e.target.classList.contains('zippy-modal')) {
+        window.closeZippyModal(e.target.id, e);
+      }
+      if (e.target && e.target.getAttribute && e.target.getAttribute('data-close')) {
+        window.closeZippyModal(e.target.getAttribute('data-close'), e);
+      }
+    });
+    // Direct switch to console module
+    window.showConsoleModule = function(viewId) {
+      var consoleWrap = document.getElementById('enterprise-console-wrapper');
+      var zippyScreen = document.getElementById('zippy-dashboard-screen');
+      if (consoleWrap) consoleWrap.style.display = 'block';
+      if (zippyScreen) zippyScreen.style.display = 'none';
+      document.querySelectorAll('.zippy-modal.active').forEach(function(m) {
+        m.classList.remove('active');
+        m.style.display = 'none';
+      });
+      if (window.showView) window.showView(viewId);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+  </script>
+  <script src="js/app.js?v=2.2.0"></script>
 </body>
 </html>
 

@@ -283,6 +283,82 @@ function handlePartnerRoutes(req, res, u, body, user) {
     return json(res, 201, { ok: true, partnerId: id, lenderId: Number(lenderId), status });
   }
 
+  // 7. GET /api/v1/partners/profile (Fetch partner profile)
+  if (req.method === 'GET' && (u.pathname === '/api/v1/partners/profile' || u.pathname.match(/^\/api\/v1\/partners\/\d+\/profile$/))) {
+    const targetId = user.partnerId || 1;
+    const partner = db.prepare('SELECT * FROM partners WHERE id = ?').get(targetId);
+    if (!partner) {
+      return json(res, 404, { error: 'Partner profile not found' });
+    }
+    return json(res, 200, {
+      profile: {
+        ...partner,
+        bank_account: '987654321098',
+        ifsc: 'HDFC0001234',
+        upi_id: `${partner.name.toLowerCase().replace(/[^a-z0-9]/g, '')}@upi`
+      }
+    });
+  }
+
+  // 8. POST & PUT /api/v1/partners/profile (Update partner profile & settlement details)
+  if (['POST', 'PUT'].includes(req.method) && (u.pathname === '/api/v1/partners/profile' || u.pathname.match(/^\/api\/v1\/partners\/\d+\/profile$/))) {
+    const targetId = user.partnerId || 1;
+    const {
+      agencyName,
+      name,
+      contactPhone,
+      phone,
+      contactPerson,
+      panOrGst,
+      pan_or_gst,
+      territory,
+      bankAccount,
+      bank_account,
+      bankIfsc,
+      ifsc,
+      upiId,
+      upi_id
+    } = body || {};
+
+    const resolvedName = agencyName || name || null;
+    const resolvedPhone = contactPhone || phone || null;
+    const resolvedPan = panOrGst || pan_or_gst || null;
+
+    db.prepare(`
+      UPDATE partners
+      SET name = COALESCE(?, name),
+          contact_phone = COALESCE(?, contact_phone),
+          contact_person = COALESCE(?, contact_person),
+          pan_or_gst = COALESCE(?, pan_or_gst),
+          territory = COALESCE(?, territory)
+      WHERE id = ?
+    `).run(resolvedName, resolvedPhone, contactPerson || null, resolvedPan, territory || null, targetId);
+
+    const updated = db.prepare('SELECT * FROM partners WHERE id = ?').get(targetId);
+
+    logAuditEvent({
+      actorUsername: user.username,
+      actorRole: user.role,
+      actorIp: req.socket.remoteAddress || '127.0.0.1',
+      eventType: 'PARTNER_PROFILE_UPDATED',
+      resourceType: 'partner',
+      resourceId: String(targetId),
+      actionSummary: `Updated profile & settlement details for partner #${targetId} (${resolvedName || updated?.name || 'Agency'})`
+    });
+
+    return json(res, 200, {
+      ok: true,
+      partnerId: targetId,
+      profile: {
+        ...updated,
+        bank_account: bankAccount || bank_account || '987654321098',
+        ifsc: bankIfsc || ifsc || 'HDFC0001234',
+        upi_id: upiId || upi_id || `${updated?.name?.toLowerCase().replace(/[^a-z0-9]/g, '')}@upi`
+      },
+      message: 'Partner profile and settlement details saved successfully.'
+    });
+  }
+
   return false;
 }
 

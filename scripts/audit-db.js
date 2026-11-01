@@ -20,20 +20,17 @@ console.log('\n--- Sample Records Verification ---');
 const users = db.prepare('SELECT id, username, role, full_name FROM users LIMIT 5').all();
 console.log('Users:', users);
 
-const partners = db.prepare('SELECT id, name, partner_type, tier, active_lead_capacity FROM partners LIMIT 5').all();
+const partners = db.prepare('SELECT id, name, type, tier, capacity_limit FROM partners LIMIT 5').all();
 console.log('Partners:', partners);
 
-const leads = db.prepare('SELECT id, lead_reference, applicant_name, loan_type, requested_amount, status FROM leads LIMIT 5').all();
+const leads = db.prepare('SELECT l.id, l.lead_reference, c.full_name, l.requested_amount, l.status FROM leads l JOIN customers c ON l.customer_id = c.id LIMIT 5').all();
 console.log('Leads:', leads);
 
 const comms = db.prepare('SELECT id, lead_id, net_payable, status FROM commission_ledger LIMIT 5').all();
 console.log('Commission Ledger:', comms);
 
-const reminders = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='reminders'").get();
-if (reminders) {
-  const rList = db.prepare('SELECT id, title, due_date, status FROM reminders LIMIT 5').all();
-  console.log('Reminders:', rList);
-}
+const reminders = db.prepare('SELECT * FROM lead_reminders LIMIT 5').all();
+console.log('Lead Reminders:', reminders);
 
 console.log('=======================================================');
 console.log('       Database Audit Completed Successfully!          ');

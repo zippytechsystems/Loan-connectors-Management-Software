@@ -33,8 +33,8 @@ const server = http.createServer(async (req, res) => {
 
   const u = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
 
-  // 3. API Requests Handling (/api/v1/...)
-  if (u.pathname.startsWith('/api/')) {
+  // 3. API Requests Handling (/api/v1/... and /health)
+  if (u.pathname.startsWith('/api/') || u.pathname === '/health') {
     // API responses must never be indexed or cached by search crawlers
     res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive');
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
@@ -67,10 +67,11 @@ const server = http.createServer(async (req, res) => {
       }
 
       // Unauthenticated Health Ping for Monitoring & Probes
-      if (req.method === 'GET' && u.pathname === '/api/v1/health') {
+      if (req.method === 'GET' && (u.pathname === '/health' || u.pathname === '/api/v1/health')) {
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
         return res.end(JSON.stringify({
-          status: 'ok',
+          status: 'healthy',
+          ok: true,
           service: 'zippy-loan-connector-loan-software-application',
           version: '1.0.0',
           environment: config.NODE_ENV,
@@ -136,7 +137,7 @@ const server = http.createServer(async (req, res) => {
               partners: db.prepare('SELECT count(*) as c FROM partners').get().c,
               commissionLedger: db.prepare('SELECT count(*) as c FROM commission_ledger').get().c,
               kycDocuments: db.prepare('SELECT count(*) as c FROM kyc_documents').get().c,
-              auditEvents: db.prepare('SELECT count(*) as c FROM audit_logs').get().c
+              auditEvents: db.prepare('SELECT count(*) as c FROM audit_events').get().c
             }
           },
           integrations: {
@@ -263,13 +264,11 @@ const server = http.createServer(async (req, res) => {
   };
 
   const contentType = mimeTypes[ext] || 'application/octet-stream';
-  let cacheControlHeader = 'public, max-age=86400';
-  if (isPrivateWorkspace) {
-    cacheControlHeader = 'no-store, no-cache, must-revalidate, private';
-  } else if (ext === '.html') {
-    cacheControlHeader = 'public, max-age=300, must-revalidate';
-  } else if (ext === '.xml' || ext === '.txt') {
-    cacheControlHeader = 'public, max-age=3600';
+  let cacheControlHeader = 'no-store, no-cache, must-revalidate, private';
+  if (config.NODE_ENV === 'production' && !isPrivateWorkspace) {
+    if (ext === '.html') cacheControlHeader = 'public, max-age=300, must-revalidate';
+    else if (ext === '.xml' || ext === '.txt') cacheControlHeader = 'public, max-age=3600';
+    else if (ext !== '.js' && ext !== '.css') cacheControlHeader = 'public, max-age=86400';
   }
 
   res.writeHead(200, {

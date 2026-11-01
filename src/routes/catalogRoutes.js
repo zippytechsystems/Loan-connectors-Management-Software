@@ -2,14 +2,14 @@ const { db } = require('../db/database');
 const { logAuditEvent } = require('../middleware/audit');
 
 function handleCatalogRoutes(req, res, u, body, user) {
-  // GET /api/v1/catalog/lenders
-  if (req.method === 'GET' && u.pathname === '/api/v1/catalog/lenders') {
+  // GET /api/v1/catalog/lenders and /api/v1/lenders
+  if (req.method === 'GET' && (u.pathname === '/api/v1/catalog/lenders' || u.pathname === '/api/v1/lenders')) {
     const lenders = db.prepare('SELECT * FROM lenders ORDER BY id ASC').all();
     return json(res, 200, { lenders });
   }
 
   // POST /api/v1/catalog/lenders
-  if (req.method === 'POST' && u.pathname === '/api/v1/catalog/lenders') {
+  if (req.method === 'POST' && (u.pathname === '/api/v1/catalog/lenders' || u.pathname === '/api/v1/lenders')) {
     if (user.role === 'auditor') {
       return json(res, 403, { error: 'Auditor role is strictly read-only' });
     }
@@ -44,8 +44,8 @@ function handleCatalogRoutes(req, res, u, body, user) {
     }
   }
 
-  // GET /api/v1/catalog/products
-  if (req.method === 'GET' && u.pathname === '/api/v1/catalog/products') {
+  // GET /api/v1/catalog/products and /api/v1/products
+  if (req.method === 'GET' && (u.pathname === '/api/v1/catalog/products' || u.pathname === '/api/v1/products')) {
     let sql = `
       SELECT p.*, l.name as lender_name, l.code as lender_code
       FROM loan_products p

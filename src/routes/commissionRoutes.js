@@ -300,8 +300,73 @@ function handleCommissionRoutes(req, res, u, body, user) {
       },
       lineItems: entries
     };
-
     return json(res, 200, { statement });
+  }
+
+  // 8. POST /api/v1/commissions/accrue (Manual & Simulator Commission Accrual)
+  if (req.method === 'POST' && u.pathname === '/api/v1/commissions/accrue') {
+    const resolvedLeadId = Number(body?.leadId || body?.lead_id || 1);
+    const resolvedPartnerId = Number(body?.partnerId || body?.partner_id || user.partnerId || 1);
+    const rawAmount = Number(body?.payout_amount || body?.gross_amount || 0);
+    const grossAmount = rawAmount > 0 
+      ? rawAmount 
+      : Math.round((Number(body?.loanAmount || 2500000) * Number(body?.commissionRate || 1.25)) / 100);
+    const holdbackRate = Number(body?.tds_rate !== undefined ? body.tds_rate : (body?.holdbackPercent || 10));
+    const holdbackAmount = Math.round((grossAmount * holdbackRate) / 100);
+    const netPayable = grossAmount - holdbackAmount;
+    const now = new Date().toISOString();
+    const ledgerCode = `COMM-${Date.now().toString().slice(-6)}`;
+
+    const resInsert = db.prepare(`
+      INSERT INTO commission_ledger (
+        ledger_code, lead_id, partner_id, trigger_event,
+        gross_amount, holdback_amount, net_payable,
+        status, plan_version_applied, created_at
+      ) VALUES (?, ?, ?, 'Manual Accrual', ?, ?, ?, 'Accrued', 'v1.0', ?)
+    `).run(ledgerCode, resolvedLeadId, resolvedPartnerId, grossAmount, holdbackAmount, netPayable, now);
+
+    logAuditEvent({
+      actorUsername: user.username,
+      actorRole: user.role,
+      actorIp: req.socket.remoteAddress || '127.0.0.1',
+      eventType: 'COMMISSION_ACCRUED',
+      resourceType: 'commission_ledger',
+      resourceId: String(resInsert.lastInsertRowid),
+      actionSummary: `Accrued commission ${ledgerCode} (Net: ₹${netPayable.toLocaleString('en-IN')}) for partner #${resolvedPartnerId}`
+    });
+
+    return json(res, 200, {
+      ok: true,
+      ledger_id: Number(resInsert.lastInsertRowid),
+      ledgerId: Number(resInsert.lastInsertRowid),
+      ledgerCode,
+      grossAmount,
+      holdbackAmount,
+      netPayable
+    });
+  }
+
+  // 9. POST /api/v1/commissions/payout (Settle Payout via Bank UTR)
+  if (req.method === 'POST' && u.pathname === '/api/v1/commissions/payout') {
+    const { partnerId = 1, utr = `NEFT-UTR-${Date.now()}` } = body || {};
+    const now = new Date().toISOString();
+
+    const pending = db.prepare("SELECT id FROM commission_ledger WHERE partner_id = ? AND status IN ('Accrued', 'Approved') LIMIT 1").get(Number(partnerId));
+    if (pending) {
+      db.prepare("UPDATE commission_ledger SET status = 'Paid', payout_reference = ?, settled_at = ? WHERE id = ?").run(utr, now, pending.id);
+    }
+
+    logAuditEvent({
+      actorUsername: user.username,
+      actorRole: user.role,
+      actorIp: req.socket.remoteAddress || '127.0.0.1',
+      eventType: 'COMMISSION_SETTLED',
+      resourceType: 'payout',
+      resourceId: String(partnerId),
+      actionSummary: `Recorded NEFT settlement UTR ${utr} for partner #${partnerId}`
+    });
+
+    return json(res, 200, { ok: true, utr, settledAt: now, message: `Settlement UTR ${utr} recorded.` });
   }
 
   return false;
