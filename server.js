@@ -170,12 +170,18 @@ const server = http.createServer(async (req, res) => {
   }
 
   // 4. Clean Route & Static Web Assets (/public/...)
-  const pathname = u.pathname;
+  let cleanPath = u.pathname;
+  if (cleanPath.startsWith('/public/')) {
+    cleanPath = cleanPath.slice(7);
+  } else if (cleanPath === '/public') {
+    cleanPath = '/';
+  }
   
   // Map clean public marketing and internal workspace routes
   const cleanRouteMap = {
     '/': 'index.html',
     '/index': 'index.html',
+    '/index.html': 'index.html',
     '/hyderabad-nacharam': 'hyderabad-nacharam.html',
     '/connector-network': 'connector-network.html',
     '/loan-products': 'loan-products.html',
@@ -189,10 +195,10 @@ const server = http.createServer(async (req, res) => {
     '/login': 'app.html'
   };
 
-  let targetRelative = cleanRouteMap[pathname] || null;
+  let targetRelative = cleanRouteMap[cleanPath] || null;
 
   if (!targetRelative) {
-    const rawSafe = path.normalize(decodeURIComponent(pathname)).replace(/^([/\\])+/, '');
+    const rawSafe = path.normalize(decodeURIComponent(cleanPath)).replace(/^([/\\])+/, '');
     const directCandidate = path.join(PUBLIC_DIR, rawSafe);
 
     if (fs.existsSync(directCandidate) && fs.statSync(directCandidate).isFile()) {
