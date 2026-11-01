@@ -173,6 +173,239 @@
   </section>
 
   <!-- =========================================================================
+       ZIPPY ENTERPRISES — CREATE ACCOUNT & SIGN IN SCREEN (IN-APP NAVIGATION)
+       Dedicated Onboarding View: Create Account / Sign In / 1-Click Instant Demo
+       ========================================================================= -->
+  <section id="screen-zippy-auth" class="zippy-auth-screen" style="display: none;" aria-label="Zippy Loan Connector Account Creation and Sign In">
+    <div class="zippy-phone-frame zippy-auth-frame">
+      <!-- Top Mobile Phone Status Bar (9:22 | VoWiFi | 60% 🔋) -->
+      <div class="zippy-status-bar zippy-dash-status-bar">
+        <span class="status-time" id="auth-status-time">9:22</span>
+        <div class="status-icons">
+          <span>VoWiFi</span>
+          <span>📶</span>
+          <span>🔋 60%</span>
+        </div>
+      </div>
+
+      <!-- Auth Navigation Bar -->
+      <div class="zippy-auth-nav">
+        <button type="button" class="zippy-auth-back-btn" id="btn-auth-back" title="Back to Welcome Landing">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          <span>Back</span>
+        </button>
+        <div class="zippy-auth-brand-badge" id="btn-auth-brand-badge">
+          <span class="badge-z">Z✦</span>
+          <span class="badge-title">ZIPPY.AI</span>
+        </div>
+        <div style="width: 50px;"></div>
+      </div>
+
+      <!-- Auth Header Text -->
+      <div class="zippy-auth-header-text">
+        <h2 class="zippy-auth-heading" id="auth-main-heading">Join Zippy Network</h2>
+        <p class="zippy-auth-subheading">Verified Loan Connector &amp; DSA Platform • Hyderabad &amp; Telangana</p>
+      </div>
+
+      <!-- Tab Switcher (Create Account | Sign In | 1-Click Demo) -->
+      <div class="zippy-auth-tab-bar" role="tablist">
+        <button type="button" class="zippy-auth-tab-item active" id="tab-zippy-register" role="tab" aria-selected="true">
+          <span>📝</span> Create Account
+        </button>
+        <button type="button" class="zippy-auth-tab-item" id="tab-zippy-signin" role="tab" aria-selected="false">
+          <span>🔑</span> Sign In
+        </button>
+        <button type="button" class="zippy-auth-tab-item" id="tab-zippy-demo" role="tab" aria-selected="false">
+          <span>⚡</span> Quick Demo
+        </button>
+      </div>
+
+      <!-- Scrollable Form Body -->
+      <div class="zippy-auth-body">
+        
+        <!-- Alerts for Error & Success -->
+        <div id="zippy-auth-error" class="zippy-alert zippy-alert-error" style="display: none;"></div>
+        <div id="zippy-auth-success" class="zippy-alert zippy-alert-success" style="display: none;"></div>
+
+        <!-- PANEL 1: CREATE ACCOUNT / SIGN UP -->
+        <div id="panel-zippy-register" class="zippy-auth-panel active">
+          <form id="form-zippy-register" novalidate>
+            <div class="zippy-input-group mb-10">
+              <label class="zippy-input-label" for="zippy-reg-fullname">Full Name *</label>
+              <input type="text" id="zippy-reg-fullname" class="zippy-text-input" placeholder="e.g. Ramesh Reddy" required autocomplete="name">
+            </div>
+
+            <div class="zippy-input-row mb-10">
+              <div class="zippy-input-group">
+                <label class="zippy-input-label" for="zippy-reg-phone">Mobile Phone (+91) *</label>
+                <div class="zippy-phone-input-wrap">
+                  <span class="phone-prefix">+91</span>
+                  <input type="tel" id="zippy-reg-phone" class="zippy-text-input" placeholder="98765 43210" required maxlength="10">
+                </div>
+              </div>
+              <div class="zippy-input-group">
+                <label class="zippy-input-label" for="zippy-reg-username">Username *</label>
+                <input type="text" id="zippy-reg-username" class="zippy-text-input" placeholder="ramesh_reddy" required autocomplete="username">
+              </div>
+            </div>
+
+            <div class="zippy-input-group mb-10">
+              <label class="zippy-input-label" for="zippy-reg-email">Email Address *</label>
+              <input type="email" id="zippy-reg-email" class="zippy-text-input" placeholder="ramesh.connector@gmail.com" required autocomplete="email">
+            </div>
+
+            <div class="zippy-input-group mb-10">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <label class="zippy-input-label" for="zippy-reg-password" style="margin-bottom:0;">Password *</label>
+                <button type="button" class="btn-pwd-peek" id="btn-peek-reg-pwd">Show</button>
+              </div>
+              <input type="password" id="zippy-reg-password" class="zippy-text-input" placeholder="Create strong password (min 6 characters)" required autocomplete="new-password">
+            </div>
+
+            <div class="zippy-input-group mb-10">
+              <label class="zippy-input-label" for="zippy-reg-business">Business / Agency / DSA Name *</label>
+              <input type="text" id="zippy-reg-business" class="zippy-text-input" placeholder="e.g. Sri Krishna Financial Solutions" required>
+            </div>
+
+            <div class="zippy-input-row mb-10">
+              <div class="zippy-input-group">
+                <label class="zippy-input-label" for="zippy-reg-territory">Territory / Area</label>
+                <input type="text" id="zippy-reg-territory" class="zippy-text-input" value="Hyderabad, Nacharam &amp; Telangana">
+              </div>
+              <div class="zippy-input-group">
+                <label class="zippy-input-label" for="zippy-reg-pangst">PAN or GSTIN (Optional)</label>
+                <input type="text" id="zippy-reg-pangst" class="zippy-text-input" placeholder="ABCDE1234F" style="text-transform: uppercase;">
+              </div>
+            </div>
+
+            <div class="zippy-consent-box mb-12">
+              <label class="zippy-checkbox-wrap">
+                <input type="checkbox" id="zippy-reg-consent" checked required>
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-text">
+                  I confirm that all loan referrals comply with <strong>DPDP Act 2023</strong> customer consent norms and accept Zippy Connector terms.
+                </span>
+              </label>
+            </div>
+
+            <button type="submit" class="zippy-btn-auth-submit zippy-btn-gold" id="btn-submit-zippy-register">
+              <span>✨</span> Create Account &amp; Launch Dashboard 🚀
+            </button>
+          </form>
+
+          <div class="zippy-auth-footer-toggle">
+            Already registered? 
+            <button type="button" class="zippy-link-btn" id="btn-toggle-to-signin">Sign In to Account</button>
+          </div>
+        </div>
+
+        <!-- PANEL 2: SIGN IN -->
+        <div id="panel-zippy-signin" class="zippy-auth-panel" style="display: none;">
+          <form id="form-zippy-signin" novalidate>
+            <div class="zippy-input-group mb-12">
+              <label class="zippy-input-label" for="zippy-login-username">Username or Email *</label>
+              <input type="text" id="zippy-login-username" class="zippy-text-input" placeholder="e.g. admin or partner" value="admin" required autocomplete="username">
+            </div>
+
+            <div class="zippy-input-group mb-16">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <label class="zippy-input-label" for="zippy-login-password" style="margin-bottom:0;">Password *</label>
+                <button type="button" class="btn-pwd-peek" id="btn-peek-login-pwd">Show</button>
+              </div>
+              <input type="password" id="zippy-login-password" class="zippy-text-input" placeholder="Enter password" value="ConnectorDemo!26" required autocomplete="current-password">
+            </div>
+
+            <button type="submit" class="zippy-btn-auth-submit zippy-btn-blue" id="btn-submit-zippy-signin">
+              <span>🔑</span> Sign In &amp; Launch Dashboard 🚀
+            </button>
+          </form>
+
+          <div class="zippy-auth-footer-toggle">
+            New to Zippy Platform? 
+            <button type="button" class="zippy-link-btn" id="btn-toggle-to-register">Create Account now</button>
+          </div>
+        </div>
+
+        <!-- PANEL 3: 1-CLICK INSTANT DEMO PERSONA ACCESS -->
+        <div id="panel-zippy-demo" class="zippy-auth-panel" style="display: none;">
+          <div style="font-size: 12px; color: #94a3b8; margin-bottom: 12px; line-height: 1.4;">
+            Tap any persona to immediately enter the live multi-tenant loan platform with full data:
+          </div>
+          <div class="zippy-demo-grid">
+            <button type="button" class="zippy-demo-card" data-role="admin">
+              <div class="demo-icon">👑</div>
+              <div class="demo-info">
+                <strong>Vikram Singhania</strong>
+                <span>Global Administrator</span>
+              </div>
+              <span class="demo-arrow">→</span>
+            </button>
+            <button type="button" class="zippy-demo-card" data-role="connector">
+              <div class="demo-icon">🤝</div>
+              <div class="demo-info">
+                <strong>Northstar Connect</strong>
+                <span>Connector 1 • Hyderabad</span>
+              </div>
+              <span class="demo-arrow">→</span>
+            </button>
+            <button type="button" class="zippy-demo-card" data-role="connector2">
+              <div class="demo-icon">💼</div>
+              <div class="demo-info">
+                <strong>Apex Wealth Advisors</strong>
+                <span>Connector 2 • Nacharam IDA</span>
+              </div>
+              <span class="demo-arrow">→</span>
+            </button>
+            <button type="button" class="zippy-demo-card" data-role="ops">
+              <div class="demo-icon">⚡</div>
+              <div class="demo-info">
+                <strong>Operations Desk</strong>
+                <span>Lead Routing &amp; Governance</span>
+              </div>
+              <span class="demo-arrow">→</span>
+            </button>
+            <button type="button" class="zippy-demo-card" data-role="lender">
+              <div class="demo-icon">🏦</div>
+              <div class="demo-info">
+                <strong>Riverbend Capital</strong>
+                <span>Institutional Lender Desk</span>
+              </div>
+              <span class="demo-arrow">→</span>
+            </button>
+            <button type="button" class="zippy-demo-card" data-role="reviewer">
+              <div class="demo-icon">🔍</div>
+              <div class="demo-info">
+                <strong>KYC Underwriter</strong>
+                <span>Document Review Queue</span>
+              </div>
+              <span class="demo-arrow">→</span>
+            </button>
+            <button type="button" class="zippy-demo-card" data-role="finance">
+              <div class="demo-icon">💰</div>
+              <div class="demo-info">
+                <strong>Finance Desk</strong>
+                <span>Commissions &amp; NEFT UTR</span>
+              </div>
+              <span class="demo-arrow">→</span>
+            </button>
+            <button type="button" class="zippy-demo-card" data-role="auditor">
+              <div class="demo-icon">🛡️</div>
+              <div class="demo-info">
+                <strong>Compliance Auditor</strong>
+                <span>Masked PII Audit Log</span>
+              </div>
+              <span class="demo-arrow">→</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
        ZIPPY ENTERPRISES — DASHBOARD / HOME SCREEN (15 LOAN CONNECTOR MODULES)
        Royal Midnight Sapphire Blue, Glowing Neon Cyan, 3-Column Image Card Grid
        ========================================================================= -->
@@ -1833,6 +2066,224 @@
         </div>
         <button type="submit" class="btn btn-primary" id="btn-submit-feedback" style="width: 100%;">Submit Feedback</button>
       </form>
+    </div>
+  </div>
+
+  <!-- Modal 9: Verified Partner Network Directory -->
+  <div class="zippy-modal" id="modal-zippy-partners" role="dialog" aria-modal="true" aria-labelledby="zippy-part-title">
+    <div class="zippy-modal-card">
+      <div class="zippy-modal-header">
+        <h3 class="zippy-modal-title" id="zippy-part-title">🏢 Verified Partner Directory</h3>
+        <button type="button" class="zippy-modal-close" data-close="modal-zippy-partners" aria-label="Close">&times;</button>
+      </div>
+      <div style="margin-bottom: 12px; display: flex; gap: 8px;">
+        <input type="text" id="zippy-partner-search" class="form-input" placeholder="🔍 Search partner or territory..." style="font-size: 13px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+        <button type="button" class="btn btn-primary btn-sm" id="btn-zippy-open-onboard-partner" style="white-space: nowrap; font-size: 12px; font-weight: 700;">+ Onboard</button>
+      </div>
+      <div id="zippy-partners-list" style="display: flex; flex-direction: column; gap: 10px; max-height: 52vh; overflow-y: auto;">
+        <!-- Dynamically rendered -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 10: Consented Lead Intake -->
+  <div class="zippy-modal" id="modal-zippy-new-lead" role="dialog" aria-modal="true" aria-labelledby="zippy-lead-title">
+    <div class="zippy-modal-card">
+      <div class="zippy-modal-header">
+        <h3 class="zippy-modal-title" id="zippy-lead-title">📝 Consented Lead Intake</h3>
+        <button type="button" class="zippy-modal-close" data-close="modal-zippy-new-lead" aria-label="Close">&times;</button>
+      </div>
+      <p style="font-size: 12.5px; color: #94a3b8; margin: 0 0 14px 0;">
+        Route new loan referral with DPDP Act 2023 customer consent to verified institutional lenders.
+      </p>
+      <form id="form-zippy-lead-intake" novalidate>
+        <div class="form-group mb-8">
+          <label class="form-label" for="zippy-lead-name" style="font-size: 12px; color: #cbd5e1;">Borrower Legal Full Name *</label>
+          <input type="text" id="zippy-lead-name" class="form-input" placeholder="e.g. Suresh Kumar" required style="background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;" class="mb-8">
+          <div class="form-group">
+            <label class="form-label" for="zippy-lead-phone" style="font-size: 12px; color: #cbd5e1;">Mobile Phone (+91) *</label>
+            <input type="tel" id="zippy-lead-phone" class="form-input" placeholder="98490 12345" required maxlength="10" style="background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="zippy-lead-pan" style="font-size: 12px; color: #cbd5e1;">PAN Number *</label>
+            <input type="text" id="zippy-lead-pan" class="form-input" placeholder="ABCDE1234F" style="text-transform: uppercase; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);" required maxlength="10">
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;" class="mb-8">
+          <div class="form-group">
+            <label class="form-label" for="zippy-lead-product" style="font-size: 12px; color: #cbd5e1;">Loan Category *</label>
+            <select id="zippy-lead-product" class="form-select" style="background: rgba(15, 23, 42, 0.85); color: #fff; border-color: rgba(56, 189, 248, 0.4); height: 38px; border-radius: 8px; width: 100%;">
+              <option value="1">MSME Business Loan (₹10L - ₹5Cr)</option>
+              <option value="2">Machinery Term Loan (₹25L - ₹15Cr)</option>
+              <option value="3">Loan Against Property (LAP)</option>
+              <option value="4">Commercial Working Capital / OD</option>
+              <option value="5">Personal &amp; Professional Loan</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="zippy-lead-amount" style="font-size: 12px; color: #cbd5e1;">Loan Amount (₹) *</label>
+            <input type="number" id="zippy-lead-amount" class="form-input" placeholder="2500000" value="2500000" required style="background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;" class="mb-10">
+          <div class="form-group">
+            <label class="form-label" for="zippy-lead-income" style="font-size: 12px; color: #cbd5e1;">Monthly Income / Turnover (₹)</label>
+            <input type="number" id="zippy-lead-income" class="form-input" value="120000" style="background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="zippy-lead-city" style="font-size: 12px; color: #cbd5e1;">City / Territory</label>
+            <input type="text" id="zippy-lead-city" class="form-input" value="Nacharam IDA, Hyderabad" style="background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+          </div>
+        </div>
+        <div class="zippy-consent-box mb-12" style="background: rgba(15,23,42,0.6); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(56,189,248,0.2);">
+          <label style="display: flex; align-items: flex-start; gap: 8px; font-size: 11.5px; color: #cbd5e1; cursor: pointer;">
+            <input type="checkbox" id="zippy-lead-consent-check" checked required style="margin-top: 2px;">
+            <span>Customer explicitly consented to loan lead matching &amp; credit check under DPDP Act 2023.</span>
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary" id="btn-submit-zippy-lead" style="width: 100%; height: 42px; font-size: 13.5px; font-weight: 700; background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);">
+          🚀 Submit &amp; Dispatch Lead
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 11: Active Lead Queue & Pipeline -->
+  <div class="zippy-modal" id="modal-zippy-lead-queue" role="dialog" aria-modal="true" aria-labelledby="zippy-queue-title">
+    <div class="zippy-modal-card">
+      <div class="zippy-modal-header">
+        <h3 class="zippy-modal-title" id="zippy-queue-title">📥 Active Lead Queue &amp; Pipeline</h3>
+        <button type="button" class="zippy-modal-close" data-close="modal-zippy-lead-queue" aria-label="Close">&times;</button>
+      </div>
+      <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+        <input type="text" id="zippy-queue-search" class="form-input" placeholder="🔍 Search borrower or loan..." style="font-size: 13px; background: rgba(15,23,42,0.8); color: #fff; border-color: rgba(56,189,248,0.3);">
+        <select id="zippy-queue-status-filter" class="form-select" style="background: rgba(15, 23, 42, 0.85); color: #fff; border-color: rgba(56, 189, 248, 0.4); border-radius: 8px; font-size: 12px; width: 130px;">
+          <option value="ALL">All Status</option>
+          <option value="Eligible">Eligible</option>
+          <option value="Offered">Offered</option>
+          <option value="Accepted">Accepted</option>
+          <option value="Disbursed">Disbursed</option>
+        </select>
+      </div>
+      <div id="zippy-lead-queue-list" style="display: flex; flex-direction: column; gap: 10px; max-height: 52vh; overflow-y: auto;">
+        <!-- Dynamically rendered -->
+      </div>
+      <div style="margin-top: 14px; display: flex; justify-content: space-between; align-items: center;">
+        <button type="button" class="btn btn-primary btn-sm" id="btn-queue-add-lead">+ Intake New Lead</button>
+        <span style="font-size: 11.5px; color: #94a3b8;" id="zippy-queue-summary">Tap any lead to inspect details</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 12: Commission Ledger & Earnings -->
+  <div class="zippy-modal" id="modal-zippy-commissions" role="dialog" aria-modal="true" aria-labelledby="zippy-comm-title">
+    <div class="zippy-modal-card">
+      <div class="zippy-modal-header">
+        <h3 class="zippy-modal-title" id="zippy-comm-title">💰 Commission Ledger &amp; Earnings</h3>
+        <button type="button" class="zippy-modal-close" data-close="modal-zippy-commissions" aria-label="Close">&times;</button>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px;">
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 10px; padding: 10px; text-align: center;">
+          <div style="font-size: 10px; color: #94a3b8; text-transform: uppercase;">Total Accrued</div>
+          <div id="zippy-comm-total" style="font-size: 15px; font-weight: 800; color: #38bdf8; font-family: monospace;">₹ 1,75,400</div>
+        </div>
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; padding: 10px; text-align: center;">
+          <div style="font-size: 10px; color: #94a3b8; text-transform: uppercase;">Paid / Settled</div>
+          <div id="zippy-comm-settled" style="font-size: 15px; font-weight: 800; color: #22c55e; font-family: monospace;">₹ 1,15,000</div>
+        </div>
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 10px; padding: 10px; text-align: center;">
+          <div style="font-size: 10px; color: #94a3b8; text-transform: uppercase;">Escrow Hold</div>
+          <div id="zippy-comm-hold" style="font-size: 15px; font-weight: 800; color: #f59e0b; font-family: monospace;">₹ 25,000</div>
+        </div>
+      </div>
+      <div id="zippy-commissions-list" style="display: flex; flex-direction: column; gap: 8px; max-height: 50vh; overflow-y: auto;">
+        <!-- Dynamically rendered commissions list -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 13: Disbursals & Performance Analytics -->
+  <div class="zippy-modal" id="modal-zippy-analytics" role="dialog" aria-modal="true" aria-labelledby="zippy-ana-title">
+    <div class="zippy-modal-card">
+      <div class="zippy-modal-header">
+        <h3 class="zippy-modal-title" id="zippy-ana-title">📊 Disbursals &amp; Performance KPIs</h3>
+        <button type="button" class="zippy-modal-close" data-close="modal-zippy-analytics" aria-label="Close">&times;</button>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+        <div style="background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 12px;">
+          <div style="font-size: 11px; color: #94a3b8;">Routing SLA Uptime</div>
+          <div style="font-size: 22px; font-weight: 800; color: #22c55e;">99.8%</div>
+          <div style="font-size: 11px; color: #64748b;">Avg Sanction: 42 hrs</div>
+        </div>
+        <div style="background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 12px;">
+          <div style="font-size: 11px; color: #94a3b8;">Disbursal Volume</div>
+          <div style="font-size: 22px; font-weight: 800; color: #38bdf8; font-family: monospace;" id="zippy-stat-disbursed">₹ 8.45 Cr</div>
+          <div style="font-size: 11px; color: #64748b;">Hyderabad &amp; TG</div>
+        </div>
+      </div>
+      <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 14px; margin-bottom: 14px;">
+        <div style="font-size: 12px; font-weight: 700; color: #cbd5e1; margin-bottom: 10px;">LOAN PRODUCT DISBURSAL MIX:</div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 11.5px; margin-bottom: 2px;">
+              <span>MSME Business Credit</span>
+              <span style="color: #38bdf8; font-weight: 700;">45% (₹3.8 Cr)</span>
+            </div>
+            <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+              <div style="width: 45%; height: 100%; background: #38bdf8;"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 11.5px; margin-bottom: 2px;">
+              <span>Machinery Term Loans (Nacharam IDA)</span>
+              <span style="color: #f59e0b; font-weight: 700;">28% (₹2.4 Cr)</span>
+            </div>
+            <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+              <div style="width: 28%; height: 100%; background: #f59e0b;"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 11.5px; margin-bottom: 2px;">
+              <span>Loan Against Property (LAP)</span>
+              <span style="color: #22c55e; font-weight: 700;">18% (₹1.5 Cr)</span>
+            </div>
+            <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+              <div style="width: 18%; height: 100%; background: #22c55e;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 14: Underwriter Document Review Queue -->
+  <div class="zippy-modal" id="modal-zippy-doc-review" role="dialog" aria-modal="true" aria-labelledby="zippy-review-title">
+    <div class="zippy-modal-card">
+      <div class="zippy-modal-header">
+        <h3 class="zippy-modal-title" id="zippy-review-title">🔍 Underwriter Document Review</h3>
+        <button type="button" class="zippy-modal-close" data-close="modal-zippy-doc-review" aria-label="Close">&times;</button>
+      </div>
+      <div style="font-size: 12.5px; color: #94a3b8; margin-bottom: 12px;">
+        Review borrower KYC &amp; financial records for underwriting sanction approval:
+      </div>
+      <div id="zippy-review-queue-list" style="display: flex; flex-direction: column; gap: 10px; max-height: 52vh; overflow-y: auto;">
+        <!-- Dynamically rendered review queue -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 15: Loan Products Catalog -->
+  <div class="zippy-modal" id="modal-zippy-products" role="dialog" aria-modal="true" aria-labelledby="zippy-prod-title">
+    <div class="zippy-modal-card">
+      <div class="zippy-modal-header">
+        <h3 class="zippy-modal-title" id="zippy-prod-title">📦 Loan Products Catalog</h3>
+        <button type="button" class="zippy-modal-close" data-close="modal-zippy-products" aria-label="Close">&times;</button>
+      </div>
+      <div id="zippy-products-catalog-list" style="display: flex; flex-direction: column; gap: 12px; max-height: 55vh; overflow-y: auto;">
+        <!-- Dynamically rendered products -->
+      </div>
     </div>
   </div>
 

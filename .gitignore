@@ -36,3 +36,9 @@ Thumbs.db
 .vscode/
 *.swp
 *.tmp
+
+# Android Gradle cache & build artifacts
+.gradle/
+android/.gradle/
+android/app/build/
+android/build/

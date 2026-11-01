@@ -145,22 +145,50 @@
       .replace(/'/g, '&#039;');
   }
 
-  // Multi-Screen Navigation Controller (Welcome Onboarding Screen <-> Home Dashboard <-> Operations Console)
+  // Multi-Screen Navigation Controller (Welcome Onboarding Screen <-> Auth & Create Account <-> Home Dashboard <-> Operations Console)
   function showWelcomeScreen() {
     const welcome = document.getElementById('screen-welcome-login');
+    const auth = document.getElementById('screen-zippy-auth');
     const zippy = document.getElementById('zippy-dashboard-screen');
     const consoleWrap = document.getElementById('enterprise-console-wrapper');
     if (welcome) welcome.style.display = 'flex';
+    if (auth) auth.style.display = 'none';
     if (zippy) zippy.style.display = 'none';
     if (consoleWrap) consoleWrap.style.display = 'none';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function showDashboardScreen() {
+  function showAuthScreen(defaultTab = 'register') {
     const welcome = document.getElementById('screen-welcome-login');
+    const auth = document.getElementById('screen-zippy-auth');
     const zippy = document.getElementById('zippy-dashboard-screen');
     const consoleWrap = document.getElementById('enterprise-console-wrapper');
     if (welcome) welcome.style.display = 'none';
+    if (auth) auth.style.display = 'flex';
+    if (zippy) zippy.style.display = 'none';
+    if (consoleWrap) consoleWrap.style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Switch tab
+    if (defaultTab === 'register') {
+      const tab = document.getElementById('tab-zippy-register');
+      if (tab) tab.click();
+    } else if (defaultTab === 'signin') {
+      const tab = document.getElementById('tab-zippy-signin');
+      if (tab) tab.click();
+    } else if (defaultTab === 'demo') {
+      const tab = document.getElementById('tab-zippy-demo');
+      if (tab) tab.click();
+    }
+  }
+
+  function showDashboardScreen() {
+    const welcome = document.getElementById('screen-welcome-login');
+    const auth = document.getElementById('screen-zippy-auth');
+    const zippy = document.getElementById('zippy-dashboard-screen');
+    const consoleWrap = document.getElementById('enterprise-console-wrapper');
+    if (welcome) welcome.style.display = 'none';
+    if (auth) auth.style.display = 'none';
     if (zippy) zippy.style.display = 'block';
     if (consoleWrap) consoleWrap.style.display = 'none';
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -168,9 +196,11 @@
 
   function showConsoleScreen() {
     const welcome = document.getElementById('screen-welcome-login');
+    const auth = document.getElementById('screen-zippy-auth');
     const zippy = document.getElementById('zippy-dashboard-screen');
     const consoleWrap = document.getElementById('enterprise-console-wrapper');
     if (welcome) welcome.style.display = 'none';
+    if (auth) auth.style.display = 'none';
     if (zippy) zippy.style.display = 'none';
     if (consoleWrap) consoleWrap.style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -185,6 +215,7 @@
     setupKeyboardShortcuts();
     setupZippyDashboard();
     setupWelcomeScreen();
+    setupZippyAuthScreen();
     updateLiveDate();
 
     // Register Service Worker for Android Play Store PWA / TWA installability
@@ -2100,7 +2131,7 @@
       });
     }
 
-    // 15 Card Handlers
+    // 15 Card Handlers — Every option box opens its dedicated in-app module view
     // 1. Profile
     const cardProfile = document.getElementById('card-profile');
     if (cardProfile) {
@@ -2134,45 +2165,83 @@
       });
     });
 
-    // 2. New Lead
-    const cardNewLead = document.getElementById('card-new-lead');
-    if (cardNewLead) {
-      cardNewLead.addEventListener('click', () => {
-        openModal('modal-intake');
+    // 2. Partners
+    const cardPartners = document.getElementById('card-partners');
+    if (cardPartners) {
+      cardPartners.addEventListener('click', () => {
+        renderZippyPartnersModal();
+        openModal('modal-zippy-partners');
       });
     }
 
-    // 3. Lead Queue
-    const cardLeadQueue = document.getElementById('card-lead-queue');
-    if (cardLeadQueue) {
-      cardLeadQueue.addEventListener('click', () => {
-        showConsoleScreen();
-        showView('view-leads');
+    // Partner search filter
+    const partnerSearchInput = document.getElementById('zippy-partner-search');
+    if (partnerSearchInput) {
+      partnerSearchInput.addEventListener('input', (e) => {
+        renderZippyPartnersModal(e.target.value);
       });
     }
 
-    // 4. Lender Match
+    // Open full onboard partner modal
+    const btnZippyOnboardPart = document.getElementById('btn-zippy-open-onboard-partner');
+    if (btnZippyOnboardPart) {
+      btnZippyOnboardPart.addEventListener('click', () => {
+        closeModal('modal-zippy-partners');
+        openModal('modal-partner');
+      });
+    }
+
+    // 3. Feed Back
+    const cardFeedback = document.getElementById('card-feedback');
+    if (cardFeedback) {
+      cardFeedback.addEventListener('click', () => {
+        openModal('modal-zippy-feedback');
+      });
+    }
+
+    // Star rating selection
+    let selectedRating = 5;
+    document.querySelectorAll('#star-rating-group .star-rating').forEach(star => {
+      star.addEventListener('click', () => {
+        selectedRating = Number(star.dataset.rating || 5);
+        document.querySelectorAll('#star-rating-group .star-rating').forEach(s => {
+          const r = Number(s.dataset.rating || 0);
+          s.style.color = r <= selectedRating ? '#facc15' : '#475569';
+        });
+      });
+    });
+
+    const formFeedback = document.getElementById('form-zippy-feedback');
+    if (formFeedback) {
+      formFeedback.addEventListener('submit', (e) => {
+        e.preventDefault();
+        closeModal('modal-zippy-feedback');
+        formFeedback.reset();
+        showToast('Feedback Received', `Thank you! Your ${selectedRating}-star feedback for Zippy Enterprises has been logged.`, 'success');
+      });
+    }
+
+    // 4. Reminders
+    const cardReminders = document.getElementById('card-reminders');
+    if (cardReminders) {
+      cardReminders.addEventListener('click', () => {
+        openModal('modal-zippy-reminders');
+      });
+    }
+
+    const btnQuickNewRem = document.getElementById('btn-quick-new-lead-rem');
+    if (btnQuickNewRem) {
+      btnQuickNewRem.addEventListener('click', () => {
+        closeModal('modal-zippy-reminders');
+        openModal('modal-zippy-new-lead');
+      });
+    }
+
+    // 5. Lender Match
     const cardLenderMatch = document.getElementById('card-lender-match');
     if (cardLenderMatch) {
       cardLenderMatch.addEventListener('click', () => {
         openModal('modal-zippy-lenders');
-      });
-    }
-
-    // 5. Doc Vault
-    const cardDocVault = document.getElementById('card-doc-vault');
-    if (cardDocVault) {
-      cardDocVault.addEventListener('click', () => {
-        openModal('modal-zippy-vault');
-      });
-    }
-
-    const btnVaultGoLeads = document.getElementById('btn-vault-go-leads');
-    if (btnVaultGoLeads) {
-      btnVaultGoLeads.addEventListener('click', () => {
-        closeModal('modal-zippy-vault');
-        showConsoleScreen();
-        showView('view-leads');
       });
     }
 
@@ -2221,16 +2290,107 @@
       });
     }
 
-    // 7. Commissions
-    const cardCommissions = document.getElementById('card-commissions');
-    if (cardCommissions) {
-      cardCommissions.addEventListener('click', () => {
-        showConsoleScreen();
-        showView('view-commissions');
+    // 7. New Lead
+    const cardNewLead = document.getElementById('card-new-lead');
+    if (cardNewLead) {
+      cardNewLead.addEventListener('click', () => {
+        openModal('modal-zippy-new-lead');
       });
     }
 
-    // 8. Payouts
+    // In-Theme New Lead Submission Handler
+    const formZippyLead = document.getElementById('form-zippy-lead-intake');
+    if (formZippyLead) {
+      formZippyLead.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = document.getElementById('btn-submit-zippy-lead');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Routing Lead...';
+        }
+
+        const fullName = (document.getElementById('zippy-lead-name')?.value || '').trim();
+        const phone = (document.getElementById('zippy-lead-phone')?.value || '').trim();
+        const pan = (document.getElementById('zippy-lead-pan')?.value || '').trim().toUpperCase();
+        const productId = Number(document.getElementById('zippy-lead-product')?.value || 1);
+        const requestedAmount = Number(document.getElementById('zippy-lead-amount')?.value || 2500000);
+        const monthlyIncome = Number(document.getElementById('zippy-lead-income')?.value || 120000);
+        const city = (document.getElementById('zippy-lead-city')?.value || 'Hyderabad').trim();
+        const consentGranted = document.getElementById('zippy-lead-consent-check')?.checked;
+
+        if (!fullName || !phone || !pan || !requestedAmount) {
+          showToast('Incomplete Form', 'Please provide Borrower Name, Mobile, PAN, and Loan Amount.', 'warning');
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = '🚀 Submit & Dispatch Lead';
+          }
+          return;
+        }
+
+        try {
+          const res = await api('/api/v1/leads/intake', {
+            method: 'POST',
+            body: JSON.stringify({
+              fullName,
+              phone,
+              email: `${fullName.toLowerCase().replace(/[^a-z]/g, '') || 'borrower'}@client.in`,
+              pan,
+              employmentType: 'Business / Self-Employed',
+              monthlyIncome,
+              city,
+              state: 'Telangana',
+              productId,
+              requestedAmount,
+              consentGranted: Boolean(consentGranted)
+            })
+          });
+
+          closeModal('modal-zippy-new-lead');
+          formZippyLead.reset();
+          await refreshAllData();
+          showToast('Lead Dispatched', `Lead #${res.lead?.id || 'New'} (${fullName}) submitted with verified customer consent!`, 'success');
+        } catch (err) {
+          showToast('Intake Notice', err.message, 'warning');
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = '🚀 Submit & Dispatch Lead';
+          }
+        }
+      });
+    }
+
+    // 8. Lead Queue
+    const cardLeadQueue = document.getElementById('card-lead-queue');
+    if (cardLeadQueue) {
+      cardLeadQueue.addEventListener('click', () => {
+        renderZippyLeadQueueModal();
+        openModal('modal-zippy-lead-queue');
+      });
+    }
+
+    const queueSearch = document.getElementById('zippy-queue-search');
+    const queueFilter = document.getElementById('zippy-queue-status-filter');
+    if (queueSearch) {
+      queueSearch.addEventListener('input', () => {
+        renderZippyLeadQueueModal(queueSearch.value, queueFilter?.value || 'ALL');
+      });
+    }
+    if (queueFilter) {
+      queueFilter.addEventListener('change', () => {
+        renderZippyLeadQueueModal(queueSearch?.value || '', queueFilter.value);
+      });
+    }
+
+    const btnQueueAddLead = document.getElementById('btn-queue-add-lead');
+    if (btnQueueAddLead) {
+      btnQueueAddLead.addEventListener('click', () => {
+        closeModal('modal-zippy-lead-queue');
+        openModal('modal-zippy-new-lead');
+      });
+    }
+
+    // 9. Payouts
     const cardPayouts = document.getElementById('card-payouts');
     if (cardPayouts) {
       cardPayouts.addEventListener('click', () => {
@@ -2242,8 +2402,8 @@
     if (btnPayoutGoLedger) {
       btnPayoutGoLedger.addEventListener('click', () => {
         closeModal('modal-zippy-payouts');
-        showConsoleScreen();
-        showView('view-commissions');
+        renderZippyCommissionsModal();
+        openModal('modal-zippy-commissions');
       });
     }
 
@@ -2260,61 +2420,34 @@
       });
     }
 
-    // 9. Reminders
-    const cardReminders = document.getElementById('card-reminders');
-    if (cardReminders) {
-      cardReminders.addEventListener('click', () => {
-        openModal('modal-zippy-reminders');
+    // 10. Commissions
+    const cardCommissions = document.getElementById('card-commissions');
+    if (cardCommissions) {
+      cardCommissions.addEventListener('click', () => {
+        renderZippyCommissionsModal();
+        openModal('modal-zippy-commissions');
       });
     }
 
-    const btnQuickNewRem = document.getElementById('btn-quick-new-lead-rem');
-    if (btnQuickNewRem) {
-      btnQuickNewRem.addEventListener('click', () => {
-        closeModal('modal-zippy-reminders');
-        showConsoleScreen();
-        showView('view-leads');
-      });
-    }
-
-    // 10. Partners
-    const cardPartners = document.getElementById('card-partners');
-    if (cardPartners) {
-      cardPartners.addEventListener('click', () => {
-        showConsoleScreen();
-        showView('view-partners');
-      });
-    }
-
-    // 11. Products
-    const cardProducts = document.getElementById('card-products');
-    if (cardProducts) {
-      cardProducts.addEventListener('click', () => {
-        showConsoleScreen();
-        showView('view-catalog');
-      });
-    }
-
-    // 12. Analytics
+    // 11. Analytics
     const cardAnalytics = document.getElementById('card-analytics');
     if (cardAnalytics) {
       cardAnalytics.addEventListener('click', () => {
-        showConsoleScreen();
-        showView('view-overview');
+        renderZippyAnalyticsModal();
+        openModal('modal-zippy-analytics');
       });
     }
 
-    // 13. Doc Review
+    // 12. Doc Review
     const cardDocReview = document.getElementById('card-doc-review');
     if (cardDocReview) {
       cardDocReview.addEventListener('click', () => {
-        showConsoleScreen();
-        showView('view-leads');
-        showToast('Reviewer Desk', 'Inspect submitted borrower KYC documents and qualify applications.', 'info');
+        renderZippyDocReviewModal();
+        openModal('modal-zippy-doc-review');
       });
     }
 
-    // 14. Circulars
+    // 13. Circulars
     const cardCirculars = document.getElementById('card-circulars');
     if (cardCirculars) {
       cardCirculars.addEventListener('click', () => {
@@ -2322,35 +2455,273 @@
       });
     }
 
-    // 15. Feed Back
-    const cardFeedback = document.getElementById('card-feedback');
-    if (cardFeedback) {
-      cardFeedback.addEventListener('click', () => {
-        openModal('modal-zippy-feedback');
+    // 14. Loan Products
+    const cardProducts = document.getElementById('card-products');
+    if (cardProducts) {
+      cardProducts.addEventListener('click', () => {
+        renderZippyProductsModal();
+        openModal('modal-zippy-products');
       });
     }
 
-    // Star rating selection
-    let selectedRating = 5;
-    document.querySelectorAll('#star-rating-group .star-rating').forEach(star => {
-      star.addEventListener('click', () => {
-        selectedRating = Number(star.dataset.rating || 5);
-        document.querySelectorAll('#star-rating-group .star-rating').forEach(s => {
-          const r = Number(s.dataset.rating || 0);
-          s.style.color = r <= selectedRating ? '#facc15' : '#475569';
-        });
+    // 15. Doc Vault
+    const cardDocVault = document.getElementById('card-doc-vault');
+    if (cardDocVault) {
+      cardDocVault.addEventListener('click', () => {
+        openModal('modal-zippy-vault');
+      });
+    }
+
+    const btnVaultGoLeads = document.getElementById('btn-vault-go-leads');
+    if (btnVaultGoLeads) {
+      btnVaultGoLeads.addEventListener('click', () => {
+        closeModal('modal-zippy-vault');
+        renderZippyLeadQueueModal();
+        openModal('modal-zippy-lead-queue');
+      });
+    }
+  }
+
+  // Dynamic Renderers for Dashboard Option Boxes Modals
+  function renderZippyPartnersModal(filterText = '') {
+    const listEl = document.getElementById('zippy-partners-list');
+    if (!listEl) return;
+
+    let partners = state.partners && state.partners.length > 0 ? state.partners : [
+      { id: 1, name: 'Northstar Connect', tier: 'Tier 1 Platinum', partner_type: 'Connector', territory: 'Hyderabad & Telangana', active_lead_capacity: 50, contact_email: 'contact@northstar.in' },
+      { id: 2, name: 'Apex Wealth Advisors', tier: 'Tier 2 Gold', partner_type: 'Connector', territory: 'Nacharam IDA & Secunderabad', active_lead_capacity: 40, contact_email: 'ramesh@apexwealth.in' },
+      { id: 3, name: 'Riverbend Capital Ltd', tier: 'Tier 1 Platinum', partner_type: 'Institutional Lender', territory: 'Telangana & Andhra Pradesh', active_lead_capacity: 100, contact_email: 'credit@riverbend.in' }
+    ];
+
+    if (filterText) {
+      const q = filterText.toLowerCase();
+      partners = partners.filter(p => (p.name || '').toLowerCase().includes(q) || (p.territory || '').toLowerCase().includes(q));
+    }
+
+    listEl.innerHTML = partners.map(p => {
+      const tierBadge = p.tier?.includes('Platinum') ? 'pill-purple' : p.tier?.includes('Gold') ? 'pill-amber' : 'pill-blue';
+      return `
+        <div class="zippy-modal-item-card">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+            <div>
+              <strong style="color: #ffffff; font-size: 14px;">${escapeHtml(p.name)}</strong>
+              <div style="font-size: 11px; color: #38bdf8;">${escapeHtml(p.partner_type || 'Connector Partner')}</div>
+            </div>
+            <span class="zippy-status-pill ${tierBadge}">${escapeHtml(p.tier || 'Gold')}</span>
+          </div>
+          <div style="font-size: 12px; color: #cbd5e1; margin-bottom: 6px;">
+            📍 Territory: <strong>${escapeHtml(p.territory || 'Hyderabad, Nacharam')}</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; color: #94a3b8;">
+            <span>Capacity: ${p.active_lead_capacity || 40} leads</span>
+            <span>✉️ ${escapeHtml(p.contact_email || 'partner@zippy.in')}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function renderZippyLeadQueueModal(filterText = '', statusFilter = 'ALL') {
+    const listEl = document.getElementById('zippy-lead-queue-list');
+    const summaryEl = document.getElementById('zippy-queue-summary');
+    if (!listEl) return;
+
+    let leads = state.leads && state.leads.length > 0 ? state.leads : [
+      { id: 1, lead_reference: 'LEAD-2026-001', applicant_name: 'Suresh Kumar', loan_type: 'MSME Business Loan', requested_amount: 2500000, status: 'Eligible', partner_name: 'Northstar Connect' },
+      { id: 2, lead_reference: 'LEAD-2026-002', applicant_name: 'Mallapur Industrial Units', loan_type: 'Machinery Term Loan', requested_amount: 7500000, status: 'Offered', partner_name: 'Apex Wealth' },
+      { id: 3, lead_reference: 'LEAD-2026-003', applicant_name: 'Nacharam Bio-Tech Ltd', loan_type: 'Loan Against Property', requested_amount: 12000000, status: 'Disbursed', partner_name: 'Riverbend Capital' }
+    ];
+
+    if (filterText) {
+      const q = filterText.toLowerCase();
+      leads = leads.filter(l => (l.applicant_name || '').toLowerCase().includes(q) || (l.loan_type || '').toLowerCase().includes(q) || (l.lead_reference || '').toLowerCase().includes(q));
+    }
+    if (statusFilter !== 'ALL') {
+      leads = leads.filter(l => l.status === statusFilter);
+    }
+
+    if (summaryEl) summaryEl.textContent = `Showing ${leads.length} active leads`;
+
+    listEl.innerHTML = leads.map(l => {
+      const pillClass = l.status === 'Disbursed' ? 'pill-green' : l.status === 'Offered' ? 'pill-amber' : l.status === 'Accepted' ? 'pill-blue' : 'pill-purple';
+      return `
+        <div class="zippy-modal-item-card zippy-lead-card-click" data-lead-id="${l.id}" style="cursor: pointer;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="font-family: monospace; font-size: 11px; color: #38bdf8; font-weight: 700;">${escapeHtml(l.lead_reference || `#${l.id}`)}</span>
+                <strong style="color: #ffffff; font-size: 13.5px;">${escapeHtml(l.applicant_name)}</strong>
+              </div>
+              <div style="font-size: 11.5px; color: #94a3b8;">${escapeHtml(l.loan_type || 'Business Loan')}</div>
+            </div>
+            <span class="zippy-status-pill ${pillClass}">${escapeHtml(l.status)}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 12px;">
+            <span style="color: #facc15; font-weight: 800; font-family: monospace; font-size: 13.5px;">${formatCurrency(l.requested_amount)}</span>
+            <span style="color: #38bdf8; font-size: 11px; text-decoration: underline;">Inspect Details →</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Clicking lead card opens full lead detail modal
+    listEl.querySelectorAll('.zippy-lead-card-click').forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.dataset.leadId;
+        closeModal('modal-zippy-lead-queue');
+        viewLeadDetail(id);
+      });
+    });
+  }
+
+  function renderZippyCommissionsModal() {
+    const listEl = document.getElementById('zippy-commissions-list');
+    const totalEl = document.getElementById('zippy-comm-total');
+    const settledEl = document.getElementById('zippy-comm-settled');
+    const holdEl = document.getElementById('zippy-comm-hold');
+
+    let comms = state.commissions && state.commissions.length > 0 ? state.commissions : [
+      { id: 1, lead_id: 1, partner_name: 'Northstar Connect', loan_amount: 2500000, commission_rate: 2.0, net_payable: 45000, status: 'Accrued' },
+      { id: 2, lead_id: 2, partner_name: 'Apex Wealth', loan_amount: 5000000, commission_rate: 2.2, net_payable: 99000, status: 'Approved' },
+      { id: 3, lead_id: 3, partner_name: 'Riverbend Capital', loan_amount: 1500000, commission_rate: 1.8, net_payable: 24300, status: 'Paid' }
+    ];
+
+    let totalAccrued = 0, totalSettled = 0, totalHold = 0;
+    comms.forEach(c => {
+      const net = Number(c.net_payable || 0);
+      totalAccrued += net;
+      if (c.status === 'Paid') totalSettled += net;
+      else totalHold += Math.round(net * 0.15);
+    });
+
+    if (totalEl) totalEl.textContent = formatCurrency(totalAccrued);
+    if (settledEl) settledEl.textContent = formatCurrency(totalSettled);
+    if (holdEl) holdEl.textContent = formatCurrency(totalHold);
+
+    if (!listEl) return;
+    listEl.innerHTML = comms.map(c => {
+      const pillClass = c.status === 'Paid' ? 'pill-green' : c.status === 'Approved' ? 'pill-blue' : 'pill-amber';
+      return `
+        <div class="zippy-modal-item-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <div>
+              <strong style="color: #ffffff; font-size: 13.5px;">${escapeHtml(c.partner_name || 'Connector Partner')}</strong>
+              <div style="font-size: 11px; color: #94a3b8;">Lead #${c.lead_id} • Disbursal: ${formatCurrency(c.loan_amount)}</div>
+            </div>
+            <span class="zippy-status-pill ${pillClass}">${escapeHtml(c.status)}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 12px;">
+            <span style="color: #cbd5e1;">Rate: ${c.commission_rate || 2.0}%</span>
+            <span style="color: #38bdf8; font-weight: 800; font-family: monospace; font-size: 14px;">Net: ${formatCurrency(c.net_payable)}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function renderZippyAnalyticsModal() {
+    const statDisbursed = document.getElementById('zippy-stat-disbursed');
+    let totalDisbursed = 84500000;
+    if (state.leads && state.leads.length > 0) {
+      const disbursedLeads = state.leads.filter(l => l.status === 'Disbursed');
+      if (disbursedLeads.length > 0) {
+        totalDisbursed = disbursedLeads.reduce((acc, l) => acc + Number(l.requested_amount || 0), 0);
+      }
+    }
+    if (statDisbursed) statDisbursed.textContent = formatCurrency(totalDisbursed);
+  }
+
+  function renderZippyDocReviewModal() {
+    const listEl = document.getElementById('zippy-review-queue-list');
+    if (!listEl) return;
+
+    const reviews = [
+      { id: 1, borrower: 'Suresh Kumar (Nacharam IDA)', docType: 'Aadhaar & PAN Card KYC', status: 'VERIFIED', time: '10 mins ago', leadId: 1 },
+      { id: 2, borrower: 'Mallapur Industrial Unit #4', docType: 'GST 3B Returns & ITR', status: 'PENDING', time: '25 mins ago', leadId: 2 },
+      { id: 3, borrower: 'Nacharam Biotech Labs', docType: 'Audited Balance Sheet & P&L', status: 'VERIFIED', time: '1 hour ago', leadId: 3 },
+      { id: 4, borrower: 'Sri Krishna Enterprises', docType: 'Machinery Invoices & Quotations', status: 'QUERY RAISED', time: '2 hours ago', leadId: 4 }
+    ];
+
+    listEl.innerHTML = reviews.map(r => {
+      const pillClass = r.status === 'VERIFIED' ? 'pill-green' : r.status === 'PENDING' ? 'pill-amber' : 'pill-purple';
+      return `
+        <div class="zippy-modal-item-card">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+            <div>
+              <strong style="color: #ffffff; font-size: 13.5px;">${escapeHtml(r.borrower)}</strong>
+              <div style="font-size: 11.5px; color: #38bdf8;">📄 ${escapeHtml(r.docType)}</div>
+            </div>
+            <span class="zippy-status-pill ${pillClass}">${escapeHtml(r.status)}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+            <span style="font-size: 11px; color: #94a3b8;">${r.time}</span>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" class="btn btn-secondary btn-sm zippy-btn-verify-doc" data-id="${r.id}" style="font-size: 11px; padding: 2px 8px; color: #4ade80; border-color: rgba(34,197,94,0.4);">✓ Verify</button>
+              <button type="button" class="btn btn-secondary btn-sm zippy-btn-inspect-lead" data-lead-id="${r.leadId}" style="font-size: 11px; padding: 2px 8px; color: #38bdf8; border-color: rgba(56,189,248,0.4);">Details →</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    listEl.querySelectorAll('.zippy-btn-verify-doc').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.textContent = '✓ Verified';
+        btn.disabled = true;
+        showToast('Document Verified', 'Underwriting record marked verified with SHA-256 stamp.', 'success');
       });
     });
 
-    const formFeedback = document.getElementById('form-zippy-feedback');
-    if (formFeedback) {
-      formFeedback.addEventListener('submit', (e) => {
-        e.preventDefault();
-        closeModal('modal-zippy-feedback');
-        formFeedback.reset();
-        showToast('Feedback Received', `Thank you! Your ${selectedRating}-star feedback for Zippy Enterprises has been logged.`, 'success');
+    listEl.querySelectorAll('.zippy-btn-inspect-lead').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.leadId;
+        closeModal('modal-zippy-doc-review');
+        viewLeadDetail(id);
       });
-    }
+    });
+  }
+
+  function renderZippyProductsModal() {
+    const listEl = document.getElementById('zippy-products-catalog-list');
+    if (!listEl) return;
+
+    const products = [
+      { id: 1, name: 'MSME Business Term Loan', ticket: '₹10 Lakh to ₹5 Crore', rate: '9.75% – 12.50% p.a.', tenor: 'Up to 60 Months', sla: '48 Hours', tag: 'Fast Sanction' },
+      { id: 2, name: 'Machinery & Equipment Financing', ticket: '₹25 Lakh to ₹15 Crore', rate: '10.25% – 13.00% p.a.', tenor: 'Up to 84 Months', sla: '72 Hours', tag: 'TSIIC Nacharam 15% Subsidy' },
+      { id: 3, name: 'Loan Against Property (LAP)', ticket: '₹20 Lakh to ₹10 Crore', rate: '9.50% – 11.75% p.a.', tenor: 'Up to 180 Months', sla: '96 Hours', tag: 'Lowest Interest' },
+      { id: 4, name: 'Commercial Working Capital & OD', ticket: '₹50 Lakh to ₹20 Crore', rate: '10.00% – 12.00% p.a.', tenor: 'Annual Renewable', sla: '48 Hours', tag: 'Flexible Limits' },
+      { id: 5, name: 'Personal & Professional Unsecured', ticket: '₹2 Lakh to ₹25 Lakh', rate: '11.50% – 15.00% p.a.', tenor: 'Up to 60 Months', sla: '24 Hours', tag: 'Instant Pre-Approval' }
+    ];
+
+    listEl.innerHTML = products.map(p => `
+      <div class="zippy-modal-item-card">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+          <div>
+            <strong style="color: #ffffff; font-size: 14px;">${escapeHtml(p.name)}</strong>
+            <div style="font-size: 11px; color: #f59e0b; font-weight: 700;">★ ${escapeHtml(p.tag)}</div>
+          </div>
+          <span class="zippy-status-pill pill-blue">SLA: ${p.sla}</span>
+        </div>
+        <div style="font-size: 12px; color: #cbd5e1; line-height: 1.5; margin-bottom: 8px;">
+          • Ticket Size: <strong>${p.ticket}</strong><br>
+          • Interest Rate: <strong>${p.rate}</strong><br>
+          • Repayment Tenor: <strong>${p.tenor}</strong>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm zippy-btn-apply-prod" data-prod-id="${p.id}" style="width: 100%; font-size: 12px; font-weight: 700;">
+          + Intake Lead for ${escapeHtml(p.name)}
+        </button>
+      </div>
+    `).join('');
+
+    listEl.querySelectorAll('.zippy-btn-apply-prod').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const prodId = btn.dataset.prodId;
+        closeModal('modal-zippy-products');
+        const sel = document.getElementById('zippy-lead-product');
+        if (sel) sel.value = prodId;
+        openModal('modal-zippy-new-lead');
+      });
+    });
   }
 
   // 16. Welcome & Onboarding Screen Handlers (Screenshot Replica)
@@ -2372,18 +2743,18 @@
     updateWelcomeTime();
     setInterval(updateWelcomeTime, 30000);
 
-    // Open Auth Drawer on "Get Started"
-    if (btnGetStarted && authDrawer) {
+    // Open Dedicated In-App Auth & Create Account Screen on "Get Started"
+    if (btnGetStarted) {
       btnGetStarted.addEventListener('click', () => {
-        const resumeBox = document.getElementById('drawer-resume-session');
-        const resumeUser = document.getElementById('drawer-resume-user');
-        if (state.currentUser && resumeBox && resumeUser) {
-          resumeBox.style.display = 'block';
-          resumeUser.textContent = `${state.currentUser.fullName || state.currentUser.username} (${(state.currentUser.role || 'user').toUpperCase()})`;
-        } else if (resumeBox) {
-          resumeBox.style.display = 'none';
-        }
-        authDrawer.classList.add('open');
+        showAuthScreen('register');
+      });
+    }
+
+    // Logo Click on Welcome Screen navigates inside to Auth
+    const welcomeLogo = document.getElementById('btn-welcome-logo');
+    if (welcomeLogo) {
+      welcomeLogo.addEventListener('click', () => {
+        showAuthScreen('register');
       });
     }
 
@@ -2409,14 +2780,6 @@
       });
     }
 
-    // Logo Click on Welcome Screen
-    const welcomeLogo = document.getElementById('btn-welcome-logo');
-    if (welcomeLogo && authDrawer) {
-      welcomeLogo.addEventListener('click', () => {
-        authDrawer.classList.toggle('open');
-      });
-    }
-
     // 1-Click Quick Demo Sign-Ins in Drawer
     document.querySelectorAll('.quick-role-btn').forEach(btn => {
       btn.addEventListener('click', async () => {
@@ -2425,14 +2788,14 @@
         try {
           await switchPersona(role);
           showDashboardScreen();
-          showToast('Welcome to Zippy', `Instant Demo Login verified: [${role.toUpperCase()}]. Home Page active.`, 'success');
+          showToast('Welcome to Zippy', `Instant Demo Login verified: [${role.toUpperCase()}]. Dashboard active.`, 'success');
         } catch (err) {
           showToast('Sign-In Error', err.message, 'error');
         }
       });
     });
 
-    // Toggle Password Visibility
+    // Toggle Password Visibility in drawer
     const btnTogglePwd = document.getElementById('btn-toggle-pwd');
     const pwdInput = document.getElementById('drawer-password');
     if (btnTogglePwd && pwdInput) {
@@ -2485,14 +2848,248 @@
       });
     }
 
-    // Register link in Drawer
+    // Register link in Drawer opens Dedicated Create Account screen
     const btnDrawerReg = document.getElementById('btn-drawer-open-reg');
     if (btnDrawerReg) {
       btnDrawerReg.addEventListener('click', () => {
         if (authDrawer) authDrawer.classList.remove('open');
-        openModal('modal-auth-login');
-        const tabReg = document.getElementById('tab-auth-register');
-        if (tabReg) tabReg.click();
+        showAuthScreen('register');
+      });
+    }
+  }
+
+  // 17. Dedicated In-App Auth & Create Account Screen Handlers
+  function setupZippyAuthScreen() {
+    const tabRegister = document.getElementById('tab-zippy-register');
+    const tabSignIn = document.getElementById('tab-zippy-signin');
+    const tabDemo = document.getElementById('tab-zippy-demo');
+
+    const panelRegister = document.getElementById('panel-zippy-register');
+    const panelSignIn = document.getElementById('panel-zippy-signin');
+    const panelDemo = document.getElementById('panel-zippy-demo');
+
+    const authHeading = document.getElementById('auth-main-heading');
+    const btnBack = document.getElementById('btn-auth-back');
+    const brandBadge = document.getElementById('btn-auth-brand-badge');
+    const authTimeEl = document.getElementById('auth-status-time');
+
+    function updateAuthTime() {
+      if (authTimeEl) {
+        const now = new Date();
+        authTimeEl.textContent = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: false });
+      }
+    }
+    updateAuthTime();
+    setInterval(updateAuthTime, 30000);
+
+    if (btnBack) {
+      btnBack.addEventListener('click', () => {
+        showWelcomeScreen();
+      });
+    }
+    if (brandBadge) {
+      brandBadge.addEventListener('click', () => {
+        showWelcomeScreen();
+      });
+    }
+
+    function switchAuthTab(activeName) {
+      [tabRegister, tabSignIn, tabDemo].forEach(t => t && t.classList.remove('active'));
+      [panelRegister, panelSignIn, panelDemo].forEach(p => {
+        if (p) {
+          p.classList.remove('active');
+          p.style.display = 'none';
+        }
+      });
+
+      const errEl = document.getElementById('zippy-auth-error');
+      const succEl = document.getElementById('zippy-auth-success');
+      if (errEl) errEl.style.display = 'none';
+      if (succEl) succEl.style.display = 'none';
+
+      if (activeName === 'register') {
+        if (tabRegister) tabRegister.classList.add('active');
+        if (panelRegister) {
+          panelRegister.classList.add('active');
+          panelRegister.style.display = 'block';
+        }
+        if (authHeading) authHeading.textContent = 'Create Connector Account';
+      } else if (activeName === 'signin') {
+        if (tabSignIn) tabSignIn.classList.add('active');
+        if (panelSignIn) {
+          panelSignIn.classList.add('active');
+          panelSignIn.style.display = 'block';
+        }
+        if (authHeading) authHeading.textContent = 'Sign In to Workspace';
+      } else if (activeName === 'demo') {
+        if (tabDemo) tabDemo.classList.add('active');
+        if (panelDemo) {
+          panelDemo.classList.add('active');
+          panelDemo.style.display = 'block';
+        }
+        if (authHeading) authHeading.textContent = '1-Click Instant Demo Login';
+      }
+    }
+
+    if (tabRegister) tabRegister.addEventListener('click', () => switchAuthTab('register'));
+    if (tabSignIn) tabSignIn.addEventListener('click', () => switchAuthTab('signin'));
+    if (tabDemo) tabDemo.addEventListener('click', () => switchAuthTab('demo'));
+
+    const btnToggleToSignIn = document.getElementById('btn-toggle-to-signin');
+    if (btnToggleToSignIn) {
+      btnToggleToSignIn.addEventListener('click', () => switchAuthTab('signin'));
+    }
+    const btnToggleToRegister = document.getElementById('btn-toggle-to-register');
+    if (btnToggleToRegister) {
+      btnToggleToRegister.addEventListener('click', () => switchAuthTab('register'));
+    }
+
+    // Password Peek Buttons
+    const btnPeekReg = document.getElementById('btn-peek-reg-pwd');
+    const pwdReg = document.getElementById('zippy-reg-password');
+    if (btnPeekReg && pwdReg) {
+      btnPeekReg.addEventListener('click', () => {
+        const isPwd = pwdReg.type === 'password';
+        pwdReg.type = isPwd ? 'text' : 'password';
+        btnPeekReg.textContent = isPwd ? 'Hide' : 'Show';
+      });
+    }
+
+    const btnPeekLogin = document.getElementById('btn-peek-login-pwd');
+    const pwdLogin = document.getElementById('zippy-login-password');
+    if (btnPeekLogin && pwdLogin) {
+      btnPeekLogin.addEventListener('click', () => {
+        const isPwd = pwdLogin.type === 'password';
+        pwdLogin.type = isPwd ? 'text' : 'password';
+        btnPeekLogin.textContent = isPwd ? 'Hide' : 'Show';
+      });
+    }
+
+    // 1-Click Instant Demo Buttons
+    document.querySelectorAll('.zippy-demo-card').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const role = btn.dataset.role;
+        try {
+          await switchPersona(role);
+          showDashboardScreen();
+          showToast('Welcome to Zippy Dashboard', `Instant Demo Login verified: [${role.toUpperCase()}]. All 15 modules active.`, 'success');
+        } catch (err) {
+          showToast('Sign-In Error', err.message, 'error');
+        }
+      });
+    });
+
+    // Create Account Form Submit
+    const formReg = document.getElementById('form-zippy-register');
+    if (formReg) {
+      formReg.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const errEl = document.getElementById('zippy-auth-error');
+        const succEl = document.getElementById('zippy-auth-success');
+        if (errEl) errEl.style.display = 'none';
+        if (succEl) succEl.style.display = 'none';
+
+        const submitBtn = document.getElementById('btn-submit-zippy-register');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Creating Account & Onboarding...';
+        }
+
+        const fullName = (document.getElementById('zippy-reg-fullname')?.value || '').trim();
+        const phone = (document.getElementById('zippy-reg-phone')?.value || '').trim();
+        const username = (document.getElementById('zippy-reg-username')?.value || '').trim();
+        const email = (document.getElementById('zippy-reg-email')?.value || '').trim();
+        const password = document.getElementById('zippy-reg-password')?.value || '';
+        const business = (document.getElementById('zippy-reg-business')?.value || '').trim();
+        const territory = (document.getElementById('zippy-reg-territory')?.value || 'Hyderabad, Nacharam & Telangana').trim();
+        const pangst = (document.getElementById('zippy-reg-pangst')?.value || '').trim().toUpperCase();
+
+        if (!fullName || !phone || !username || !email || !password || !business) {
+          if (errEl) {
+            errEl.textContent = 'Please fill all required fields marked with *';
+            errEl.style.display = 'block';
+          }
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span>✨</span> Create Account &amp; Launch Dashboard 🚀';
+          }
+          return;
+        }
+
+        try {
+          const res = await api('/api/v1/auth/register-connector', {
+            method: 'POST',
+            body: JSON.stringify({
+              fullName,
+              phone,
+              username,
+              email,
+              password,
+              organizationName: business,
+              territory,
+              panOrGstin: pangst
+            })
+          });
+
+          if (res.csrfToken) state.csrfToken = res.csrfToken;
+          await fetchCurrentUser();
+          await refreshAllData();
+          showDashboardScreen();
+          showToast('Account Created Successfully', `Welcome ${res.user.fullName || res.user.username}! Your loan connector dashboard is ready.`, 'success');
+        } catch (err) {
+          if (errEl) {
+            errEl.textContent = err.message || 'Registration failed';
+            errEl.style.display = 'block';
+          }
+          showToast('Registration Error', err.message, 'error');
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span>✨</span> Create Account &amp; Launch Dashboard 🚀';
+          }
+        }
+      });
+    }
+
+    // Sign In Form Submit
+    const formSignIn = document.getElementById('form-zippy-signin');
+    if (formSignIn) {
+      formSignIn.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const errEl = document.getElementById('zippy-auth-error');
+        if (errEl) errEl.style.display = 'none';
+
+        const submitBtn = document.getElementById('btn-submit-zippy-signin');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Authenticating...';
+        }
+
+        const username = (document.getElementById('zippy-login-username')?.value || '').trim();
+        const password = document.getElementById('zippy-login-password')?.value || '';
+
+        try {
+          const res = await api('/api/v1/auth/login', {
+            method: 'POST',
+            body: JSON.stringify({ username, password })
+          });
+          if (res.csrfToken) state.csrfToken = res.csrfToken;
+          await fetchCurrentUser();
+          await refreshAllData();
+          showDashboardScreen();
+          showToast('Welcome Back', `Authenticated as ${res.user.fullName || res.user.username}. All 15 modules active.`, 'success');
+        } catch (err) {
+          if (errEl) {
+            errEl.textContent = err.message || 'Invalid username or password';
+            errEl.style.display = 'block';
+          }
+          showToast('Sign In Error', err.message, 'error');
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span>🔑</span> Sign In &amp; Launch Dashboard 🚀';
+          }
+        }
       });
     }
   }
@@ -2500,6 +3097,7 @@
   // Export app namespace for inline element event handlers
   window.app = {
     showWelcomeScreen,
+    showAuthScreen,
     showDashboardScreen,
     showConsoleScreen,
     viewLeadDetail,
