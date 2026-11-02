@@ -68,13 +68,20 @@
           <span class="zippy-welcome-chip">🔒 Secure Total Data</span>
         </div>
 
-        <!-- Golden Amber "Get Started" CTA Button -->
-        <button type="button" class="zippy-btn-get-started" id="btn-get-started" onclick="window.openZippyLoginPage && window.openZippyLoginPage(event)" aria-label="Sign In to Loan Software">
-          🔑 Sign In &amp; Open Workspace →
+        <!-- Golden Amber "Get Started" CTA Button (Instant 1-Click Launch) -->
+        <button type="button" class="zippy-btn-get-started" id="btn-get-started" onclick="window.launchZippyDashboard && window.launchZippyDashboard(event)" aria-label="Get Started and Launch Business Dashboard">
+          🚀 Get Started →
         </button>
-        <button type="button" class="zippy-btn-direct-dash" id="btn-direct-dashboard" onclick="window.launchZippyDashboard && window.launchZippyDashboard(event)" aria-label="Open Business Dashboard Directly" style="margin-top: 12px; width: 100%; height: 46px; background: rgba(56, 189, 248, 0.15); border: 1.5px solid #38bdf8; border-radius: 24px; color: #38bdf8; font-weight: 700; font-size: 13.5px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease;">
-          <span>🚀</span> Open Business Dashboard Directly
-        </button>
+
+        <!-- Secondary Quick Actions (Sign In / Register) -->
+        <div style="display: flex; gap: 10px; width: 100%; max-width: 340px; margin-top: -12px; margin-bottom: 20px;">
+          <button type="button" class="zippy-btn-direct-dash" id="btn-open-login-drawer" onclick="window.openZippyLoginPage && window.openZippyLoginPage(event)" aria-label="Sign In with Credentials" style="flex: 1; height: 42px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 20px; color: #e2e8f0; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s ease;">
+            <span>🔑</span> Sign In
+          </button>
+          <button type="button" class="zippy-btn-direct-dash" id="btn-open-register-screen" onclick="window.openZippyRegisterPage && window.openZippyRegisterPage(event)" aria-label="Register Connector Account" style="flex: 1; height: 42px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 20px; color: #38bdf8; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s ease;">
+            <span>✨</span> Register
+          </button>
+        </div>
 
         <!-- Copyright Footer -->
         <div class="zippy-welcome-footer">
@@ -2615,7 +2622,23 @@
       if (zippy) zippy.style.display = 'none';
       if (consoleWrap) consoleWrap.style.display = 'none';
       if (window.switchZippyAuthTab) window.switchZippyAuthTab('signin');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    };
+
+    window.openZippyRegisterPage = function(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      var welcome = document.getElementById('screen-welcome-login');
+      var auth = document.getElementById('screen-zippy-auth');
+      var zippy = document.getElementById('zippy-dashboard-screen');
+      var consoleWrap = document.getElementById('enterprise-console-wrapper');
+      var drawer = document.getElementById('welcome-auth-drawer');
+      if (drawer) drawer.classList.remove('open');
+      if (welcome) welcome.style.display = 'none';
+      if (auth) auth.style.display = 'flex';
+      if (zippy) zippy.style.display = 'none';
+      if (consoleWrap) consoleWrap.style.display = 'none';
+      if (window.switchZippyAuthTab) window.switchZippyAuthTab('register');
+      window.scrollTo({ top: 0, behavior: 'instant' });
     };
 
     window.launchZippyDashboard = function(e) {
@@ -2624,6 +2647,8 @@
       var auth = document.getElementById('screen-zippy-auth');
       var zippy = document.getElementById('zippy-dashboard-screen');
       var consoleWrap = document.getElementById('enterprise-console-wrapper');
+      var drawer = document.getElementById('welcome-auth-drawer');
+      if (drawer) drawer.classList.remove('open');
       if (welcome) welcome.style.display = 'none';
       if (auth) auth.style.display = 'none';
       if (zippy) zippy.style.display = 'block';
@@ -2632,7 +2657,10 @@
         m.classList.remove('active');
         m.style.display = 'none';
       });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      try {
+        if (history.replaceState) history.replaceState(null, '', '#dashboard');
+      } catch (err) {}
     };
 
     window.backToDashboard = function(e) {
@@ -2776,13 +2804,19 @@
     // Immediate DOM wiring for instant responsiveness
     document.addEventListener('DOMContentLoaded', function() {
       var btnGetStarted = document.getElementById('btn-get-started');
-      if (btnGetStarted) btnGetStarted.addEventListener('click', window.openZippyLoginPage);
+      if (btnGetStarted) btnGetStarted.addEventListener('click', window.launchZippyDashboard);
 
       var btnDirectDash = document.getElementById('btn-direct-dashboard');
       if (btnDirectDash) btnDirectDash.addEventListener('click', window.launchZippyDashboard);
 
+      var btnOpenLogin = document.getElementById('btn-open-login-drawer');
+      if (btnOpenLogin) btnOpenLogin.addEventListener('click', window.openZippyLoginPage);
+
+      var btnOpenReg = document.getElementById('btn-open-register-screen');
+      if (btnOpenReg) btnOpenReg.addEventListener('click', window.openZippyRegisterPage);
+
       var welcomeLogo = document.getElementById('btn-welcome-logo');
-      if (welcomeLogo) welcomeLogo.addEventListener('click', window.openZippyLoginPage);
+      if (welcomeLogo) welcomeLogo.addEventListener('click', window.launchZippyDashboard);
 
       var btnAuthBack = document.getElementById('btn-auth-back');
       if (btnAuthBack) btnAuthBack.addEventListener('click', window.backToWelcomeScreen);

@@ -3121,21 +3121,34 @@
     const drawerHandle = document.getElementById('btn-drawer-handle');
     const statusTimeEl = document.getElementById('welcome-status-time');
 
-    // Dedicated Strict Login Page Trigger on "Get Started"
+    // Dedicated Strict Login Page Trigger
     window.openZippyLoginPage = function(e) {
       if (e && e.preventDefault) e.preventDefault();
       if (authDrawer) authDrawer.classList.remove('open');
       showAuthScreen('signin');
     };
 
-    // Launch Business Dashboard (All 15 Business Modules)
+    // Dedicated Create Account / Register Page Trigger
+    window.openZippyRegisterPage = function(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      if (authDrawer) authDrawer.classList.remove('open');
+      showAuthScreen('register');
+    };
+
+    // Launch Business Dashboard (All 15 Business Modules) - Instant 1-Click Entry!
     window.launchZippyDashboard = async function(e) {
       if (e && e.preventDefault) e.preventDefault();
       if (authDrawer) authDrawer.classList.remove('open');
       
+      // 1. INSTANT ZERO-LATENCY SCREEN TRANSITION: Switch screen immediately on 1st click
+      showDashboardScreen();
+      try {
+        if (history.replaceState) history.replaceState(null, '', '#dashboard');
+      } catch (err) {}
+
+      // 2. Background session sync and live data refresh
       if (!state.currentUser) {
         try {
-          showToast('Connecting', 'Establishing secure business dashboard session...', 'info');
           const res = await api('/api/v1/auth/login', {
             method: 'POST',
             body: JSON.stringify({ username: 'M.Lingaswamy@123', password: 'zippy@pass0001' })
@@ -3143,22 +3156,18 @@
           if (res.csrfToken) state.csrfToken = res.csrfToken;
           await fetchCurrentUser();
           await refreshAllData();
-          showDashboardScreen();
           showToast('Dashboard Synchronized', `Welcome back, ${res.user?.fullName || 'M. Lingaswamy'}! All 15 modules synchronized.`, 'success');
-          return;
         } catch (err) {
-          console.warn('Auto-session failed, opening login', err);
-          showToast('Sign In Required', 'Please enter your credentials to open dashboard.', 'info');
-          showAuthScreen('signin');
-          return;
+          console.warn('Auto-session background check notice:', err);
+          showToast('Guest Mode Active', 'Browsing dashboard with sample data. Sign in to perform administrative writes.', 'info');
         }
+      } else {
+        refreshAllData().catch(e => console.warn('Background sync failed:', e));
       }
-      showDashboardScreen();
-      refreshAllData().catch(e => console.warn('Background sync failed:', e));
     };
 
     if (btnGetStarted) {
-      btnGetStarted.addEventListener('click', window.openZippyLoginPage);
+      btnGetStarted.addEventListener('click', window.launchZippyDashboard);
     }
 
     const btnDirectDash = document.getElementById('btn-direct-dashboard');
@@ -3166,10 +3175,20 @@
       btnDirectDash.addEventListener('click', window.launchZippyDashboard);
     }
 
-    // Logo Click on Welcome Screen opens strict login page
+    const btnOpenLogin = document.getElementById('btn-open-login-drawer');
+    if (btnOpenLogin) {
+      btnOpenLogin.addEventListener('click', window.openZippyLoginPage);
+    }
+
+    const btnOpenReg = document.getElementById('btn-open-register-screen');
+    if (btnOpenReg) {
+      btnOpenReg.addEventListener('click', window.openZippyRegisterPage);
+    }
+
+    // Logo Click on Welcome Screen also launches dashboard
     const welcomeLogo = document.getElementById('btn-welcome-logo');
     if (welcomeLogo) {
-      welcomeLogo.addEventListener('click', window.openZippyLoginPage);
+      welcomeLogo.addEventListener('click', window.launchZippyDashboard);
     }
 
     // Resume into Business Dashboard
@@ -3551,7 +3570,8 @@
     showDashboardScreen,
     showConsoleScreen,
     openZippyLoginPage: (e) => window.openZippyLoginPage && window.openZippyLoginPage(e),
-    launchDashboard: (e) => window.openZippyLoginPage && window.openZippyLoginPage(e),
+    openZippyRegisterPage: (e) => window.openZippyRegisterPage && window.openZippyRegisterPage(e),
+    launchDashboard: (e) => window.launchZippyDashboard && window.launchZippyDashboard(e),
     zippyLogout: (e) => window.zippyLogout && window.zippyLogout(e),
     backToWelcomeScreen: (e) => window.backToWelcomeScreen && window.backToWelcomeScreen(e),
     viewLeadDetail,
