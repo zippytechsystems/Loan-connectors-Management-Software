@@ -61,6 +61,13 @@
           Easily Maintain your Loan Applications, Calculate Loan Commissions, and Manage &amp; Secure Total Data.
         </p>
 
+        <!-- 3 Feature Highlights on Mobile/App Welcome Screen -->
+        <div class="zippy-welcome-chips">
+          <span class="zippy-welcome-chip">📁 Maintain Applications</span>
+          <span class="zippy-welcome-chip">💰 Calculate Commissions</span>
+          <span class="zippy-welcome-chip">🔒 Secure Total Data</span>
+        </div>
+
         <!-- Golden Amber "Get Started" CTA Button -->
         <button type="button" class="zippy-btn-get-started" id="btn-get-started" onclick="window.openZippyLoginPage && window.openZippyLoginPage(event)" aria-label="Sign In to Loan Software">
           🔑 Sign In &amp; Open Workspace →
@@ -305,16 +312,16 @@
        ZIPPY ENTERPRISES — DASHBOARD / HOME SCREEN (15 LOAN CONNECTOR MODULES)
        Royal Midnight Sapphire Blue, Glowing Neon Cyan, 3-Column Image Card Grid
        ========================================================================= -->
-  <section id="zippy-dashboard-screen" class="zippy-app-wrapper" style="display: none;" aria-label="Zippy Loan Connector Loan Software Application Dashboard">
+  <section id="zippy-dashboard-screen" class="zippy-app-wrapper" style="display: none;" aria-label="Loan Connector Management Software Dashboard">
     <div class="zippy-main-container">
       
 
 
       <!-- Top App Header -->
       <header class="zippy-header">
-        <div class="zippy-header-logo-wrap" id="zippy-logo-btn" title="Zippy Loan Connector Loan Software Application">
+        <div class="zippy-header-logo-wrap" id="zippy-logo-btn" title="Loan Connector Management Software">
           <div class="zippy-logo-badge">
-            <img src="img/dashboard/logo.svg" alt="Zippy Loan Connector Software" width="44" height="44">
+            <img src="img/dashboard/logo.svg" alt="Loan Connector Management Software" width="44" height="44">
           </div>
         </div>
         <div style="display: flex; align-items: center; gap: 8px;">
@@ -343,7 +350,7 @@
 
       <!-- Sub-Brand Banner & Console Switcher -->
       <div class="zippy-brand-banner">
-        <span class="zippy-brand-tag"><span class="active-dot"></span> Zippy Loan Connector Loan Software Application</span>
+        <span class="zippy-brand-tag"><span class="active-dot"></span> Loan Connector Management Software</span>
         <button type="button" class="zippy-view-switch-btn" id="zippy-toggle-console" title="Open Full Operations Console">
           <span>📊</span> <span>Operations Console</span>
         </button>
@@ -2642,7 +2649,7 @@
       if (auth) auth.style.display = 'none';
       if (zippy) zippy.style.display = 'none';
       if (consoleWrap) consoleWrap.style.display = 'none';
-      if (welcome) welcome.style.display = 'block';
+      if (welcome) welcome.style.display = 'flex';
       document.querySelectorAll('.zippy-modal.active, .modal-backdrop.active').forEach(function(m) {
         m.classList.remove('active');
         m.style.display = 'none';

@@ -344,7 +344,12 @@ function handleLeadRoutes(req, res, u, body, user) {
       );
 
       // 3. Generate lead reference
-      const leadRef = `LND-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+      let leadRef = '';
+      let attempts = 0;
+      do {
+        leadRef = `LND-${new Date().getFullYear()}-${Date.now().toString().slice(-4)}${Math.floor(100 + Math.random() * 900)}`;
+        attempts++;
+      } while (attempts < 10 && dbSync.prepare('SELECT id FROM leads WHERE lead_reference = ?').get(leadRef));
       const estimatedCommission = Math.round((Number(requestedAmount) * 1.25) / 100);
 
       // 4. Create Lead
