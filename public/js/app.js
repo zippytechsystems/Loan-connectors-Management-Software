@@ -173,11 +173,8 @@
     if (defaultTab === 'register') {
       const tab = document.getElementById('tab-zippy-register');
       if (tab) tab.click();
-    } else if (defaultTab === 'signin') {
+    } else {
       const tab = document.getElementById('tab-zippy-signin');
-      if (tab) tab.click();
-    } else if (defaultTab === 'demo') {
-      const tab = document.getElementById('tab-zippy-demo');
       if (tab) tab.click();
     }
   }
@@ -2164,14 +2161,7 @@
       });
     }
 
-    // Quick Persona Switchers in Profile Modal
-    document.querySelectorAll('.persona-quick-btn').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const role = btn.dataset.role;
-        closeModal('modal-zippy-profile');
-        await switchPersona(role);
-      });
-    });
+
 
     // 2. Partners
     const cardPartners = document.getElementById('card-partners');
@@ -3180,20 +3170,7 @@
       });
     }
 
-    // 1-Click Quick Demo Sign-Ins in Drawer
-    document.querySelectorAll('.quick-role-btn').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const role = btn.dataset.role;
-        if (authDrawer) authDrawer.classList.remove('open');
-        try {
-          await switchPersona(role);
-          showDashboardScreen();
-          showToast('Welcome to Zippy', `Instant Demo Login verified: [${role.toUpperCase()}]. Dashboard active.`, 'success');
-        } catch (err) {
-          showToast('Sign-In Error', err.message, 'error');
-        }
-      });
-    });
+
 
     // Toggle Password Visibility in drawer
     const btnTogglePwd = document.getElementById('btn-toggle-pwd');
@@ -3262,11 +3239,9 @@
   function setupZippyAuthScreen() {
     const tabRegister = document.getElementById('tab-zippy-register');
     const tabSignIn = document.getElementById('tab-zippy-signin');
-    const tabDemo = document.getElementById('tab-zippy-demo');
 
     const panelRegister = document.getElementById('panel-zippy-register');
     const panelSignIn = document.getElementById('panel-zippy-signin');
-    const panelDemo = document.getElementById('panel-zippy-demo');
 
     const authHeading = document.getElementById('auth-main-heading');
     const btnBack = document.getElementById('btn-auth-back');
@@ -3294,8 +3269,8 @@
     }
 
     function switchAuthTab(activeName) {
-      [tabRegister, tabSignIn, tabDemo].forEach(t => t && t.classList.remove('active'));
-      [panelRegister, panelSignIn, panelDemo].forEach(p => {
+      [tabRegister, tabSignIn].forEach(t => t && t.classList.remove('active'));
+      [panelRegister, panelSignIn].forEach(p => {
         if (p) {
           p.classList.remove('active');
           p.style.display = 'none';
@@ -3314,7 +3289,7 @@
           panelRegister.style.display = 'block';
         }
         if (authHeading) authHeading.textContent = 'Create Connector Account';
-      } else if (activeName === 'signin') {
+      } else {
         if (tabSignIn) tabSignIn.classList.add('active');
         if (panelSignIn) {
           panelSignIn.classList.add('active');
@@ -3323,19 +3298,11 @@
         if (authHeading) authHeading.textContent = 'Sign In to Zippy Loan Connector';
         const subHead = document.querySelector('.zippy-auth-subheading');
         if (subHead) subHead.textContent = 'Strict Authorized Access • M.Lingaswamy@123';
-      } else if (activeName === 'demo') {
-        if (tabDemo) tabDemo.classList.add('active');
-        if (panelDemo) {
-          panelDemo.classList.add('active');
-          panelDemo.style.display = 'block';
-        }
-        if (authHeading) authHeading.textContent = '1-Click Instant Demo Login';
       }
     }
 
     if (tabRegister) tabRegister.addEventListener('click', () => switchAuthTab('register'));
     if (tabSignIn) tabSignIn.addEventListener('click', () => switchAuthTab('signin'));
-    if (tabDemo) tabDemo.addEventListener('click', () => switchAuthTab('demo'));
 
     const btnToggleToSignIn = document.getElementById('btn-toggle-to-signin');
     if (btnToggleToSignIn) {
@@ -3367,19 +3334,7 @@
       });
     }
 
-    // 1-Click Instant Demo Buttons
-    document.querySelectorAll('.zippy-demo-card').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const role = btn.dataset.role;
-        try {
-          await switchPersona(role);
-          showDashboardScreen();
-          showToast('Welcome to Zippy Dashboard', `Instant Demo Login verified: [${role.toUpperCase()}]. All 15 modules active.`, 'success');
-        } catch (err) {
-          showToast('Sign-In Error', err.message, 'error');
-        }
-      });
-    });
+
 
     // Quick-Fill M. Lingaswamy Credentials on Sign In Panel
     const btnQuickFillLingaswamy = document.getElementById('btn-quick-fill-lingaswamy');

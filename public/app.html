@@ -97,60 +97,6 @@
           </button>
         </div>
 
-        <!-- 1-Click Quick Demo Sign-In (Instant Access for All 8 Personas) -->
-        <div style="margin-bottom: 14px;">
-          <div style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
-            ⚡ 1-Click Instant Persona Sign-In:
-          </div>
-          <div class="quick-role-chips">
-            <button type="button" class="quick-role-btn" data-role="admin">
-              <span class="role-tag">👑 ADMIN</span>
-              <span class="role-name">Vikram Singhania</span>
-            </button>
-            <button type="button" class="quick-role-btn" data-role="connector">
-              <span class="role-tag">🤝 CONNECTOR 1</span>
-              <span class="role-name">Northstar Connect</span>
-            </button>
-            <button type="button" class="quick-role-btn" data-role="connector2">
-              <span class="role-tag">💼 CONNECTOR 2</span>
-              <span class="role-name">Apex Wealth</span>
-            </button>
-            <button type="button" class="quick-role-btn" data-role="ops">
-              <span class="role-tag">⚡ OPERATIONS</span>
-              <span class="role-name">Operations Desk</span>
-            </button>
-            <button type="button" class="quick-role-btn" data-role="lender">
-              <span class="role-tag">🏦 LENDER</span>
-              <span class="role-name">Riverbend Capital</span>
-            </button>
-            <button type="button" class="quick-role-btn" data-role="reviewer">
-              <span class="role-tag">🔍 REVIEWER</span>
-              <span class="role-name">KYC Underwriter</span>
-            </button>
-            <button type="button" class="quick-role-btn" data-role="finance">
-              <span class="role-tag">💰 FINANCE</span>
-              <span class="role-name">Payouts &amp; UTR</span>
-            </button>
-            <button type="button" class="quick-role-btn" data-role="auditor">
-              <span class="role-tag">🛡️ AUDITOR</span>
-              <span class="role-name">Compliance Audit</span>
-            </button>
-          </div>
-        </div>
-
-        <div style="text-align: center; margin: 12px 0 14px 0; position: relative;">
-          <span style="background: #09132b; padding: 0 10px; color: #64748b; font-size: 11px; text-transform: uppercase;">or enter credentials</span>
-          <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.1); z-index: -1;"></div>
-        </div>
-
-        <!-- Strict Authorized Credentials Quick-Fill Pill -->
-        <button type="button" id="btn-drawer-quick-lingaswamy" class="zippy-quick-credential-pill" style="margin-bottom: 12px;" title="Fill M. Lingaswamy Credentials">
-          <span class="pill-sparkle">⚡</span>
-          <span class="pill-label">Authorized:</span>
-          <strong class="pill-val">M.Lingaswamy@123</strong>
-          <span class="pill-tap">[Tap to Fill]</span>
-        </button>
-
         <!-- Credentials Form -->
         <form id="form-drawer-login" novalidate>
           <div id="drawer-login-error" style="display: none; padding: 8px 12px; margin-bottom: 12px; font-size: 12px; border-radius: 8px; background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4);"></div>
@@ -221,16 +167,13 @@
         <p class="zippy-auth-subheading">Strict Authorized Access • Verified Connector &amp; Admin Network</p>
       </div>
 
-      <!-- Tab Switcher (Sign In | Create Account | 1-Click Demo) -->
+      <!-- Tab Switcher (Sign In | Create Account) -->
       <div class="zippy-auth-tab-bar" role="tablist">
         <button type="button" class="zippy-auth-tab-item active" id="tab-zippy-signin" role="tab" aria-selected="true">
           <span>🔑</span> Sign In
         </button>
         <button type="button" class="zippy-auth-tab-item" id="tab-zippy-register" role="tab" aria-selected="false">
           <span>📝</span> Create Account
-        </button>
-        <button type="button" class="zippy-auth-tab-item" id="tab-zippy-demo" role="tab" aria-selected="false">
-          <span>⚡</span> Quick Demo
         </button>
       </div>
 
@@ -365,78 +308,7 @@
           </div>
         </div>
 
-        <!-- PANEL 3: 1-CLICK INSTANT DEMO PERSONA ACCESS -->
-        <div id="panel-zippy-demo" class="zippy-auth-panel" style="display: none;">
-          <div style="font-size: 12px; color: #94a3b8; margin-bottom: 12px; line-height: 1.4;">
-            Tap any persona to immediately enter the live multi-tenant loan platform with full data:
-          </div>
-          <div class="zippy-demo-grid">
-            <button type="button" class="zippy-demo-card" data-role="admin">
-              <div class="demo-icon">👑</div>
-              <div class="demo-info">
-                <strong>Vikram Singhania</strong>
-                <span>Global Administrator</span>
-              </div>
-              <span class="demo-arrow">→</span>
-            </button>
-            <button type="button" class="zippy-demo-card" data-role="connector">
-              <div class="demo-icon">🤝</div>
-              <div class="demo-info">
-                <strong>Northstar Connect</strong>
-                <span>Connector 1 • Hyderabad</span>
-              </div>
-              <span class="demo-arrow">→</span>
-            </button>
-            <button type="button" class="zippy-demo-card" data-role="connector2">
-              <div class="demo-icon">💼</div>
-              <div class="demo-info">
-                <strong>Apex Wealth Advisors</strong>
-                <span>Connector 2 • Nacharam IDA</span>
-              </div>
-              <span class="demo-arrow">→</span>
-            </button>
-            <button type="button" class="zippy-demo-card" data-role="ops">
-              <div class="demo-icon">⚡</div>
-              <div class="demo-info">
-                <strong>Operations Desk</strong>
-                <span>Lead Routing &amp; Governance</span>
-              </div>
-              <span class="demo-arrow">→</span>
-            </button>
-            <button type="button" class="zippy-demo-card" data-role="lender">
-              <div class="demo-icon">🏦</div>
-              <div class="demo-info">
-                <strong>Riverbend Capital</strong>
-                <span>Institutional Lender Desk</span>
-              </div>
-              <span class="demo-arrow">→</span>
-            </button>
-            <button type="button" class="zippy-demo-card" data-role="reviewer">
-              <div class="demo-icon">🔍</div>
-              <div class="demo-info">
-                <strong>KYC Underwriter</strong>
-                <span>Document Review Queue</span>
-              </div>
-              <span class="demo-arrow">→</span>
-            </button>
-            <button type="button" class="zippy-demo-card" data-role="finance">
-              <div class="demo-icon">💰</div>
-              <div class="demo-info">
-                <strong>Finance Desk</strong>
-                <span>Commissions &amp; NEFT UTR</span>
-              </div>
-              <span class="demo-arrow">→</span>
-            </button>
-            <button type="button" class="zippy-demo-card" data-role="auditor">
-              <div class="demo-icon">🛡️</div>
-              <div class="demo-info">
-                <strong>Compliance Auditor</strong>
-                <span>Masked PII Audit Log</span>
-              </div>
-              <span class="demo-arrow">→</span>
-            </button>
-          </div>
-        </div>
+
 
       </div>
     </div>
@@ -684,23 +556,7 @@
       </button>
     </div>
 
-    <!-- 1. Top Persona Switcher Bar for Real-time Role & Tenant Testing -->
-    <aside class="persona-bar" aria-label="Role Simulation and Tenant Testing Switcher">
-      <div class="persona-bar-info">
-        <span class="persona-env-tag">DEMO SANDBOX</span>
-        <span class="persona-bar-text">Switch Persona &amp; Tenant Boundary:</span>
-      </div>
-      <div class="persona-selector" role="group" aria-label="Available Personas">
-        <button type="button" class="persona-btn active" data-role="admin" title="System Administrator (Global Network Scope)">Admin</button>
-        <button type="button" class="persona-btn" data-role="operations" title="Operations Desk (Routing &amp; Governance)">Operations Mgr</button>
-        <button type="button" class="persona-btn" data-role="connector" title="Connector Tenant: Northstar Connect">Connector 1 (Northstar)</button>
-        <button type="button" class="persona-btn" data-role="connector2" title="Connector Tenant: Apex Financial Advisors">Connector 2 (Apex)</button>
-        <button type="button" class="persona-btn" data-role="lender" title="Institutional Lender: Riverbend Capital Ltd">Lender Liaison</button>
-        <button type="button" class="persona-btn" data-role="reviewer" title="Reviewer Role (Underwriting &amp; KYC Verification)">Reviewer</button>
-        <button type="button" class="persona-btn" data-role="finance" title="Finance Role (Commissions &amp; Settlement)">Finance</button>
-        <button type="button" class="persona-btn" data-role="auditor" title="Independent Compliance Auditor (Masked PII)">Auditor (Masked PII)</button>
-      </div>
-    </aside>
+
 
     <!-- 2. Application Header -->
     <header class="app-header">
@@ -717,7 +573,7 @@
 
     <div class="header-user-badge">
       <div class="user-meta">
-        <span id="header-user-name" class="user-name">Vikram Singhania</span>
+        <span id="header-user-name" class="user-name">M. Lingaswamy</span>
         <span id="header-user-role" class="role-badge">ADMIN</span>
       </div>
       <span id="tenant-scope-indicator" class="tenant-scope-pill">Network Scope (Global)</span>
@@ -1874,7 +1730,7 @@
         <div style="width: 72px; height: 72px; border-radius: 50%; background: #1e293b; border: 2px solid #38bdf8; margin: 0 auto 10px auto; overflow: hidden; display: flex; align-items: center; justify-content: center;">
           <img src="img/dashboard/profile.svg" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
-        <h4 id="zippy-prof-name" style="font-size: 18px; margin: 0 0 4px 0; color: #ffffff;">Vikram Singhania</h4>
+        <h4 id="zippy-prof-name" style="font-size: 18px; margin: 0 0 4px 0; color: #ffffff;">M. Lingaswamy</h4>
         <div id="zippy-prof-role" style="font-size: 12px; color: #38bdf8; font-weight: 700; text-transform: uppercase;">ADMINISTRATOR</div>
       </div>
       <div style="background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 14px; border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 20px; font-size: 13px;">
@@ -1930,15 +1786,7 @@
         </button>
       </form>
 
-      <div style="margin-bottom: 16px;">
-        <div style="font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 8px;">SWITCH ACTIVE ROLE (DEMO SANDBOX):</div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-          <button type="button" class="btn btn-secondary btn-sm persona-quick-btn" data-role="connector" style="color: #38bdf8;">Northstar Connector</button>
-          <button type="button" class="btn btn-secondary btn-sm persona-quick-btn" data-role="connector2" style="color: #38bdf8;">Apex Connector</button>
-          <button type="button" class="btn btn-secondary btn-sm persona-quick-btn" data-role="reviewer" style="color: #38bdf8;">Reviewer Role</button>
-          <button type="button" class="btn btn-secondary btn-sm persona-quick-btn" data-role="finance" style="color: #38bdf8;">Finance Role</button>
-        </div>
-      </div>
+
       <button type="button" class="btn btn-danger" id="zippy-prof-logout" style="width: 100%;">Sign Out of Session</button>
     </div>
   </div>
@@ -2832,7 +2680,7 @@
     };
 
     window.switchZippyAuthTab = function(tabName) {
-      var tabs = ['signin', 'register', 'demo'];
+      var tabs = ['signin', 'register'];
       tabs.forEach(function(t) {
         var tabBtn = document.getElementById('tab-zippy-' + t);
         var panel = document.getElementById('panel-zippy-' + t);
@@ -2965,8 +2813,7 @@
       var tabRegister = document.getElementById('tab-zippy-register');
       if (tabRegister) tabRegister.addEventListener('click', function() { window.switchZippyAuthTab('register'); });
 
-      var tabDemo = document.getElementById('tab-zippy-demo');
-      if (tabDemo) tabDemo.addEventListener('click', function() { window.switchZippyAuthTab('demo'); });
+
 
       var toRegister = document.getElementById('btn-toggle-to-register');
       if (toRegister) toRegister.addEventListener('click', function() { window.switchZippyAuthTab('register'); });
