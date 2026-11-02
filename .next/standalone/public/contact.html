@@ -80,7 +80,9 @@
               Our operations team reviews submissions within 24 business hours.
             </p>
 
-            <form onsubmit="event.preventDefault(); alert('Your message has been received. Our partner operations desk will review and contact you shortly.');" style="display: flex; flex-direction: column; gap: 1.25rem;">
+            <form id="contactForm" style="display: flex; flex-direction: column; gap: 1.25rem;">
+              <div id="contactFormAlert" style="display: none; padding: 1rem 1.25rem; border-radius: var(--radius-sm); font-size: 0.92rem; line-height: 1.5;"></div>
+
               <div>
                 <label for="cName" style="display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 0.35rem;">Full Name *</label>
                 <input type="text" id="cName" required placeholder="Your Name" style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); font-size: 0.95rem;">
@@ -111,7 +113,7 @@
                 <textarea id="cMessage" required rows="4" placeholder="Briefly describe your agency, monthly lead volume, or inquiry..." style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); font-size: 0.95rem; font-family: inherit;"></textarea>
               </div>
 
-              <button type="submit" class="btn btn-primary" style="padding: 0.75rem 2rem; width: fit-content;">Submit Message</button>
+              <button type="submit" id="cSubmitBtn" class="btn btn-primary" style="padding: 0.75rem 2rem; width: fit-content;">Submit Message</button>
             </form>
           </div>
 
@@ -200,5 +202,51 @@
 
   </footer>
 
+  <script>
+    document.getElementById('contactForm')?.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('cSubmitBtn');
+      const alertBox = document.getElementById('contactFormAlert');
+      const name = document.getElementById('cName').value.trim();
+      const email = document.getElementById('cEmail').value.trim();
+      const phone = document.getElementById('cPhone').value.trim();
+      const inquiryType = document.getElementById('cRole').value;
+      const message = document.getElementById('cMessage').value.trim();
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting Inquiry...';
+      alertBox.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/v1/public/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, phone, subject: inquiryType, message, inquiryType })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed to submit inquiry');
+
+        alertBox.style.display = 'block';
+        alertBox.style.backgroundColor = '#ecfdf5';
+        alertBox.style.border = '1.5px solid #10b981';
+        alertBox.style.color = '#065f46';
+        alertBox.innerHTML = `
+          <div style="font-weight: 700; font-size: 1rem; margin-bottom: 0.35rem;">✔ Inquiry Successfully Registered!</div>
+          <p style="margin: 0 0 0.5rem 0;">Reference Tracking Code: <strong>${data.reference}</strong></p>
+          <p style="margin: 0; font-size: 0.88rem; color: #047857;">Our Regional Operational Desk in Hyderabad &amp; Telangana has recorded your inquiry in the audit trail and will reach out within 24 business hours.</p>
+        `;
+        document.getElementById('contactForm').reset();
+      } catch (err) {
+        alertBox.style.display = 'block';
+        alertBox.style.backgroundColor = '#fef2f2';
+        alertBox.style.border = '1.5px solid #ef4444';
+        alertBox.style.color = '#991b1b';
+        alertBox.textContent = 'Submission failed: ' + err.message;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Submit Message';
+      }
+    });
+  </script>
 </body>
 </html>

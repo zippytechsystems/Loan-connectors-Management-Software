@@ -132,7 +132,9 @@
             Submit your organization details to begin verification with the Veridian Operations Desk.
           </p>
 
-          <form onsubmit="event.preventDefault(); alert('Thank you for submitting your connector onboarding inquiry. A Veridian operations officer will contact you within 24 business hours to complete KYC and credentials verification.');" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+          <form id="onboardingForm" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div id="onboardingAlert" style="grid-column: 1 / -1; display: none; padding: 1rem 1.25rem; border-radius: var(--radius-sm); font-size: 0.92rem; line-height: 1.5;"></div>
+
             <div>
               <label for="orgName" style="display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 0.35rem; color: var(--text-primary);">Organization / Agency Name *</label>
               <input type="text" id="orgName" required placeholder="e.g. Hyderabad Capital Advisory" style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); font-size: 0.95rem;">
@@ -169,7 +171,7 @@
             </div>
 
             <div style="grid-column: 1 / -1;">
-              <button type="submit" class="btn btn-primary" style="padding: 0.75rem 2rem;">Submit Onboarding Request</button>
+              <button type="submit" id="onboardingSubmitBtn" class="btn btn-primary" style="padding: 0.75rem 2rem;">Submit Onboarding Request</button>
               <span style="font-size: 0.82rem; color: var(--text-muted); margin-left: 1rem;">
                 No registration fee is charged. Verification is processed through our operations desk.
               </span>
@@ -231,5 +233,60 @@
 
   </footer>
 
+  <script>
+    document.getElementById('onboardingForm')?.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('onboardingSubmitBtn');
+      const alertBox = document.getElementById('onboardingAlert');
+      const orgName = document.getElementById('orgName').value.trim();
+      const contactPerson = document.getElementById('contactPerson').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const territory = document.getElementById('territory').value;
+      const panGst = document.getElementById('panGst').value.trim();
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting Application...';
+      alertBox.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/v1/public/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: contactPerson,
+            email,
+            phone,
+            subject: 'Connector Onboarding: ' + orgName,
+            inquiryType: 'connector_onboarding',
+            message: `Connector Organization: ${orgName} | Territory: ${territory} | PAN/GSTIN: ${panGst || 'N/A'}`
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed to submit application');
+
+        alertBox.style.display = 'block';
+        alertBox.style.backgroundColor = '#ecfdf5';
+        alertBox.style.border = '1.5px solid #10b981';
+        alertBox.style.color = '#065f46';
+        alertBox.innerHTML = `
+          <div style="font-weight: 700; font-size: 1rem; margin-bottom: 0.35rem;">✔ Connector Onboarding Application Logged!</div>
+          <p style="margin: 0 0 0.5rem 0;">Reference Tracking Code: <strong>${data.reference}</strong></p>
+          <p style="margin: 0 0 0.75rem 0; font-size: 0.88rem; color: #047857;">Our partner verification desk will inspect your entity credentials within 24 business hours. If you wish to activate your workspace instantly or test our interactive demo, click below:</p>
+          <a href="/app#register" class="btn btn-primary" style="display: inline-block; padding: 0.5rem 1.25rem; font-size: 0.85rem; text-decoration: none;">Launch Workspace Self-Signup →</a>
+        `;
+        document.getElementById('onboardingForm').reset();
+      } catch (err) {
+        alertBox.style.display = 'block';
+        alertBox.style.backgroundColor = '#fef2f2';
+        alertBox.style.border = '1.5px solid #ef4444';
+        alertBox.style.color = '#991b1b';
+        alertBox.textContent = 'Submission failed: ' + err.message;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Submit Onboarding Request';
+      }
+    });
+  </script>
 </body>
 </html>
