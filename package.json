@@ -15,7 +15,8 @@
     "migrate:mysql": "node scripts/mysql_migrate.js",
     "migrate:mysql:seed": "node scripts/mysql_migrate.js --seed",
     "backup:mysql": "node scripts/mysql_backup.js",
-    "restore:mysql": "node scripts/mysql_restore.js"
+    "restore:mysql": "node scripts/mysql_restore.js",
+    "audit:db": "node scripts/audit-db.js"
   },
   "keywords": [
     "loan-connector",
