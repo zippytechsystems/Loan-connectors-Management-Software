@@ -180,13 +180,13 @@ const server = http.createServer(async (req, res) => {
   
   // Map clean public marketing and internal workspace routes
   const cleanRouteMap = {
-    '/': 'app.html',
-    '/index': 'app.html',
-    '/index.html': 'app.html',
+    '/': 'index.html',
+    '/index': 'index.html',
+    '/index.html': 'index.html',
+    '/home': 'index.html',
     '/app': 'app.html',
     '/app.html': 'app.html',
     '/login': 'app.html',
-    '/home': 'app.html',
     '/dashboard': 'app.html',
     '/workspace': 'app.html',
     '/portal': 'app.html',
