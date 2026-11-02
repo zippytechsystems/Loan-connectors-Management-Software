@@ -228,11 +228,9 @@
     try {
       await fetchCurrentUser();
       await refreshAllData();
-      if (directDashboardRequested) {
+      if (directDashboardRequested || state.currentUser) {
         showDashboardScreen();
       } else {
-        // Android App Launch Flow: Always open the starting Home Onboarding screen first.
-        // User clicks "Get Started" -> logs in -> opens Business Dashboard with all 15 boxes.
         showWelcomeScreen();
       }
     } catch (err) {
@@ -3108,26 +3106,27 @@
     const drawerHandle = document.getElementById('btn-drawer-handle');
     const statusTimeEl = document.getElementById('welcome-status-time');
 
-    // Live mobile status time update
-    function updateWelcomeTime() {
-      if (statusTimeEl) {
-        const now = new Date();
-        statusTimeEl.textContent = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: false });
-      }
-    }
-    updateWelcomeTime();
-    setInterval(updateWelcomeTime, 30000);
-
-    // Dedicated Strict Login Page Trigger on "Get Started" (User Core Request)
+    // Dedicated Strict Login Page Trigger on "Get Started"
     window.openZippyLoginPage = function(e) {
       if (e && e.preventDefault) e.preventDefault();
       if (authDrawer) authDrawer.classList.remove('open');
       showAuthScreen('signin');
     };
-    window.launchZippyDashboard = window.openZippyLoginPage;
+
+    // Launch Business Dashboard (All 15 Business Modules)
+    window.launchZippyDashboard = function(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      if (authDrawer) authDrawer.classList.remove('open');
+      showDashboardScreen();
+    };
 
     if (btnGetStarted) {
       btnGetStarted.addEventListener('click', window.openZippyLoginPage);
+    }
+
+    const btnDirectDash = document.getElementById('btn-direct-dashboard');
+    if (btnDirectDash) {
+      btnDirectDash.addEventListener('click', window.launchZippyDashboard);
     }
 
     // Logo Click on Welcome Screen opens strict login page
@@ -3246,16 +3245,7 @@
     const authHeading = document.getElementById('auth-main-heading');
     const btnBack = document.getElementById('btn-auth-back');
     const brandBadge = document.getElementById('btn-auth-brand-badge');
-    const authTimeEl = document.getElementById('auth-status-time');
 
-    function updateAuthTime() {
-      if (authTimeEl) {
-        const now = new Date();
-        authTimeEl.textContent = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: false });
-      }
-    }
-    updateAuthTime();
-    setInterval(updateAuthTime, 30000);
 
     if (btnBack) {
       btnBack.addEventListener('click', () => {

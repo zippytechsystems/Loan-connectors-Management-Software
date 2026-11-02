@@ -39,15 +39,7 @@
         <span>← Back to Website</span>
       </a>
 
-      <!-- Top Phone Status Bar (Exact Simulation from Screenshot) -->
-      <div class="zippy-status-bar">
-        <span class="status-time" id="welcome-status-time">9:22</span>
-        <div class="status-icons">
-          <span>VoWiFi</span>
-          <span>📶</span>
-          <span>🔋 60%</span>
-        </div>
-      </div>
+
 
       <!-- Center Top App Logo Badge (Purple-Pink Gradient with Stylized Z and Sparkle) -->
       <div class="zippy-welcome-logo-wrap">
@@ -70,8 +62,11 @@
         </p>
 
         <!-- Golden Amber "Get Started" CTA Button -->
-        <button type="button" class="zippy-btn-get-started" id="btn-get-started" onclick="window.openZippyLoginPage && window.openZippyLoginPage(event)" aria-label="Get Started and Open Login Page">
-          Get Started
+        <button type="button" class="zippy-btn-get-started" id="btn-get-started" onclick="window.openZippyLoginPage && window.openZippyLoginPage(event)" aria-label="Sign In to Loan Software">
+          🔑 Sign In &amp; Open Workspace →
+        </button>
+        <button type="button" class="zippy-btn-direct-dash" id="btn-direct-dashboard" onclick="window.launchZippyDashboard && window.launchZippyDashboard(event)" aria-label="Open Business Dashboard Directly" style="margin-top: 12px; width: 100%; height: 46px; background: rgba(56, 189, 248, 0.15); border: 1.5px solid #38bdf8; border-radius: 24px; color: #38bdf8; font-weight: 700; font-size: 13.5px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease;">
+          <span>🚀</span> Open Business Dashboard Directly
         </button>
 
         <!-- Copyright Footer -->
@@ -136,15 +131,7 @@
        ========================================================================= -->
   <section id="screen-zippy-auth" class="zippy-auth-screen" style="display: none;" aria-label="Zippy Loan Connector Account Creation and Sign In">
     <div class="zippy-phone-frame zippy-auth-frame">
-      <!-- Top Mobile Phone Status Bar (9:22 | VoWiFi | 60% 🔋) -->
-      <div class="zippy-status-bar zippy-dash-status-bar">
-        <span class="status-time" id="auth-status-time">9:22</span>
-        <div class="status-icons">
-          <span>VoWiFi</span>
-          <span>📶</span>
-          <span>🔋 60%</span>
-        </div>
-      </div>
+
 
       <!-- Auth Navigation Bar -->
       <div class="zippy-auth-nav">
@@ -321,18 +308,7 @@
   <section id="zippy-dashboard-screen" class="zippy-app-wrapper" style="display: none;" aria-label="Zippy Loan Connector Loan Software Application Dashboard">
     <div class="zippy-main-container">
       
-      <!-- Top Mobile Status Bar (9:22 | VoWiFi | 60%) -->
-      <div class="zippy-status-bar zippy-dash-status-bar">
-        <span class="status-time" id="dashboard-status-time">9:22</span>
-        <div class="status-icons">
-          <span class="status-icon" title="Connected">🔗</span>
-          <span class="status-icon" title="DND">🌙</span>
-          <span class="status-icon" title="Network">📶</span>
-          <span class="status-vowifi">Vo WiFi</span>
-          <span class="status-icon" title="Wi-Fi">🛜</span>
-          <span class="status-battery" title="Battery 60%">60% 🔋</span>
-        </div>
-      </div>
+
 
       <!-- Top App Header -->
       <header class="zippy-header">
@@ -2794,6 +2770,9 @@
     document.addEventListener('DOMContentLoaded', function() {
       var btnGetStarted = document.getElementById('btn-get-started');
       if (btnGetStarted) btnGetStarted.addEventListener('click', window.openZippyLoginPage);
+
+      var btnDirectDash = document.getElementById('btn-direct-dashboard');
+      if (btnDirectDash) btnDirectDash.addEventListener('click', window.launchZippyDashboard);
 
       var welcomeLogo = document.getElementById('btn-welcome-logo');
       if (welcomeLogo) welcomeLogo.addEventListener('click', window.openZippyLoginPage);
