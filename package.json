@@ -1,37 +1,23 @@
 {
-  "name": "loan-connector-management-software",
+  "name": "zippy-loan-connector",
   "version": "1.0.0",
-  "description": "Zippy Loan Connector Loan Software Application — Independent multi-party loan lead routing and partner network platform (Zippy Enterprises)",
-  "main": "server.js",
-  "type": "commonjs",
+  "description": "Zippy Loan Connector — Management Software (Phase 1)",
+  "private": true,
   "scripts": {
-    "start": "node server.js",
-    "build": "node scripts/build.js",
-    "build:android": "node scripts/build_android.js",
-    "dev": "node --watch --watch-path=src --watch-path=public --watch-path=server.js server.js",
-    "test": "node --test tests/api.test.js",
-    "backup": "node scripts/backup.js",
-    "restore": "node scripts/restore.js",
-    "migrate:mysql": "node scripts/mysql_migrate.js",
-    "migrate:mysql:seed": "node scripts/mysql_migrate.js --seed",
-    "backup:mysql": "node scripts/mysql_backup.js",
-    "restore:mysql": "node scripts/mysql_restore.js",
-    "audit:db": "node scripts/audit-db.js"
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "build:client": "cd client && npm run build",
+    "start": "cd server && npm start",
+    "db:test": "cd server && npm run db:test",
+    "db:init": "cd server && npm run db:init",
+    "test": "cd server && npm test"
   },
   "keywords": [
     "loan-connector",
-    "lead-routing",
     "fintech",
-    "commissions",
-    "partner-network"
+    "zippy-loan-connector",
+    "hostinger-mysql"
   ],
-  "author": "Zippy Enterprises Operations Team",
-  "license": "UNLICENSED",
-  "private": true,
-  "engines": {
-    "node": ">=22.0.0"
-  },
-  "dependencies": {
-    "mysql2": "^3.24.6"
-  }
+  "author": "M. Lingaswamy",
+  "license": "UNLICENSED"
 }

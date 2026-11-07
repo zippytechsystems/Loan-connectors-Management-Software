@@ -1,26 +1,18 @@
 # Dependencies
 node_modules/
-package-lock.json
+client/node_modules/
+server/node_modules/
 
-# Environment variables & secrets
+# Production builds
+client/dist/
+dist/
+
+# Environment files
 .env
 .env.local
 .env.*.local
-
-# SQLite Local Database files & WAL artifacts
-data/*.sqlite*
-data/*.db*
-!data/.gitkeep
-
-# Point-in-time Database Backups
-backups/*.sqlite*
-backups/*.sql*
-backups/*.gz
-!backups/.gitkeep
-
-# Encrypted Vault Storage (local test uploads)
-storage/kyc_vault/*
-!storage/kyc_vault/.gitkeep
+server/.env
+client/.env
 
 # Logs
 logs/
@@ -29,16 +21,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# System & IDE artifacts
+# OS & Editor
 .DS_Store
 Thumbs.db
-.idea/
 .vscode/
-*.swp
-*.tmp
-
-# Android Gradle cache & build artifacts
-.gradle/
-android/.gradle/
-android/app/build/
-android/build/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

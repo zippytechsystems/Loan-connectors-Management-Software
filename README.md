@@ -1,172 +1,242 @@
-# Zippy Enterprises — Loan Connector Management Software
-## Multi-Party Loan Lead Routing & Partner Network Platform
+# Zippy Loan Connector — Management Software (Phase 1)
 
-[![Architecture: Independent](https://img.shields.io/badge/Architecture-Independent_Product-1E664E)](SPECIFICATION.md)
-[![Runtime: Node.js 24](https://img.shields.io/badge/Runtime-Node.js_v24_Native-0F382A)](https://nodejs.org/)
-[![Database: SQLite WAL / MySQL](https://img.shields.io/badge/Database-SQLite_WAL_ACID-C5A059)](src/db/schema.js)
-[![Security: DPDP Act 2023](https://img.shields.io/badge/Compliance-DPDP_Act_2023-blue)](SPECIFICATION.md)
-
-**Zippy Enterprises — Loan Connector OS** is an independent, multi-party loan lead exchange, partner network governance, and commission reconciliation platform. It allows lending networks, loan connectors (brokers, referral agents, fintech partners), and institutional lender liaisons to onboard partners, configure eligibility rules, intake consented customer leads, preview deterministic routing with explainability traces, manage multi-party lead lifecycles, and reconcile immutable financial commission ledgers.
-
-> [!IMPORTANT]
-> **Product Independence Boundary:** This application is strictly an independent loan connector management software. It is **NOT** a DSA loan-origination system (LOS), does not process direct loan underwriting, and does not make credit decisions. It operates on its own dedicated codebase, database, authentication store, branding, and deployment boundary.
+**Application:** Zippy Loan Connector  
+**Owner:** M. Lingaswamy  
+**Role:** Single Owner / Admin  
+**Business Type:** Individual Loan Connector  
+**Platform:** Responsive Web Application (Fintech Style)  
+**Technology Platform Brand:** ZippyTech Solutions  
+**Database:** Hostinger MySQL 8.0+  
+**Architecture:** React + Vite + TypeScript Frontend | Node.js + Express Backend | MySQL2 Connection Pool
 
 ---
 
-## 🌟 Key Functional Modules
+## 📌 Phase 1 Scope (Strictly Enforced)
 
-1. **Role-Aware Auth & Persona Portals**:
-   - Distinct sign-in and role-filtered operational views for **Platform Administrator (`admin`)**, **Operations Manager (`operations`)**, **Connector Partner (`connector`)**, **Lender Liaison (`lender`)**, and **Compliance Auditor (`auditor`)**.
-   - Includes a real-time **Sandbox Persona Switcher** on top for instant role-based evaluation and tenant isolation verification.
-2. **Partner Onboarding & Governance**:
-   - Partner organization directory with verification statuses (`Draft`, `Pending`, `Approved`, `Suspended`, `Terminated`).
-   - Partner tiers (`Tier 1 Platinum`, `Tier 2 Gold`, `Tier 3 Silver`), geographic territory coverage, authorized product categories, and active lead capacity limits.
-3. **Lender & Product Catalog**:
-   - Configurable loan categories: *Personal Loan*, *Home Loan*, *Business Loan*, *Loan Against Property (LAP)*, and *MSME Express*.
-   - Criteria rules: ticket size boundaries, CIBIL thresholds, minimum monthly income/turnaround, interest rate ranges, required document checklists, and SLA turnaround hours.
-4. **Consent-Aware Intake & Deterministic Routing Engine**:
-   - Minimum contact intake with digital consent receipts (`consent_purpose`, `consent_version`, `timestamp`, `channel`, `ip_hash`).
-   - Deduplication protection preventing multiple active applications within 30 days via HMAC-SHA256 hashes.
-   - Explainable rule engine (`RULE-v2.4-AUTO`) ranking candidate partners by suitability score (tier weight + available capacity headroom + geographic proximity).
-   - 24-hour acceptance SLA timer countdown, partner decline reason codes, and automated fallback pool return.
-5. **Lead Lifecycle & Append-Only Event Timeline**:
-   - Multi-party lifecycle progression: `Eligible` → `Offered` → `Accepted` → `Contacted` → `Referred` → `Lender Review` → `Sanctioned` → `Disbursed` (or `Declined`, `Withdrawn`, `Expired`).
-   - Append-only chronological timeline capturing actors, timestamps, state transitions, notes, and reason codes.
-6. **Versioned Commission Engine & Ledger**:
-   - Configurable versioned plans: *Fixed Bounty*, *Flat Percentage*, *Tiered Volume Slabs*, and *Referral Splits*.
-   - Event-driven triggers (`Accepted`, `Referred`, `Disbursed`).
-   - Escrow holdback mechanism (e.g. 10% or 15% retention for clawback buffers) and cap ceilings.
-   - Dual-approval workflows (`Accrued` → `Approved` → `Paid`).
-   - Non-destructive clawback reversals posting offsetting financial records without rewriting past history.
-   - Monthly reconciliation partner settlement statements.
-7. **Security, Privacy & Compliance**:
-   - Customer PII (name, phone, email, PAN) is encrypted at rest using AES-256-GCM and stored in an isolated `customers` table separated from operational `leads`.
-   - Auditors and unprivileged roles receive strictly masked PII.
-   - KYC documents stored in a private object storage vault outside public web roots with opaque UUIDs, simulated malware scanning, and short-lived (15 min) signed download tokens.
-   - Immutable system audit trail logging all authentication, dispatch, PII view, and commission events.
-   - Automated database point-in-time backup and restore scripts with SHA-256 verification.
+Phase 1 focuses exclusively on establishing a rock-solid, production-ready foundation:
+1. **Premium Login Page** with initial admin credentials, password visibility toggle, and brute-force rate limiting.
+2. **Secure Authentication Backend** with 12-round bcrypt password hashing, session tokens, and secure HTTP-only cookies.
+3. **Home Dashboard** displaying genuine business status, contact summary, active loan categories, and last update timestamp (zero fake statistics).
+4. **Business Profile Management** allowing the owner to save, retrieve, and update business parameters without creating duplicate rows.
+5. **Hostinger MySQL Integration** with parameterized SQL queries, transactions, and audit logging.
+6. **Strict Category Validation**: Supports Personal Loan, Business Loan, Home Loan, Loan Against Property, Vehicle Loan. **Agriculture Loan is strictly excluded and prohibited across UI and backend validation.**
+7. **Logout & Protected Routes** ensuring unauthenticated visitors are automatically redirected to Login.
+
+*Note: Customer intake, lead management, loan applications, KYC documents, commission ledgers, and referral agents are scheduled for upcoming phases.*
 
 ---
 
-## 🚀 Quick Start Guide
+## 🏗️ Clean Modular Project Architecture
 
-### Prerequisites
-- **Node.js**: v22.0.0 or later (v24 recommended; leverages native `node:sqlite` DatabaseSync and `node:crypto`).
-- Zero external npm packages required for core execution!
-
-### Installation & Launch
-
-1. Clone or navigate to the project directory:
-   ```powershell
-   cd "c:\Users\madya\OneDrive\Business Software Management Applications\Loan connector Management  Software"
-   ```
-
-2. Start the standalone server:
-   ```powershell
-   npm start
-   # or run directly:
-   node server.js
-   ```
-
-3. Open your browser and navigate to:
-   ```
-   http://127.0.0.1:4180
-   ```
+```
+Loan connector Management Software/
+├── package.json               # Root orchestrator scripts (dev, build, test)
+├── .env.example               # Complete environment variable template
+├── schema.sql                 # Clean MySQL table definitions for phpMyAdmin
+├── README.md                  # Comprehensive setup & deployment guide
+│
+├── client/                    # React 19 + Vite + TypeScript + Tailwind CSS
+│   ├── index.html
+│   ├── package.json
+│   ├── tsconfig.json
+│   ├── vite.config.ts         # Configured with proxy for /api -> localhost:5000
+│   ├── public/
+│   │   └── logo.svg           # Scalable ZippyTech / Zippy Loan Connector brand logo
+│   └── src/
+│       ├── main.tsx
+│       ├── App.tsx            # Protected client-side routing
+│       ├── index.css          # Tailwind CSS theme (#071426, #087FE5, #12A8F5, #F59A16)
+│       ├── types/             # Strict TypeScript models (User, BusinessProfile, etc.)
+│       ├── services/api.ts    # Centralized API client with credentials: 'include'
+│       ├── context/           # AuthContext managing user state and sessions
+│       ├── components/        # Navbar, Sidebar, ProtectedRoute, DashboardLayout
+│       └── pages/
+│           ├── LoginPage.tsx
+│           ├── DashboardPage.tsx
+│           ├── BusinessProfilePage.tsx
+│           └── SettingsPage.tsx
+│
+└── server/                    # Node.js + Express + Hostinger MySQL
+    ├── package.json
+    ├── server.js              # Server entrypoint with auto-bootstrap
+    └── src/
+        ├── app.js             # Express middleware, CORS, Helmet, static serving
+        ├── config/env.js      # Centralized environment variable loader
+        ├── db/
+        │   ├── connection.js  # MySQL2 connection pool with health probes
+        │   ├── init.js        # Table creation & initial admin bootstrap
+        │   ├── queries.js     # Parameterized SQL statements (Zero SQL injection)
+        │   └── testAdapter.js # In-memory mock adapter for lightning-fast test isolation
+        ├── middleware/
+        │   ├── auth.js        # HTTP-only cookie JWT validator
+        │   ├── rateLimiter.js # 10 requests / 15 min brute-force shield
+        │   └── validation.js  # Zod schema validation (enforcing category rules)
+        ├── routes/
+        │   ├── authRoutes.js  # /api/auth/login, /logout, /me
+        │   └── profileRoutes.js # /api/business-profile (GET, POST, PUT)
+        ├── utils/security.js  # Bcrypt hashing & JWT signing
+        ├── scripts/
+        │   ├── testConnection.js # Diagnostic connection testing script
+        │   └── bootstrap.js      # Manual database table & admin creation
+        └── tests/
+            └── api.test.js    # 10 comprehensive automated integration tests
+```
 
 ---
 
-## 🔑 Demo Personas & Credentials
+## 🎨 Fintech Color Palette
 
-All demo accounts share the password: `ConnectorDemo!26`. You can also switch personas with a single click using the **Top Persona Bar** in the web app:
-
-| Persona / Role | Username | Password | Tenant Scope & Purpose |
-| :--- | :--- | :--- | :--- |
-| **Platform Administrator** | `admin` | `ConnectorDemo!26` | Global network visibility, partner approvals, commission plan editor, settlements, full audit inspection. |
-| **Operations Manager** | `ops` | `ConnectorDemo!26` | Lead qualification, manual dispatch, SLA queue monitoring, dispute resolution. |
-| **Connector 1 (Northstar)** | `partner` | `ConnectorDemo!26` | Scoped to **Northstar Connect (Org #1)**. Can only view, accept, and track own assigned leads and commission earnings. |
-| **Connector 2 (Apex)** | `partner2` | `ConnectorDemo!26` | Scoped to **Apex Financial Advisors (Org #2)**. Cannot view Northstar or BluePeak data. |
-| **Lender Liaison** | `lender` | `ConnectorDemo!26` | Scoped to **Riverbend Capital Ltd**. Reviews referred loans, issues sanctions, and confirms disbursements. |
-| **Compliance Auditor** | `auditor` | `ConnectorDemo!26` | Global read-only compliance inspection. Customer PII (Names, Phones, Emails, PAN) is **strictly masked**. |
+- **Deep Navy:** `#071426` (Primary backgrounds, sidebar, brand accents)
+- **Primary Blue:** `#087FE5` (Action buttons, primary highlights)
+- **Bright Blue:** `#12A8F5` (Interactive states, gradients)
+- **Orange Accent:** `#F59A16` (Brand sparkles, important indicators)
+- **Neutral Background:** `#F4F7FB` (Clean contrast for cards)
+- **White:** `#FFFFFF` (Surface card backgrounds)
 
 ---
 
-## 🧪 Automated Testing
+## 🗄️ Hostinger MySQL Database Setup (hPanel & phpMyAdmin)
 
-Run the automated integration and unit test suite verifying tenant isolation, PII masking, routing rules, and commission calculations:
+Follow these steps to set up your production database on Hostinger:
 
-```powershell
+### Step 1: Create Database & User in Hostinger hPanel
+1. Log in to [Hostinger hPanel](https://hpanel.hostinger.com).
+2. Go to **Websites** → Select your domain → **Databases** → **MySQL Databases**.
+3. Under **Create a New MySQL Database and Database User**:
+   - **MySQL Database Name:** e.g., `u914601002_Zippyloansdata`
+   - **MySQL Username:** e.g., `u914601002_zippyicicloan`
+   - **Password:** Generate a strong password (minimum 16 characters with letters, numbers, symbols).
+4. Click **Create**.
+5. Note down your full database name, username, and password.
+
+### Step 2: Import `schema.sql` via phpMyAdmin
+1. In hPanel, under the **List of Current MySQL Databases And Users**, locate your newly created database.
+2. Click the **phpMyAdmin** button on the right.
+3. In phpMyAdmin, click on your database name in the left panel.
+4. Click the **Import** tab in the top navigation bar.
+5. Under **File to import**, click **Choose File** and select `schema.sql` from this project folder.
+6. Scroll down and click **Import**.
+7. You will see green success confirmation messages indicating the following tables were created:
+   - `admins`
+   - `business_profiles`
+   - `audit_logs`
+
+### Step 3: Enable Remote MySQL (Optional for Local Development)
+If you want to connect from your local development machine directly to Hostinger MySQL:
+1. In hPanel, navigate to **Databases** → **Remote MySQL**.
+2. Under **IP (IPv4 or IPv6)**, enter `%` (to allow connections from any IP) or your specific home/office IP.
+3. Select your database from the dropdown.
+4. Click **Create**.
+5. Use the Hostinger remote hostname provided in hPanel (e.g., `srv1555.hstgr.io`).
+
+---
+
+## ⚙️ Environment Variables Configuration
+
+Copy `.env.example` to `.env` in the project root:
+
+```bash
+cp .env.example .env
+```
+
+Fill in your actual Hostinger credentials:
+
+```ini
+PORT=5000
+NODE_ENV=production
+CORS_ORIGIN=https://yourdomain.com
+
+# Hostinger MySQL Database
+# When deployed on Hostinger web server, DB_HOST is 127.0.0.1
+# When connecting remotely from your dev machine, use srv1555.hstgr.io
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_NAME=u914601002_Zippyloansdata
+DB_USER=u914601002_zippyicicloan
+DB_PASSWORD=YourActualHostingerPasswordHere
+
+# Security
+SESSION_SECRET=a_very_long_random_entropy_secret_key_minimum_32_characters
+COOKIE_NAME=zippy_auth_token
+COOKIE_MAX_AGE_DAYS=7
+
+# Initial Admin Bootstrap
+ADMIN_USERNAME=M.Lingaswamy@123
+ADMIN_INITIAL_PASSWORD=YourSecureAdminPasswordHere
+```
+
+> [!CAUTION]
+> **Never commit your `.env` file to GitHub.** The `.gitignore` file is pre-configured to ignore all `.env` files.
+
+---
+
+## 🚀 Deployment to Hostinger Node.js Application
+
+### Method: Hostinger hPanel Node.js Application
+1. In hPanel, go to **Websites** → **Dashboard** → scroll to **Advanced** → click **Node.js**.
+2. Click **Create Application**:
+   - **Node.js version:** Select **Node.js 20 LTS** or **Node.js 22 LTS**.
+   - **Application mode:** Select **Production**.
+   - **Application root:** `/home/u914601002/domains/yourdomain.com/public_html`
+   - **Application startup file:** `server/server.js` (or copy server build to root).
+3. Build the React frontend before deploying:
+   ```bash
+   npm run build:client
+   ```
+   This compiles the React SPA into `client/dist/`. The Express server (`server/src/app.js`) is pre-configured to automatically serve `client/dist/` as static assets for all web routes, and handle `/api/*` for REST endpoints!
+4. Install production dependencies on the server:
+   ```bash
+   npm install --omit=dev
+   cd server && npm install --omit=dev
+   ```
+5. Set your environment variables in Hostinger hPanel under **Node.js** → **Environment Variables**.
+6. Click **Restart Application**.
+
+---
+
+## 🧪 Local Testing & Verification
+
+### 1. Run Automated Test Suite (10 Passing Tests)
+To run the automated integration tests verifying login, rate limiting, cookies, profile persistence, and loan category restrictions:
+```bash
 npm test
-# runs: node --test tests/api.test.js
 ```
+*All 10 tests execute in seconds using Node.js's native test runner (`node:test`).*
+
+### 2. Test Hostinger Database Connectivity
+Verify whether your Hostinger MySQL credentials connect successfully:
+```bash
+npm run db:test
+```
+
+### 3. Run Development Servers
+Start both the Express backend and Vite React frontend concurrently:
+```bash
+# Terminal 1: Backend API (port 5000)
+npm run dev:server
+
+# Terminal 2: React Vite Client (port 3000)
+npm run dev:client
+```
+Open your browser at `http://localhost:3000`.
 
 ---
 
-## 💾 Point-in-Time Database Backup & Restore
+## 🔐 Security Specifications
 
-To take an instant backup of the SQLite database with SHA-256 integrity checksum:
-```powershell
-npm run backup
-# Output: backups/connector_network_backup_YYYY-MM-DD_HHMMSS.sqlite + .sha256
-```
-
-To restore the latest backup (or specify a particular backup file):
-```powershell
-npm run restore
-# or specify file: node scripts/restore.js backups/connector_network_backup_XXXX.sqlite
-```
+- **Argon2 / Bcrypt Hashing:** Passwords hashed with 12 salt rounds before storage.
+- **HTTP-Only Cookies:** Tokens stored in cookies with `httpOnly: true`, `sameSite: 'lax'`, preventing JavaScript XSS theft.
+- **Rate Limiting:** Login endpoint limited to 10 requests per 15-minute window per IP to block brute-force attacks.
+- **Parameterized SQL:** All queries use `mysql2` prepared statements with `?` placeholders, eliminating SQL injection risks.
+- **Strict Role Authorization:** Protected routes check token validity on every request.
+- **Audit Logging:** Every login attempt and business profile update is recorded in the `audit_logs` table with timestamp and IP address.
+- **No Banking Secrets:** Never stores passwords, banking PINs, or OTPs.
 
 ---
 
-## 🏛️ Project Directory Structure
+## 👤 Owner & Technology Attribution
 
-```
-Loan connector Management  Software/
-├── SPECIFICATION.md          # Canonical product specification and requirements
-├── README.md                 # Setup guide, role credentials, and architecture summary
-├── package.json              # Project scripts and engine requirements
-├── .env.example              # Environment configuration template
-├── server.js                 # Standalone HTTP server & API routing entry point
-├── src/
-│   ├── config.js             # Configuration loader, secrets, paths, and flags
-│   ├── db/
-│   │   ├── database.js       # SQLite DatabaseSync connection & ACID transaction helper
-│   │   ├── schema.js         # Relational schema (WAL mode, foreign keys, 13 tables)
-│   │   └── seed.js           # Synthetic dataset generator for all 5 personas & demo leads
-│   ├── middleware/
-│   │   ├── auth.js           # Session token management, RBAC, tenant isolation guards
-│   │   ├── security.js       # Hardened CSP, HSTS, X-Frame-Options, in-memory rate limiting
-│   │   └── audit.js          # Append-only system audit logger & lead event logger
-│   ├── services/
-│   │   ├── routingEngine.js  # Rule versioning (v2.4), suitability scoring, capacity checks
-│   │   ├── commissionEngine.js# Tiered, percentage, split plans, holdbacks, clawbacks
-│   │   ├── documentStorage.js# Private vault, malware scanning status, signed download links
-│   │   └── piiMasker.js      # AES-256-GCM encryption and selective PII masking service
-│   └── routes/
-│       ├── authRoutes.js     # /api/v1/auth (login, logout, me, switch-persona)
-│       ├── partnerRoutes.js  # /api/v1/partners (onboarding, approval, commercials)
-│       ├── catalogRoutes.js  # /api/v1/catalog (lenders, loan products & criteria)
-│       ├── leadRoutes.js     # /api/v1/leads (intake, deduplication, dispatch, transitions)
-│       ├── commissionRoutes.js # /api/v1/commissions (plans, ledger, approvals, payouts)
-│       └── reportRoutes.js   # /api/v1/reports (overview KPIs, audit events, masked CSV export)
-├── public/
-│   ├── index.html            # Main single-page web app with all 7 role portals
-│   ├── css/
-│   │   └── style.css         # Forest-green & warm-neutral fintech design system
-│   └── js/
-│       └── app.js            # Reactive UI logic, routing simulator, modals, and tables
-├── scripts/
-│   ├── backup.js             # Automated database backup with SHA-256 checksum
-│   └── restore.js            # Verified database restore utility
-└── tests/
-    └── api.test.js           # 12 automated unit and integration tests
-```
-
----
-
-## 🔒 Security & Launch Invariant Summary
-
-1. **PII Segregation**: All customer identity details (`name`, `phone`, `email`, `pan`) are stored in an isolated `customers` table and encrypted using AES-256-GCM. Operational lead records store only anonymized references (`LND-2026-XXXX`).
-2. **Server-Side Tenant Scoping**: Every API request checks the authenticated session. Connectors cannot view, query, or enumerate other partners' leads, customers, or commissions.
-3. **Private KYC Vault**: Files are stored with opaque UUID keys in `storage/kyc_vault/` outside the web server root. Download links require a cryptographically signed HMAC token valid for only 15 minutes.
-4. **Immutable Financial Ledger**: Commission records are append-only. Clawbacks and reversals create offsetting `REV-` rows rather than overwriting historical financial entries.
-5. **Pre-Production Checklist Notice**: Before deploying with real customer or banking data, ensure production TLS termination, managed HSM KMS key rotation, active antivirus daemon integration, and formal jurisdiction privacy counsel review under DPDP Act 2023.
+- **Owner:** M. Lingaswamy
+- **Application:** Zippy Loan Connector
+- **Technology Partner:** ZippyTech Solutions
+- **Version:** Phase 1.0.0
