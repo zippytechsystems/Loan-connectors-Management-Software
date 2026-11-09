@@ -1,4 +1,13 @@
-import type { ApiResponse, BusinessProfile, User } from '../types';
+import type {
+  ApiResponse,
+  BusinessProfile,
+  Customer,
+  DashboardSummary,
+  LeadStatus,
+  LeadStatusHistory,
+  LoanLead,
+  User,
+} from '../types';
 
 const API_BASE = '/api';
 
@@ -25,6 +34,8 @@ async function request<T = any>(endpoint: string, options: RequestInit = {}): Pr
         success: false,
         message: data.message || `Request failed with status ${res.status}`,
         errors: data.errors,
+        isDuplicate: data.isDuplicate,
+        existingCustomer: data.existingCustomer,
       };
     }
 
@@ -77,6 +88,134 @@ export const api = {
       method: 'PUT',
       body: JSON.stringify(profile),
     });
+  },
+
+  // Customer Management APIs (Phase 2)
+  async getCustomers(params: {
+    search?: string;
+    city?: string;
+    sort?: string;
+    page?: number;
+    limit?: number;
+  } = {}): Promise<ApiResponse<{ customers: Customer[]; pagination: any }>> {
+    const query = new URLSearchParams();
+    if (params.search) query.set('search', params.search);
+    if (params.city) query.set('city', params.city);
+    if (params.sort) query.set('sort', params.sort);
+    if (params.page) query.set('page', String(params.page));
+    if (params.limit) query.set('limit', String(params.limit));
+
+    const qs = query.toString() ? `?${query.toString()}` : '';
+    return request(`/customers${qs}`);
+  },
+
+  async getCustomer(id: number): Promise<ApiResponse<{ customer: Customer }>> {
+    return request(`/customers/${id}`);
+  },
+
+  async checkCustomerDuplicate(params: {
+    mobile_number?: string;
+    email?: string;
+    excludeId?: number;
+  }): Promise<ApiResponse<{ exists: boolean; customer: Customer | null }>> {
+    const query = new URLSearchParams();
+    if (params.mobile_number) query.set('mobile_number', params.mobile_number);
+    if (params.email) query.set('email', params.email);
+    if (params.excludeId) query.set('excludeId', String(params.excludeId));
+    return request(`/customers/check-duplicate?${query.toString()}`);
+  },
+
+  async createCustomer(data: Partial<Customer>, force = false): Promise<ApiResponse<{ customer: Customer }>> {
+    return request(`/customers${force ? '?force=true' : ''}`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+
+  async updateCustomer(id: number, data: Partial<Customer>, force = false): Promise<ApiResponse<{ customer: Customer }>> {
+    return request(`/customers/${id}${force ? '?force=true' : ''}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  },
+
+  async deleteCustomer(id: number): Promise<ApiResponse<{ hasLinkedLeads: boolean }>> {
+    return request(`/customers/${id}`, {
+      method: 'DELETE',
+    });
+  },
+
+  // Lead Management APIs (Phase 2)
+  async getLeads(params: {
+    search?: string;
+    loan_type?: string;
+    lead_status?: string;
+    lead_source?: string;
+    startDate?: string;
+    endDate?: string;
+    sort?: string;
+    page?: number;
+    limit?: number;
+  } = {}): Promise<ApiResponse<{ leads: LoanLead[]; pagination: any }>> {
+    const query = new URLSearchParams();
+    if (params.search) query.set('search', params.search);
+    if (params.loan_type) query.set('loan_type', params.loan_type);
+    if (params.lead_status) query.set('lead_status', params.lead_status);
+    if (params.lead_source) query.set('lead_source', params.lead_source);
+    if (params.startDate) query.set('startDate', params.startDate);
+    if (params.endDate) query.set('endDate', params.endDate);
+    if (params.sort) query.set('sort', params.sort);
+    if (params.page) query.set('page', String(params.page));
+    if (params.limit) query.set('limit', String(params.limit));
+
+    const qs = query.toString() ? `?${query.toString()}` : '';
+    return request(`/leads${qs}`);
+  },
+
+  async getLead(id: number): Promise<ApiResponse<{ lead: LoanLead }>> {
+    return request(`/leads/${id}`);
+  },
+
+  async createLead(data: any): Promise<ApiResponse<{ lead: LoanLead }>> {
+    return request('/leads', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+
+  async updateLead(id: number, data: any): Promise<ApiResponse<{ lead: LoanLead }>> {
+    return request(`/leads/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  },
+
+  async updateLeadStatus(
+    id: number,
+    new_status: LeadStatus,
+    change_notes?: string
+  ): Promise<ApiResponse<{ lead: LoanLead }>> {
+    return request(`/leads/${id}/status`, {
+      method: 'PATCH',
+      body: JSON.stringify({ new_status, change_notes }),
+    });
+  },
+
+  async getLeadHistory(id: number): Promise<ApiResponse<{ history: LeadStatusHistory[] }>> {
+    return request(`/leads/${id}/history`);
+  },
+
+  // Dashboard Live Metrics APIs (Phase 2)
+  async getDashboardSummary(): Promise<ApiResponse<DashboardSummary>> {
+    return request('/dashboard/summary');
+  },
+
+  async getRecentCustomers(limit = 5): Promise<ApiResponse<Customer[]>> {
+    return request(`/dashboard/recent-customers?limit=${limit}`);
+  },
+
+  async getRecentLeads(limit = 5): Promise<ApiResponse<LoanLead[]>> {
+    return request(`/dashboard/recent-leads?limit=${limit}`);
   },
 
   // Health probe

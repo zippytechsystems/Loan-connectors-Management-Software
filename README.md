@@ -1,4 +1,4 @@
-# Zippy Loan Connector — Management Software (Phase 1)
+# Zippy Loan Connector — Management Software (Phases 1 & 2)
 
 **Application:** Zippy Loan Connector  
 **Owner:** M. Lingaswamy  
@@ -7,22 +7,43 @@
 **Platform:** Responsive Web Application (Fintech Style)  
 **Technology Platform Brand:** ZippyTech Solutions  
 **Database:** Hostinger MySQL 8.0+  
-**Architecture:** React + Vite + TypeScript Frontend | Node.js + Express Backend | MySQL2 Connection Pool
+**Architecture:** React 19 + Vite + TypeScript Frontend | Node.js + Express Backend | MySQL2 Connection Pool
 
 ---
 
-## 📌 Phase 1 Scope (Strictly Enforced)
+## 📌 Implementation Status
 
-Phase 1 focuses exclusively on establishing a rock-solid, production-ready foundation:
+### ✅ Phase 1: Authentication & Business Profile (Completed)
 1. **Premium Login Page** with initial admin credentials, password visibility toggle, and brute-force rate limiting.
 2. **Secure Authentication Backend** with 12-round bcrypt password hashing, session tokens, and secure HTTP-only cookies.
-3. **Home Dashboard** displaying genuine business status, contact summary, active loan categories, and last update timestamp (zero fake statistics).
+3. **Home Dashboard** displaying genuine business status, contact summary, active loan categories, and last update timestamp.
 4. **Business Profile Management** allowing the owner to save, retrieve, and update business parameters without creating duplicate rows.
 5. **Hostinger MySQL Integration** with parameterized SQL queries, transactions, and audit logging.
 6. **Strict Category Validation**: Supports Personal Loan, Business Loan, Home Loan, Loan Against Property, Vehicle Loan. **Agriculture Loan is strictly excluded and prohibited across UI and backend validation.**
 7. **Logout & Protected Routes** ensuring unauthenticated visitors are automatically redirected to Login.
 
-*Note: Customer intake, lead management, loan applications, KYC documents, commission ledgers, and referral agents are scheduled for upcoming phases.*
+### ✅ Phase 2: Customer & Lead Management (Completed)
+1. **Customer Management**:
+   - Customer List with search, city filter, and pagination.
+   - Unique auto-generated customer codes (`ZLC-CUS-000001`).
+   - Customer Registration & Edit modals with contact, address, and employment details.
+   - Duplicate customer detection by mobile number and email.
+   - Safe soft-archival that prevents accidental deletion of customer history when linked leads exist.
+   - Comprehensive Customer Profile view displaying full details and linked loan leads table.
+2. **Loan Lead Management**:
+   - Loan Lead Pipeline with search, loan type, status, and priority filters.
+   - Unique auto-generated lead codes (`ZLC-LEAD-000001`).
+   - Customer Selection supporting existing customers or inline customer registration.
+   - Strict category enforcement (Personal Loan, Business Loan, Home Loan, Loan Against Property, Vehicle Loan — Agriculture Loan strictly disallowed).
+   - Follow-up date scheduling and instruction notes.
+3. **Lead Status Audit & History**:
+   - 9 Tracked Lead Statuses: `New`, `Contacted`, `Interested`, `Documents Pending`, `Qualified`, `Converted`, `Not Interested`, `Duplicate`, `Closed`.
+   - Every status update automatically appends an audit record to `lead_status_history` logging previous status, new status, changed by (admin), change notes, and timestamp.
+   - Visual chronological timeline on Lead Details page.
+4. **Dashboard Real-Time Integration**:
+   - Live metric cards (Total Clients, Total Leads, New, Contacted, Qualified, Converted).
+   - Real-time pipeline status breakdown pills.
+   - Recent Customers and Recent Loan Leads tables computed directly from Hostinger MySQL.
 
 ---
 
@@ -196,12 +217,12 @@ ADMIN_INITIAL_PASSWORD=YourSecureAdminPasswordHere
 
 ## 🧪 Local Testing & Verification
 
-### 1. Run Automated Test Suite (10 Passing Tests)
-To run the automated integration tests verifying login, rate limiting, cookies, profile persistence, and loan category restrictions:
+### 1. Run Automated Test Suite (19 Passing Tests)
+To run the automated integration tests verifying login, rate limiting, cookies, profile persistence, customer management, duplicate detection, lead tracking, audit histories, and loan category restrictions:
 ```bash
 npm test
 ```
-*All 10 tests execute in seconds using Node.js's native test runner (`node:test`).*
+*All 19 tests across Phase 1 and Phase 2 execute in seconds using Node.js's native test runner (`node:test`).*
 
 ### 2. Test Hostinger Database Connectivity
 Verify whether your Hostinger MySQL credentials connect successfully:

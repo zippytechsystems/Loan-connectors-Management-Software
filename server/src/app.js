@@ -7,6 +7,9 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import authRoutes from './routes/authRoutes.js';
 import profileRoutes from './routes/profileRoutes.js';
+import customerRoutes from './routes/customerRoutes.js';
+import leadRoutes from './routes/leadRoutes.js';
+import dashboardRoutes from './routes/dashboardRoutes.js';
 import { testDbConnection } from './db/connection.js';
 import { apiRateLimiter } from './middleware/rateLimiter.js';
 import { env } from './config/env.js';
@@ -80,6 +83,9 @@ app.get('/api/health', async (req, res) => {
 // Mount REST API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/business-profile', profileRoutes);
+app.use('/api/customers', customerRoutes);
+app.use('/api/leads', leadRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // 404 Handler for undefined API routes
 app.all('/api/*', (req, res) => {

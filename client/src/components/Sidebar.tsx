@@ -1,6 +1,15 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Building2, Settings, LogOut, X, Sparkles } from 'lucide-react';
+import {
+  LayoutDashboard,
+  Building2,
+  Users,
+  ClipboardList,
+  Settings,
+  LogOut,
+  X,
+  Sparkles,
+} from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 interface SidebarProps {
@@ -27,6 +36,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
       to: '/profile',
       label: 'Business Profile',
       icon: Building2,
+    },
+    {
+      to: '/customers',
+      label: 'Customers',
+      icon: Users,
+    },
+    {
+      to: '/leads',
+      label: 'Lead Management',
+      icon: ClipboardList,
     },
     {
       to: '/settings',

@@ -1,107 +1,122 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../services/api';
-import type { BusinessProfile } from '../types';
+import type { BusinessProfile, Customer, DashboardSummary, LoanLead } from '../types';
 import {
-  Building2,
-  Phone,
-  Mail,
-  MapPin,
+  Users,
+  ClipboardList,
   CheckCircle2,
   Clock,
   ArrowRight,
   ShieldAlert,
   Loader2,
   Landmark,
-  Layers,
   Sparkles,
+  Plus,
+  Phone,
+  MapPin,
+  Award,
 } from 'lucide-react';
 
 export const DashboardPage: React.FC = () => {
   const [profile, setProfile] = useState<BusinessProfile | null>(null);
+  const [summary, setSummary] = useState<DashboardSummary | null>(null);
+  const [recentCustomers, setRecentCustomers] = useState<Customer[]>([]);
+  const [recentLeads, setRecentLeads] = useState<LoanLead[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function loadData() {
+    async function loadDashboardData() {
       try {
-        const res = await api.getBusinessProfile();
-        if (res.success) {
-          setProfile(res.profile || null);
-        } else {
-          setError(res.message || 'Could not fetch profile details');
-        }
+        setLoading(true);
+        const [profileRes, summaryRes, custRes, leadRes] = await Promise.all([
+          api.getBusinessProfile(),
+          api.getDashboardSummary(),
+          api.getRecentCustomers(5),
+          api.getRecentLeads(5),
+        ]);
+
+        if (profileRes.success) setProfile(profileRes.profile || null);
+        if (summaryRes.success && summaryRes.data) setSummary(summaryRes.data);
+        if (custRes.success && custRes.data) setRecentCustomers(custRes.data);
+        if (leadRes.success && leadRes.data) setRecentLeads(leadRes.data);
       } catch (err: any) {
-        setError(err.message || 'Failed to load business profile');
+        setError(err.message || 'Failed to load dashboard metrics from database');
       } finally {
         setLoading(false);
       }
     }
-    loadData();
+    loadDashboardData();
   }, []);
 
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-24">
         <Loader2 className="w-10 h-10 text-[#087FE5] animate-spin mb-3" />
-        <p className="text-sm font-medium text-slate-500">Loading business profile data from MySQL...</p>
+        <p className="text-sm font-medium text-slate-500">Connecting to Hostinger MySQL & compiling live metrics...</p>
       </div>
     );
   }
 
-  const isProfileComplete = !!(
-    profile &&
-    profile.business_name &&
-    profile.owner_name &&
-    profile.mobile_number &&
-    profile.email
-  );
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0,
+    }).format(amount);
+  };
 
-  const activeCategories = profile?.loan_categories || [];
-
-  const formatLastUpdated = (dateString?: string) => {
-    if (!dateString) return 'Not yet configured';
-    try {
-      const date = new Date(dateString);
-      return date.toLocaleDateString('en-IN', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      });
-    } catch (e) {
-      return dateString;
-    }
+  const getStatusBadge = (status: string) => {
+    const map: Record<string, string> = {
+      New: 'bg-sky-50 text-sky-700 border-sky-200',
+      Contacted: 'bg-blue-50 text-blue-700 border-blue-200',
+      Interested: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+      'Documents Pending': 'bg-amber-50 text-amber-700 border-amber-200',
+      Qualified: 'bg-purple-50 text-purple-700 border-purple-200',
+      Converted: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+      'Not Interested': 'bg-slate-100 text-slate-600 border-slate-200',
+      Duplicate: 'bg-rose-50 text-rose-700 border-rose-200',
+      Closed: 'bg-slate-100 text-slate-600 border-slate-200',
+    };
+    return map[status] || 'bg-slate-100 text-slate-700 border-slate-200';
   };
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-fade-in">
-      {/* Welcome Section */}
+      {/* Welcome Banner */}
       <div className="bg-gradient-to-r from-[#071426] via-[#0d223f] to-[#087FE5] rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
-        {/* Subtle decorative glow */}
         <div className="absolute top-0 right-0 -mt-12 -mr-12 w-64 h-64 rounded-full bg-[#12A8F5]/20 blur-2xl pointer-events-none" />
         <div className="absolute bottom-0 right-1/4 -mb-12 w-48 h-48 rounded-full bg-[#F59A16]/20 blur-xl pointer-events-none" />
 
         <div className="relative z-10 max-w-2xl">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-[11px] font-semibold text-sky-200 mb-3 border border-white/10">
-            <Sparkles className="w-3.5 h-3.5 text-[#F59A16]" /> Phase 1 Management Console
+            <Sparkles className="w-3.5 h-3.5 text-[#F59A16]" /> Phase 2 Live Operational Console
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
             Welcome to Zippy Loan Connector
           </h1>
           <p className="mt-2 text-sm sm:text-base text-slate-300 font-normal leading-relaxed">
-            Manage your loan connector business information from one place.
+            Manage your loan connector clients, active lead pipeline, and lender engagements from one dashboard.
           </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <Link
-              to="/profile"
+              to="/customers"
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-[#071426] text-xs sm:text-sm font-bold shadow-md hover:bg-slate-100 transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
-              <Building2 className="w-4 h-4 text-[#087FE5]" />
-              <span>{profile ? 'Edit Business Profile' : 'Configure Business Profile'}</span>
+              <Users className="w-4 h-4 text-[#087FE5]" />
+              <span>Customer Directory</span>
               <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
+            </Link>
+
+            <Link
+              to="/leads"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#087FE5] to-[#12A8F5] text-white text-xs sm:text-sm font-bold shadow-md hover:brightness-110 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            >
+              <ClipboardList className="w-4 h-4" />
+              <span>Loan Pipeline</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
 
             {profile?.lender_name && (
@@ -114,7 +129,6 @@ export const DashboardPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Error alert if any */}
       {error && (
         <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start gap-3">
           <ShieldAlert className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
@@ -125,218 +139,245 @@ export const DashboardPage: React.FC = () => {
         </div>
       )}
 
-      {/* 4 Core Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {/* Card 1: Business Profile Status */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                Profile Status
-              </span>
-              <div
-                className={`p-2 rounded-xl ${
-                  isProfileComplete ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600'
-                }`}
-              >
-                {isProfileComplete ? (
-                  <CheckCircle2 className="w-5 h-5" />
-                ) : (
-                  <Clock className="w-5 h-5" />
-                )}
-              </div>
-            </div>
-            <div className="text-xl font-bold text-[#071426] mb-1">
-              {isProfileComplete ? 'Configured & Active' : 'Setup Incomplete'}
-            </div>
-            <p className="text-xs text-slate-500 leading-normal">
-              {profile?.connector_status
-                ? `Connector Status: ${profile.connector_status}`
-                : 'Complete business registration details.'}
-            </p>
+      {/* Live Pipeline Metric Counters (Strictly MySQL data) */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        {/* Metric 1: Total Customers */}
+        <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between text-slate-400 mb-2">
+            <span className="text-[11px] font-bold uppercase tracking-wider">Total Clients</span>
+            <Users className="w-4 h-4 text-[#087FE5]" />
           </div>
-          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-            <span className="text-slate-500 font-medium">Business Type</span>
-            <span className="font-semibold text-slate-800">{profile?.business_type || 'Individual Loan Connector'}</span>
+          <div className="text-2xl font-extrabold text-slate-900">
+            {summary?.total_customers ?? 0}
           </div>
+          <span className="text-[10px] text-slate-500 font-medium mt-1">Active customer records</span>
         </div>
 
-        {/* Card 2: Business Contact Details */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                Contact Details
-              </span>
-              <div className="p-2 rounded-xl bg-blue-50 text-[#087FE5]">
-                <Phone className="w-5 h-5" />
-              </div>
-            </div>
-            <div className="text-sm font-bold text-[#071426] mb-2 flex items-center gap-1.5 truncate">
-              <Phone className="w-3.5 h-3.5 text-[#087FE5] shrink-0" />
-              <span className="truncate">{profile?.mobile_number || 'No phone set'}</span>
-            </div>
-            <div className="text-xs text-slate-600 flex items-center gap-1.5 truncate mb-1">
-              <Mail className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-              <span className="truncate">{profile?.email || 'No email set'}</span>
-            </div>
-            <div className="text-xs text-slate-600 flex items-center gap-1.5 truncate">
-              <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-              <span className="truncate">
-                {[profile?.city, profile?.state].filter(Boolean).join(', ') || 'Address not configured'}
-              </span>
-            </div>
+        {/* Metric 2: Total Leads */}
+        <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between text-slate-400 mb-2">
+            <span className="text-[11px] font-bold uppercase tracking-wider">Total Leads</span>
+            <ClipboardList className="w-4 h-4 text-[#087FE5]" />
           </div>
-          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-            <span className="text-slate-500 font-medium">Owner</span>
-            <span className="font-semibold text-slate-800">{profile?.owner_name || 'M. Lingaswamy'}</span>
+          <div className="text-2xl font-extrabold text-slate-900">
+            {summary?.total_leads ?? 0}
           </div>
+          <span className="text-[10px] text-slate-500 font-medium mt-1">Total loan enquiries</span>
         </div>
 
-        {/* Card 3: Active Loan Categories */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                Active Categories
-              </span>
-              <div className="p-2 rounded-xl bg-indigo-50 text-indigo-600">
-                <Layers className="w-5 h-5" />
-              </div>
-            </div>
-            <div className="text-2xl font-bold text-[#071426] mb-1">
-              {activeCategories.length}{' '}
-              <span className="text-xs font-normal text-slate-400">Categories</span>
-            </div>
-            <div className="flex flex-wrap gap-1 mt-2">
-              {activeCategories.length > 0 ? (
-                activeCategories.slice(0, 3).map((cat) => (
-                  <span
-                    key={cat}
-                    className="inline-block px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 text-[10px] font-semibold"
-                  >
-                    {cat}
-                  </span>
-                ))
-              ) : (
-                <span className="text-xs text-slate-400 italic">No categories selected</span>
-              )}
-              {activeCategories.length > 3 && (
-                <span className="inline-block px-1.5 py-0.5 rounded-md bg-slate-100 text-slate-500 text-[10px] font-semibold">
-                  +{activeCategories.length - 3} more
-                </span>
-              )}
-            </div>
+        {/* Metric 3: New Leads */}
+        <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between text-slate-400 mb-2">
+            <span className="text-[11px] font-bold uppercase tracking-wider">New</span>
+            <Sparkles className="w-4 h-4 text-sky-500" />
           </div>
-          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-            <span className="text-slate-500 font-medium">Lender</span>
-            <span className="font-semibold text-slate-800">{profile?.lender_name || 'Not linked'}</span>
+          <div className="text-2xl font-extrabold text-sky-600">
+            {summary?.new_leads ?? 0}
           </div>
+          <span className="text-[10px] text-sky-600/70 font-semibold mt-1">Pending contact</span>
         </div>
 
-        {/* Card 4: Profile Last Updated */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                Last Updated
-              </span>
-              <div className="p-2 rounded-xl bg-amber-50 text-[#F59A16]">
-                <Clock className="w-5 h-5" />
-              </div>
-            </div>
-            <div className="text-sm font-bold text-[#071426] mb-1 leading-snug">
-              {formatLastUpdated(profile?.updated_at || profile?.created_at)}
-            </div>
-            <p className="text-xs text-slate-500 leading-normal mt-1">
-              {profile?.updated_at ? 'Stored permanently in MySQL database.' : 'Profile has not been saved yet.'}
-            </p>
+        {/* Metric 4: Contacted Leads */}
+        <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between text-slate-400 mb-2">
+            <span className="text-[11px] font-bold uppercase tracking-wider">Contacted</span>
+            <Clock className="w-4 h-4 text-blue-500" />
           </div>
-          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-            <span className="text-slate-500 font-medium">Database</span>
-            <span className="font-semibold text-emerald-600">Hostinger MySQL</span>
+          <div className="text-2xl font-extrabold text-blue-600">
+            {summary?.contacted_leads ?? 0}
           </div>
+          <span className="text-[10px] text-blue-600/70 font-semibold mt-1">In discussion</span>
+        </div>
+
+        {/* Metric 5: Qualified Leads */}
+        <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between text-slate-400 mb-2">
+            <span className="text-[11px] font-bold uppercase tracking-wider">Qualified</span>
+            <Award className="w-4 h-4 text-purple-500" />
+          </div>
+          <div className="text-2xl font-extrabold text-purple-600">
+            {summary?.qualified_leads ?? 0}
+          </div>
+          <span className="text-[10px] text-purple-600/70 font-semibold mt-1">Eligible for login</span>
+        </div>
+
+        {/* Metric 6: Converted Leads */}
+        <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between text-slate-400 mb-2">
+            <span className="text-[11px] font-bold uppercase tracking-wider">Converted</span>
+            <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+          </div>
+          <div className="text-2xl font-extrabold text-emerald-600">
+            {summary?.converted_leads ?? 0}
+          </div>
+          <span className="text-[10px] text-emerald-600/70 font-semibold mt-1">Disbursed / Done</span>
         </div>
       </div>
 
-      {/* Business Details Breakdown Preview */}
-      <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
-          <div>
-            <h2 className="text-lg font-bold text-[#071426]">Business Overview Summary</h2>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Verified business profile parameters registered in MySQL.
-            </p>
+      {/* Status Breakdown Bar */}
+      {summary && summary.status_breakdown && (
+        <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs">
+          <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2.5">
+            Loan Pipeline Status Breakdown
+          </span>
+          <div className="flex flex-wrap items-center gap-2">
+            {Object.entries(summary.status_breakdown).map(([status, count]) => (
+              <div
+                key={status}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50 text-xs"
+              >
+                <span className="font-medium text-slate-700">{status}</span>
+                <span className="px-2 py-0.5 rounded-md bg-white border font-bold text-slate-900 shadow-2xs">
+                  {count}
+                </span>
+              </div>
+            ))}
           </div>
-          <Link
-            to="/profile"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-[#087FE5] bg-blue-50 hover:bg-blue-100 transition-colors self-start sm:self-auto"
-          >
-            <span>Update Information</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
+        </div>
+      )}
+
+      {/* Split Section: Recent Customers & Recent Loan Leads */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Recent Customers Table */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 overflow-hidden flex flex-col justify-between">
+          <div>
+            <div className="p-5 border-b border-slate-100 flex items-center justify-between">
+              <div>
+                <h3 className="text-base font-bold text-slate-900">Recent Customers</h3>
+                <p className="text-xs text-slate-500">Newly registered client profiles</p>
+              </div>
+              <Link
+                to="/customers"
+                className="text-xs font-bold text-[#087FE5] hover:underline flex items-center gap-1"
+              >
+                <span>View Directory</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            {recentCustomers.length === 0 ? (
+              <div className="text-center py-12 px-4 text-slate-400 text-xs">
+                No customer profiles created yet.{' '}
+                <Link to="/customers" className="text-[#087FE5] font-bold underline">
+                  Add one now
+                </Link>
+              </div>
+            ) : (
+              <div className="divide-y divide-slate-100 text-sm">
+                {recentCustomers.map((c) => (
+                  <div key={c.id} className="p-4 hover:bg-slate-50 transition-colors flex items-center justify-between">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <Link
+                          to={`/customers/${c.id}`}
+                          className="font-bold text-slate-900 hover:text-[#087FE5]"
+                        >
+                          {c.full_name}
+                        </Link>
+                        <span className="font-mono text-[11px] font-semibold text-slate-400">
+                          {c.customer_code}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-3 text-xs text-slate-500 mt-0.5">
+                        <span className="flex items-center gap-1">
+                          <Phone className="w-3 h-3 text-slate-400" />
+                          {c.mobile_number}
+                        </span>
+                        {c.city && (
+                          <span className="flex items-center gap-1">
+                            <MapPin className="w-3 h-3 text-slate-400" />
+                            {c.city}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="text-right">
+                      <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-50 text-[#087FE5] border border-sky-100">
+                        {c.total_leads || 0} Leads
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="p-4 bg-slate-50 border-t border-slate-100 text-right">
+            <Link
+              to="/customers"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#087FE5] hover:text-[#065aa3]"
+            >
+              <Plus className="w-3.5 h-3.5" /> Register New Customer
+            </Link>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-          {/* Section 1 */}
-          <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-              A. Business Identity
-            </h3>
-            <div className="space-y-1.5 text-xs">
+        {/* Recent Loan Leads Table */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 overflow-hidden flex flex-col justify-between">
+          <div>
+            <div className="p-5 border-b border-slate-100 flex items-center justify-between">
               <div>
-                <span className="text-slate-400 block">Business Name:</span>
-                <span className="font-semibold text-slate-800">{profile?.business_name || 'Zippy Loan Connector'}</span>
+                <h3 className="text-base font-bold text-slate-900">Recent Loan Leads</h3>
+                <p className="text-xs text-slate-500">Live enquiries across all loan categories</p>
               </div>
-              <div>
-                <span className="text-slate-400 block">Owner Name:</span>
-                <span className="font-semibold text-slate-800">{profile?.owner_name || 'M. Lingaswamy'}</span>
-              </div>
-              <div>
-                <span className="text-slate-400 block">Start Date:</span>
-                <span className="font-semibold text-slate-800">{profile?.business_start_date || 'Not specified'}</span>
-              </div>
+              <Link
+                to="/leads"
+                className="text-xs font-bold text-[#087FE5] hover:underline flex items-center gap-1"
+              >
+                <span>View Pipeline</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
-          </div>
 
-          {/* Section 2 */}
-          <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-              B. Lender & Connector
-            </h3>
-            <div className="space-y-1.5 text-xs">
-              <div>
-                <span className="text-slate-400 block">Lender Name:</span>
-                <span className="font-semibold text-slate-800">{profile?.lender_name || 'ICICI Bank (Default Setup)'}</span>
+            {recentLeads.length === 0 ? (
+              <div className="text-center py-12 px-4 text-slate-400 text-xs">
+                No loan leads submitted yet.{' '}
+                <Link to="/leads" className="text-[#087FE5] font-bold underline">
+                  Log your first lead
+                </Link>
               </div>
-              <div>
-                <span className="text-slate-400 block">Connector ID:</span>
-                <span className="font-semibold text-slate-800">{profile?.connector_id || 'Pending issuance by bank'}</span>
-              </div>
-              <div>
-                <span className="text-slate-400 block">Agreement Ref:</span>
-                <span className="font-semibold text-slate-800">{profile?.agreement_reference || 'Optional / In progress'}</span>
-              </div>
-            </div>
-          </div>
+            ) : (
+              <div className="divide-y divide-slate-100 text-sm">
+                {recentLeads.map((l) => (
+                  <div key={l.id} className="p-4 hover:bg-slate-50 transition-colors flex items-center justify-between">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <Link
+                          to={`/leads/${l.id}`}
+                          className="font-bold text-slate-900 hover:text-[#087FE5]"
+                        >
+                          {l.loan_type}
+                        </Link>
+                        <span className="font-mono text-[11px] font-semibold text-[#087FE5] bg-sky-50 px-1.5 py-0.5 rounded">
+                          {l.lead_code}
+                        </span>
+                      </div>
+                      <div className="text-xs text-slate-500 mt-0.5">
+                        <span>{l.customer_name}</span> •{' '}
+                        <span className="font-bold text-emerald-700">{formatCurrency(l.required_amount)}</span>
+                      </div>
+                    </div>
 
-          {/* Section 3 */}
-          <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-              C. Registered Categories
-            </h3>
-            <div className="space-y-1.5">
-              {activeCategories.length > 0 ? (
-                activeCategories.map((c) => (
-                  <div key={c} className="flex items-center gap-2 text-xs text-slate-700 font-medium">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span>{c}</span>
+                    <div className="text-right">
+                      <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${getStatusBadge(l.lead_status)}`}>
+                        {l.lead_status}
+                      </span>
+                      <span className="text-[11px] text-slate-400 block mt-0.5">{l.enquiry_date}</span>
+                    </div>
                   </div>
-                ))
-              ) : (
-                <p className="text-xs text-slate-400 italic">No loan categories enabled yet.</p>
-              )}
-            </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="p-4 bg-slate-50 border-t border-slate-100 text-right">
+            <Link
+              to="/leads"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#087FE5] hover:text-[#065aa3]"
+            >
+              <Plus className="w-3.5 h-3.5" /> Log New Loan Lead
+            </Link>
           </div>
         </div>
       </div>
