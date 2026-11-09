@@ -534,11 +534,31 @@ if ($endpoint === 'business-profile' && ($method === 'POST' || $method === 'PUT'
         exit;
     }
 
-    // Validation
-    $bName = trim($body['business_name'] ?? '');
-    $oName = trim($body['owner_name'] ?? '');
-    $mobile = trim($body['mobile_number'] ?? '');
+    // Validation (Supports both snake_case and camelCase payloads)
+    $bName = trim($body['business_name'] ?? ($body['businessName'] ?? ''));
+    $oName = trim($body['owner_name'] ?? ($body['ownerName'] ?? ''));
+    $bType = trim($body['business_type'] ?? ($body['businessType'] ?? 'Individual Loan Connector'));
+    $bDesc = trim($body['business_description'] ?? ($body['businessDescription'] ?? '')) ?: null;
+    $bStart = trim($body['business_start_date'] ?? ($body['businessStartDate'] ?? '')) ?: null;
+    $mobile = trim($body['mobile_number'] ?? ($body['mobileNumber'] ?? ''));
+    $waNumber = trim($body['whatsapp_number'] ?? ($body['whatsappNumber'] ?? $mobile));
     $email = trim($body['email'] ?? '');
+    $altContact = trim($body['alternate_contact'] ?? ($body['alternateContact'] ?? '')) ?: null;
+    $addr = trim($body['address_line'] ?? ($body['addressLine'] ?? '')) ?: null;
+    $area = trim($body['area'] ?? '') ?: null;
+    $city = trim($body['city'] ?? '') ?: null;
+    $dist = trim($body['district'] ?? '') ?: null;
+    $state = trim($body['state'] ?? '') ?: null;
+    $pin = trim($body['pin_code'] ?? ($body['pinCode'] ?? '')) ?: null;
+    $country = trim($body['country'] ?? '') ?: 'India';
+    $lender = trim($body['lender_name'] ?? ($body['lenderName'] ?? '')) ?: null;
+    $connId = trim($body['connector_id'] ?? ($body['connectorId'] ?? '')) ?: null;
+    $agreeRef = trim($body['agreement_reference'] ?? ($body['agreementReference'] ?? '')) ?: null;
+    $agreeStart = trim($body['agreement_start_date'] ?? ($body['agreementStartDate'] ?? '')) ?: null;
+    $connStatus = trim($body['connector_status'] ?? ($body['connectorStatus'] ?? 'Active'));
+    $bNotes = trim($body['business_notes'] ?? ($body['businessNotes'] ?? ($body['notes'] ?? ''))) ?: null;
+    $webUrl = trim($body['website_url'] ?? ($body['websiteUrl'] ?? '')) ?: null;
+    $logo = trim($body['logo_path'] ?? ($body['logoPath'] ?? '')) ?: null;
 
     if (empty($bName) || empty($oName) || empty($mobile) || empty($email)) {
         http_response_code(400);
@@ -547,7 +567,7 @@ if ($endpoint === 'business-profile' && ($method === 'POST' || $method === 'PUT'
     }
 
     // Strictly disallow Agriculture Loan
-    $cats = $body['loan_categories'] ?? [];
+    $cats = $body['loan_categories'] ?? ($body['loanCategories'] ?? []);
     if (!is_array($cats)) $cats = [];
     foreach ($cats as $cat) {
         if (stripos($cat, 'agri') !== false) {
@@ -599,29 +619,29 @@ if ($endpoint === 'business-profile' && ($method === 'POST' || $method === 'PUT'
         $updateParams = [
             $bName,
             $oName,
-            $body['business_type'] ?? 'Individual Loan Connector',
-            $body['business_description'] ?? null,
-            $body['business_start_date'] ?? null,
+            $bType,
+            $bDesc,
+            $bStart,
             $mobile,
-            $body['whatsapp_number'] ?? $mobile,
+            $waNumber,
             $email,
-            $body['alternate_contact'] ?? null,
-            $body['address_line'] ?? null,
-            $body['area'] ?? null,
-            $body['city'] ?? null,
-            $body['district'] ?? null,
-            $body['state'] ?? null,
-            $body['pin_code'] ?? null,
-            $body['country'] ?? 'India',
-            $body['lender_name'] ?? null,
-            $body['connector_id'] ?? null,
-            $body['agreement_reference'] ?? null,
-            $body['agreement_start_date'] ?? null,
-            $body['connector_status'] ?? 'Active',
+            $altContact,
+            $addr,
+            $area,
+            $city,
+            $dist,
+            $state,
+            $pin,
+            $country,
+            $lender,
+            $connId,
+            $agreeRef,
+            $agreeStart,
+            $connStatus,
             $catsJson,
-            $body['business_notes'] ?? null,
-            $body['website_url'] ?? null,
-            $body['logo_path'] ?? null,
+            $bNotes,
+            $webUrl,
+            $logo,
             $existing['id']
         ];
         $stmt = $pdo->prepare($updateSql);
@@ -648,29 +668,29 @@ if ($endpoint === 'business-profile' && ($method === 'POST' || $method === 'PUT'
         $insertParams = [
             $bName,
             $oName,
-            $body['business_type'] ?? 'Individual Loan Connector',
-            $body['business_description'] ?? null,
-            $body['business_start_date'] ?? null,
+            $bType,
+            $bDesc,
+            $bStart,
             $mobile,
-            $body['whatsapp_number'] ?? $mobile,
+            $waNumber,
             $email,
-            $body['alternate_contact'] ?? null,
-            $body['address_line'] ?? null,
-            $body['area'] ?? null,
-            $body['city'] ?? null,
-            $body['district'] ?? null,
-            $body['state'] ?? null,
-            $body['pin_code'] ?? null,
-            $body['country'] ?? 'India',
-            $body['lender_name'] ?? null,
-            $body['connector_id'] ?? null,
-            $body['agreement_reference'] ?? null,
-            $body['agreement_start_date'] ?? null,
-            $body['connector_status'] ?? 'Active',
+            $altContact,
+            $addr,
+            $area,
+            $city,
+            $dist,
+            $state,
+            $pin,
+            $country,
+            $lender,
+            $connId,
+            $agreeRef,
+            $agreeStart,
+            $connStatus,
             $catsJson,
-            $body['business_notes'] ?? null,
-            $body['website_url'] ?? null,
-            $body['logo_path'] ?? null,
+            $bNotes,
+            $webUrl,
+            $logo,
         ];
         $stmt = $pdo->prepare($insertSql);
         $stmt->execute($insertParams);
