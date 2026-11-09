@@ -10,7 +10,7 @@ dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
 dotenv.config(); // Fallback to current working directory .env
 
 export const env = {
-  PORT: process.env.PORT || 5000,
+  PORT: process.env.PORT || 3000,
   NODE_ENV: process.env.NODE_ENV || 'development',
   CORS_ORIGIN: process.env.CORS_ORIGIN || 'http://localhost:3000',
 
