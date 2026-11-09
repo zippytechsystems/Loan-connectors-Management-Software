@@ -10,8 +10,8 @@
   "scripts": {
     "dev:server": "npm --workspace=server run dev",
     "dev:client": "npm --workspace=client run dev",
-    "build:client": "npm --workspace=client run build",
-    "build": "npm --workspace=client run build",
+    "build:client": "npm --workspace=client run build && node -e \"const fs=require('fs'); fs.cpSync('client/dist', '.', { recursive: true });\"",
+    "build": "npm run build:client",
     "start": "npm --workspace=server run start",
     "db:test": "npm --workspace=server run db:test",
     "db:init": "npm --workspace=server run db:init",

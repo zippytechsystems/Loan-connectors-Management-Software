@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="zippyBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#087FE5"/>
+      <stop offset="50%" stop-color="#12A8F5"/>
+      <stop offset="100%" stop-color="#071426"/>
+    </linearGradient>
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  <rect x="4" y="4" width="92" height="92" rx="22" fill="url(#zippyBg)"/>
+  <rect x="4" y="4" width="92" height="92" rx="22" fill="none" stroke="#12A8F5" stroke-width="2.2" opacity="0.9"/>
+  
+  <path d="M28 28 L72 28 L72 37 L44 63 L72 63 L72 73 L28 73 L28 64 L56 38 L28 38 Z" fill="#ffffff" filter="url(#neonGlow)"/>
+  
+  <polygon points="76,22 78,27 83,29 78,31 76,36 74,31 69,29 74,27" fill="#F59A16"/>
+  <circle cx="28" cy="28" r="3" fill="#12A8F5"/>
+</svg>
