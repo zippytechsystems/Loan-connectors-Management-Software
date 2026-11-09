@@ -3,9 +3,10 @@ node_modules/
 client/node_modules/
 server/node_modules/
 
-# Production builds
-client/dist/
-dist/
+# Lock files (avoid cross-platform npm bug #4828 between Windows and Linux)
+package-lock.json
+client/package-lock.json
+server/package-lock.json
 
 # Environment files
 .env
