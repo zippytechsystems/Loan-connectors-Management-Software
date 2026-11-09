@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Zippy Loan Connector — Management Software",
   "private": true,
+  "type": "module",
   "main": "server.js",
   "workspaces": [
     "client",

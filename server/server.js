@@ -1,14 +1,18 @@
+import http from 'http';
 import app from './src/app.js';
 import { env } from './src/config/env.js';
 import { testDbConnection } from './src/db/connection.js';
 import { initializeDatabase } from './src/db/init.js';
 
-const PORT = env.PORT || 5000;
+const rawPort = process.env.PORT;
+const primaryPort = rawPort && isNaN(Number(rawPort)) ? rawPort : parseInt(rawPort || '5000', 10);
 
 async function startServer() {
   console.log('====================================================');
-  console.log('  ZIPPY LOAN CONNECTOR — BACKEND SERVER (PHASE 1)   ');
+  console.log('  ZIPPY LOAN CONNECTOR — BACKEND SERVER (PHASE 2)   ');
   console.log('  Owner: M. Lingaswamy                              ');
+  console.log(`  Startup PORT env: ${rawPort || '(not set, default 5000)'}`);
+  console.log(`  Active Node: ${process.version}`);
   console.log('====================================================');
 
   // Test Hostinger MySQL connectivity
@@ -17,7 +21,6 @@ async function startServer() {
 
   if (dbStatus.success) {
     console.log(`[DB] ✅ Hostinger MySQL connected successfully at ${dbStatus.serverTime}`);
-    // Run schema initialization and admin bootstrap
     await initializeDatabase();
   } else {
     console.warn(`[DB] ⚠️ MySQL not yet connected: ${dbStatus.message}`);
@@ -27,12 +30,34 @@ async function startServer() {
     console.warn('[DB] Server will still start so API and health probes remain accessible.');
   }
 
-  app.listen(PORT, () => {
-    console.log(`[SERVER] 🚀 Server running on http://localhost:${PORT}`);
-    console.log(`[SERVER] Environment: ${env.NODE_ENV}`);
-    console.log(`[SERVER] Health check: http://localhost:${PORT}/api/health`);
-    console.log('====================================================');
-  });
+  // Create primary HTTP server
+  const server = http.createServer(app);
+
+  if (typeof primaryPort === 'number') {
+    server.listen(primaryPort, '0.0.0.0', () => {
+      console.log(`[SERVER] 🚀 Primary server listening on http://0.0.0.0:${primaryPort}`);
+      console.log(`[SERVER] Health check: http://localhost:${primaryPort}/api/health`);
+    });
+
+    // Also bind fallback port (3000 if primary is 5000, or 5000 if primary is 3000)
+    const secondaryPort = primaryPort === 5000 ? 3000 : 5000;
+    try {
+      const fallbackServer = http.createServer(app);
+      fallbackServer.on('error', (err) => {
+        console.log(`[SERVER] Secondary port ${secondaryPort} not bound: ${err.message}`);
+      });
+      fallbackServer.listen(secondaryPort, '0.0.0.0', () => {
+        console.log(`[SERVER] 🚀 Secondary server also listening on http://0.0.0.0:${secondaryPort}`);
+      });
+    } catch {
+      // ignore
+    }
+  } else {
+    // Unix domain socket or named pipe
+    server.listen(primaryPort, () => {
+      console.log(`[SERVER] 🚀 Server listening on socket ${primaryPort}`);
+    });
+  }
 }
 
 startServer().catch((err) => {
