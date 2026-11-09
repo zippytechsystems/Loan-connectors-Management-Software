@@ -18,22 +18,17 @@ RewriteBase /
 RewriteRule ^server(/.*)?$ - [F,L]
 RewriteRule ^migrations(/.*)?$ - [F,L]
 
-# 3. Node.js API Reverse Proxy (when mod_proxy is active on LiteSpeed / Apache)
-<IfModule mod_proxy.c>
-  RewriteRule ^api/(.*)$ http://127.0.0.1:5000/api/$1 [P,L]
-</IfModule>
-
-# 4. Critical: NEVER rewrite /api requests to index.html under any circumstances
+# 3. Pass-through API requests to Express Node.js application (do not rewrite /api to index.html)
 RewriteCond %{REQUEST_URI} ^/api(/.*)?$ [NC]
 RewriteRule ^ - [L]
 
-# 5. Single Page Application (SPA) Routing for React Router
+# 4. Single Page Application (SPA) Routing for React Router
 # If request is NOT an actual file or directory, serve index.html
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.html [QSA,L]
 
-# 6. Enable compression for speed
+# 5. Enable compression for speed
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json image/svg+xml
 </IfModule>
