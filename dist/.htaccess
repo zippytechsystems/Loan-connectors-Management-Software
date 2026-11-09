@@ -1,0 +1,38 @@
+# =============================================================================
+# ZIPPY LOAN CONNECTOR — HOSTINGER APACHE / LITESPEED CONFIGURATION
+# Application: Zippy Loan Connector
+# Owner: M. Lingaswamy
+# =============================================================================
+
+DirectoryIndex index.html
+
+# 1. Security: Block direct access to hidden files, git, server code, and environment variables
+<FilesMatch "^\.(env|git|gitignore)">
+  Require all denied
+</FilesMatch>
+
+RewriteEngine On
+RewriteBase /
+
+# Block direct access to server backend source code and migrations
+RewriteRule ^server(/.*)?$ - [F,L]
+RewriteRule ^migrations(/.*)?$ - [F,L]
+
+# 2. Reverse Proxy for API requests to local Node.js server (if Apache/LiteSpeed fronts Node.js)
+# If Hostinger runs Node.js on port 3000 (or custom internal port), pass /api requests through:
+<IfModule mod_proxy.c>
+  RewriteCond %{REQUEST_URI} ^/api/ [NC]
+  RewriteRule ^api/(.*)$ http://127.0.0.1:3000/api/$1 [P,L]
+</IfModule>
+
+# 3. SPA Fallback: Direct non-file and non-API requests to index.html for React Router
+# Crucial: NEVER rewrite /api requests to index.html!
+RewriteCond %{REQUEST_URI} !^/api/ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]
+
+# 4. Enable compression for speed
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json image/svg+xml
+</IfModule>
