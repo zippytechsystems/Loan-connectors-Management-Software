@@ -12,7 +12,7 @@
   "scripts": {
     "dev:server": "npm --workspace=server run dev",
     "dev:client": "npm --workspace=client run dev",
-    "build:client": "npm --workspace=client run build && node -e \"import('fs').then(fs => { fs.cpSync('client/dist', 'dist', { recursive: true }); fs.cpSync('client/dist', '.', { recursive: true }); if (fs.existsSync('.htaccess')) { fs.copyFileSync('.htaccess', 'dist/.htaccess'); } })\"",
+    "build:client": "npm --workspace=client run build && node -e \"import('fs').then(fs => { fs.cpSync('client/dist', 'dist', { recursive: true }); fs.cpSync('client/dist', '.', { recursive: true }); if (fs.existsSync('.htaccess')) { fs.copyFileSync('.htaccess', 'dist/.htaccess'); } if (fs.existsSync('api')) { fs.cpSync('api', 'dist/api', { recursive: true }); } })\"",
     "build": "npm run build:client",
     "start": "node server.js",
     "db:test": "npm --workspace=server run db:test",

@@ -18,12 +18,10 @@ RewriteBase /
 RewriteRule ^server(/.*)?$ - [F,L]
 RewriteRule ^migrations(/.*)?$ - [F,L]
 
-# 2. Reverse Proxy for API requests to local Node.js server (if Apache/LiteSpeed fronts Node.js)
-# If Hostinger runs Node.js on port 3000 (or custom internal port), pass /api requests through:
-<IfModule mod_proxy.c>
-  RewriteCond %{REQUEST_URI} ^/api/ [NC]
-  RewriteRule ^api/(.*)$ http://127.0.0.1:3000/api/$1 [P,L]
-</IfModule>
+# 2. Native API Routing for Hostinger LiteSpeed Web Hosting
+# Route all /api/* requests to api/index.php (runs natively in PHP 8.x with direct MySQL connection)
+RewriteCond %{REQUEST_URI} ^/api/ [NC]
+RewriteRule ^api/(.*)$ api/index.php?endpoint=$1 [QSA,L]
 
 # 3. SPA Fallback: Direct non-file and non-API requests to index.html for React Router
 # Crucial: NEVER rewrite /api requests to index.html!
