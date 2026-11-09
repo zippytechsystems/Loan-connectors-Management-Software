@@ -24,9 +24,23 @@ async function request<T = any>(endpoint: string, options: RequestInit = {}): Pr
 
   try {
     const res = await fetch(`${API_BASE}${endpoint}`, config);
+
+    // Verify if server returned JSON
+    const contentType = res.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+      const text = await res.text();
+      const isHtml = text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html') || text.trim().startsWith('<');
+      return {
+        success: false,
+        message: isHtml
+          ? `Backend API server is unreachable or returning HTML (HTTP ${res.status}). Please ensure Node.js is running in Hostinger.`
+          : `Unexpected server response format (HTTP ${res.status}): ${text.slice(0, 100)}`,
+      };
+    }
+
     const data = await res.json().catch(() => ({
       success: false,
-      message: `Failed to parse response (HTTP ${res.status})`,
+      message: `Failed to parse JSON response (HTTP ${res.status})`,
     }));
 
     if (!res.ok) {

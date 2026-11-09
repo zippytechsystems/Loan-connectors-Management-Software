@@ -17,6 +17,7 @@ import { env } from './config/env.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const clientDistPath = path.resolve(__dirname, '../../client/dist');
+const rootDistPath = path.resolve(__dirname, '../../');
 
 const app = express();
 
@@ -53,9 +54,12 @@ app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ extended: true, limit: '2mb' }));
 app.use(cookieParser());
 
-// Serve static assets from built React frontend
+// Serve static assets from built React frontend (client/dist or root)
 if (fs.existsSync(clientDistPath)) {
   app.use(express.static(clientDistPath));
+}
+if (fs.existsSync(path.join(rootDistPath, 'assets'))) {
+  app.use(express.static(rootDistPath));
 }
 
 // General Rate Limiter for API
@@ -97,9 +101,16 @@ app.all('/api/*', (req, res) => {
 
 // SPA Fallback for client-side routing (serves React's index.html)
 app.get('*', (req, res, next) => {
-  const indexPath = path.join(clientDistPath, 'index.html');
-  if (fs.existsSync(indexPath)) {
-    return res.sendFile(indexPath);
+  if (req.path.startsWith('/api')) {
+    return next();
+  }
+  const clientIndex = path.join(clientDistPath, 'index.html');
+  const rootIndex = path.join(rootDistPath, 'index.html');
+  if (fs.existsSync(clientIndex)) {
+    return res.sendFile(clientIndex);
+  }
+  if (fs.existsSync(rootIndex)) {
+    return res.sendFile(rootIndex);
   }
   next();
 });

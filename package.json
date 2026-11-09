@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Zippy Loan Connector — Management Software",
   "private": true,
+  "main": "server.js",
   "workspaces": [
     "client",
     "server"
@@ -10,9 +11,9 @@
   "scripts": {
     "dev:server": "npm --workspace=server run dev",
     "dev:client": "npm --workspace=client run dev",
-    "build:client": "npm --workspace=client run build && node -e \"const fs=require('fs'); fs.cpSync('client/dist', '.', { recursive: true });\"",
+    "build:client": "npm --workspace=client run build && node -e \"import('fs').then(fs => fs.cpSync('client/dist', '.', { recursive: true }))\"",
     "build": "npm run build:client",
-    "start": "npm --workspace=server run start",
+    "start": "node server.js",
     "db:test": "npm --workspace=server run db:test",
     "db:init": "npm --workspace=server run db:init",
     "test": "npm --workspace=server run test"
