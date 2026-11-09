@@ -5,7 +5,7 @@ import { initializeDatabase } from './src/db/init.js';
 
 const rawPort = process.env.PORT;
 const isSocket = rawPort && isNaN(Number(rawPort));
-const primaryPort = isSocket ? rawPort : parseInt(rawPort || String(env.PORT) || '5000', 10);
+const primaryPort = isSocket ? rawPort : parseInt(rawPort || String(env.PORT) || '3000', 10);
 const host = process.env.HOST || '0.0.0.0';
 
 let serverInstance = null;
