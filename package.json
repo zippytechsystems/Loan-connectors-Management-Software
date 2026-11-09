@@ -1,16 +1,21 @@
 {
   "name": "zippy-loan-connector",
   "version": "1.0.0",
-  "description": "Zippy Loan Connector — Management Software (Phase 1)",
+  "description": "Zippy Loan Connector — Management Software",
   "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
-    "dev:server": "cd server && npm run dev",
-    "dev:client": "cd client && npm run dev",
-    "build:client": "cd client && npm run build",
-    "start": "cd server && npm start",
-    "db:test": "cd server && npm run db:test",
-    "db:init": "cd server && npm run db:init",
-    "test": "cd server && npm test"
+    "dev:server": "npm --workspace=server run dev",
+    "dev:client": "npm --workspace=client run dev",
+    "build:client": "npm --workspace=client run build",
+    "build": "npm --workspace=client run build",
+    "start": "npm --workspace=server run start",
+    "db:test": "npm --workspace=server run db:test",
+    "db:init": "npm --workspace=server run db:init",
+    "test": "npm --workspace=server run test"
   },
   "keywords": [
     "loan-connector",
