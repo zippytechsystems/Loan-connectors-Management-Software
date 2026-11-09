@@ -1,6 +1,6 @@
 import { getPool } from './connection.js';
-import { getAdminByUsername, createAdmin } from './queries.js';
-import { hashPassword } from '../utils/security.js';
+import { getAdminByUsername, createAdmin, updateAdminPassword } from './queries.js';
+import { hashPassword, comparePassword } from '../utils/security.js';
 import { env } from '../config/env.js';
 
 export async function initializeDatabase() {
@@ -178,6 +178,14 @@ export async function initializeDatabase() {
         role: 'admin',
       });
       console.log(`[BOOTSTRAP] Initial admin account initialized: ${targetAdmin}`);
+    } else {
+      // Check if existing password matches current ADMIN_INITIAL_PASSWORD; if not, sync it
+      const isMatch = await comparePassword(env.ADMIN_INITIAL_PASSWORD, existing.password_hash);
+      if (!isMatch && (process.env.ADMIN_SYNC_PASSWORD === 'true' || process.env.NODE_ENV !== 'production')) {
+        const passwordHash = await hashPassword(env.ADMIN_INITIAL_PASSWORD);
+        await updateAdminPassword(targetAdmin, passwordHash);
+        console.log(`[BOOTSTRAP] Admin credentials synchronized for: ${targetAdmin}`);
+      }
     }
 
     return true;

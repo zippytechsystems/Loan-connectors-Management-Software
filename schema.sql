@@ -24,6 +24,11 @@ CREATE TABLE IF NOT EXISTS `admins` (
   INDEX `idx_admins_is_active` (`is_active`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Initial Admin Account Seed (Username: M.Lingaswamy@123 / Password: M.Linga@123)
+INSERT INTO `admins` (`username`, `password_hash`, `role`, `is_active`)
+VALUES ('M.Lingaswamy@123', '$2b$12$.uZy2Y76dg80xQtmCXta1uQE8PXFDonzIVdUVd38WtXg31VtNaoqq', 'admin', 1)
+ON DUPLICATE KEY UPDATE `password_hash` = VALUES(`password_hash`), `is_active` = 1;
+
 -- -----------------------------------------------------------------------------
 -- 2. Business Profiles Table
 -- -----------------------------------------------------------------------------

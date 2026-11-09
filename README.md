@@ -181,9 +181,10 @@ SESSION_SECRET=a_very_long_random_entropy_secret_key_minimum_32_characters
 COOKIE_NAME=zippy_auth_token
 COOKIE_MAX_AGE_DAYS=7
 
-# Initial Admin Bootstrap
+# Initial Admin Bootstrap (M. Lingaswamy)
 ADMIN_USERNAME=M.Lingaswamy@123
-ADMIN_INITIAL_PASSWORD=YourSecureAdminPasswordHere
+ADMIN_INITIAL_PASSWORD=M.Linga@123
+ADMIN_SYNC_PASSWORD=true
 ```
 
 > [!CAUTION]
@@ -217,12 +218,18 @@ ADMIN_INITIAL_PASSWORD=YourSecureAdminPasswordHere
 
 ## 🧪 Local Testing & Verification
 
-### 1. Run Automated Test Suite (19 Passing Tests)
-To run the automated integration tests verifying login, rate limiting, cookies, profile persistence, customer management, duplicate detection, lead tracking, audit histories, and loan category restrictions:
+### 1. Run Automated Test Suite (20 Passing Tests)
+To run the automated integration tests verifying API health, database query health, login, rate limiting, cookies, profile persistence, customer management, duplicate detection, lead tracking, audit histories, and loan category restrictions:
 ```bash
 npm test
 ```
-*All 19 tests across Phase 1 and Phase 2 execute in seconds using Node.js's native test runner (`node:test`).*
+*All 20 tests across Phase 1 and Phase 2 execute in seconds using Node.js's native test runner (`node:test`).*
+
+### 2. Reset or Synchronize Admin Password
+To synchronize or reset the admin password (`M.Lingaswamy@123` / `M.Linga@123`) in MySQL:
+```bash
+npm run db:reset-admin
+```
 
 ### 2. Test Hostinger Database Connectivity
 Verify whether your Hostinger MySQL credentials connect successfully:

@@ -37,12 +37,24 @@ describe('Zippy Loan Connector — Phase 1 Test Suite', () => {
     await initializeDatabase();
   });
 
-  test('1. Database health probe returns operational status', async () => {
+  test('1. API health probe returns running status and connected database', async () => {
     const res = await fetch(`${baseUrl}/api/health`);
     assert.equal(res.status, 200);
     const json = await res.json();
-    assert.equal(json.status, 'ok');
-    assert.equal(json.database.connected, true);
+    assert.equal(json.success, true);
+    assert.equal(json.service, 'Zippy Loan Connector API');
+    assert.equal(json.status, 'running');
+    assert.equal(json.database, 'connected');
+  });
+
+  test('1B. Dedicated database health probe verifies query execution', async () => {
+    const res = await fetch(`${baseUrl}/api/health/database`);
+    assert.equal(res.status, 200);
+    const json = await res.json();
+    assert.equal(json.success, true);
+    assert.equal(json.service, 'Zippy Loan Connector API');
+    assert.equal(json.status, 'connected');
+    assert.match(json.message, /passed/i);
   });
 
   test('2. Incorrect login fails with HTTP 401', async () => {

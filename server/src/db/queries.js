@@ -42,6 +42,20 @@ export async function getAdminCount() {
 }
 
 /**
+ * Update an admin's password hash
+ */
+export async function updateAdminPassword(username, newPasswordHash) {
+  const pool = getPool();
+  const sql = `
+    UPDATE admins
+    SET password_hash = ?, updated_at = NOW()
+    WHERE username = ?
+  `;
+  const [result] = await pool.execute(sql, [newPasswordHash, username]);
+  return (result.affectedRows || result.changedRows || 0) > 0;
+}
+
+/**
  * Fetch the active business profile (Single Owner Profile)
  */
 export async function getBusinessProfile() {

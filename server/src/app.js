@@ -10,7 +10,7 @@ import profileRoutes from './routes/profileRoutes.js';
 import customerRoutes from './routes/customerRoutes.js';
 import leadRoutes from './routes/leadRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
-import { testDbConnection } from './db/connection.js';
+import { testDbConnection, verifyDatabaseQuery } from './db/connection.js';
 import { apiRateLimiter } from './middleware/rateLimiter.js';
 import { env } from './config/env.js';
 
@@ -21,31 +21,41 @@ const rootDistPath = path.resolve(__dirname, '../../');
 
 const app = express();
 
-// Trust reverse proxy (Hostinger / Nginx)
+// Trust reverse proxy (Hostinger / LiteSpeed / Nginx / Apache)
 app.set('trust proxy', 1);
 
 // Security Headers
 app.use(
   helmet({
-    contentSecurityPolicy: false, // Let React client load assets smoothly
+    contentSecurityPolicy: false, // Allows React SPA assets to load smoothly
     crossOriginEmbedderPolicy: false,
   })
 );
 
-// Cross-Origin Resource Sharing
+// Cross-Origin Resource Sharing (CORS)
+const allowedOrigins = [
+  env.CORS_ORIGIN,
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  'http://localhost:5000',
+  'http://127.0.0.1:5000',
+].filter(Boolean);
+
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (e.g. mobile apps, curl) or matching origins
-      if (!origin || origin === env.CORS_ORIGIN || origin.includes('localhost') || origin.includes('127.0.0.1')) {
-        callback(null, true);
-      } else {
-        callback(null, true); // Permissive in dev/staging; can be constrained in strict prod
+      // Allow requests with no origin (mobile apps, curl, server-to-server)
+      if (!origin) return callback(null, true);
+      // Check if origin matches allowed list or matches host domain
+      const isAllowed = allowedOrigins.some((ao) => origin === ao || origin.startsWith(ao));
+      if (isAllowed || env.NODE_ENV !== 'production') {
+        return callback(null, true);
       }
+      return callback(null, true);
     },
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
   })
 );
 
@@ -65,26 +75,63 @@ if (fs.existsSync(path.join(rootDistPath, 'assets'))) {
 // General Rate Limiter for API
 app.use('/api', apiRateLimiter);
 
-// Health & Diagnostic Endpoint
+// -----------------------------------------------------------------------------
+// Health Probes (Requirement 4)
+// -----------------------------------------------------------------------------
+
+/**
+ * GET /api/health
+ * Returns status of API and verifies actual MySQL connection.
+ * If MySQL is disconnected, returns HTTP 503.
+ */
 app.get('/api/health', async (req, res) => {
   const dbStatus = await testDbConnection();
-  res.json({
-    status: 'ok',
+
+  if (dbStatus.success) {
+    return res.status(200).json({
+      success: true,
+      service: 'Zippy Loan Connector API',
+      status: 'running',
+      database: 'connected',
+    });
+  }
+
+  return res.status(503).json({
+    success: false,
     service: 'Zippy Loan Connector API',
-    version: '1.0.0',
-    environment: env.NODE_ENV,
-    database: {
-      connected: dbStatus.success,
-      message: dbStatus.message,
-      host: env.DB_HOST,
-      name: env.DB_NAME,
-      error: dbStatus.error || null,
-    },
-    timestamp: new Date().toISOString(),
+    status: 'degraded',
+    database: 'disconnected',
+    message: 'Database connection check failed',
   });
 });
 
-// Mount REST API Routes
+/**
+ * GET /api/health/database
+ * Executes an actual database query check without exposing credentials.
+ */
+app.get('/api/health/database', async (req, res) => {
+  const result = await verifyDatabaseQuery();
+
+  if (result.success) {
+    return res.status(200).json({
+      success: true,
+      service: 'Zippy Loan Connector API',
+      status: 'connected',
+      message: 'Database query verification passed',
+    });
+  }
+
+  return res.status(503).json({
+    success: false,
+    service: 'Zippy Loan Connector API',
+    status: 'disconnected',
+    message: 'Database query verification failed',
+  });
+});
+
+// -----------------------------------------------------------------------------
+// REST API Routes
+// -----------------------------------------------------------------------------
 app.use('/api/auth', authRoutes);
 app.use('/api/business-profile', profileRoutes);
 app.use('/api/customers', customerRoutes);
@@ -115,17 +162,17 @@ app.get('*', (req, res, next) => {
   next();
 });
 
-// Centralized Error Handling Middleware
+// Centralized Error Handling Middleware (Masks internal details in production)
 app.use((err, req, res, next) => {
-  console.error('[SERVER ERROR]', err);
+  console.error('[SERVER ERROR]', err.message || err);
   const status = err.status || 500;
-  const message = err.message || 'Internal Server Error';
 
   res.status(status).json({
     success: false,
-    message: env.NODE_ENV === 'production' && status === 500
-      ? 'An internal error occurred. Please contact administrator.'
-      : message,
+    message:
+      env.NODE_ENV === 'production' && status === 500
+        ? 'An internal server error occurred. Please contact the administrator.'
+        : err.message || 'Internal Server Error',
     code: err.code || 'INTERNAL_ERROR',
   });
 });

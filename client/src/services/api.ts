@@ -9,9 +9,21 @@ import type {
   User,
 } from '../types';
 
-const API_BASE = '/api';
+// Centralized Environment-Based API Configuration
+const RAW_API_URL = (
+  import.meta.env.VITE_API_URL ||
+  import.meta.env.VITE_API_BASE_URL ||
+  ''
+).trim();
+
+export const API_BASE = RAW_API_URL
+  ? (RAW_API_URL.endsWith('/api') ? RAW_API_URL : `${RAW_API_URL.replace(/\/$/, '')}/api`)
+  : '/api';
 
 async function request<T = any>(endpoint: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
+  const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+  const url = `${API_BASE}${cleanEndpoint}`;
+
   const config: RequestInit = {
     ...options,
     credentials: 'include', // Crucial for HTTP-only cookies
@@ -23,18 +35,41 @@ async function request<T = any>(endpoint: string, options: RequestInit = {}): Pr
   };
 
   try {
-    const res = await fetch(`${API_BASE}${endpoint}`, config);
+    const res = await fetch(url, config);
 
     // Verify if server returned JSON
     const contentType = res.headers.get('content-type') || '';
-    if (!contentType.includes('application/json')) {
+    const isJson = contentType.includes('application/json');
+
+    if (!isJson) {
       const text = await res.text();
-      const isHtml = text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html') || text.trim().startsWith('<');
+      const isHtml =
+        text.trim().startsWith('<!DOCTYPE') ||
+        text.trim().startsWith('<html') ||
+        text.trim().startsWith('<');
+
+      let diagnosticMessage = '';
+      if (res.status === 503) {
+        diagnosticMessage = isHtml
+          ? 'Backend API server is unreachable (HTTP 503 Service Unavailable). Please ensure Node.js application is running in Hostinger hPanel.'
+          : 'Service Unavailable (HTTP 503). The server is temporarily overloaded or down.';
+      } else if (res.status === 502) {
+        diagnosticMessage = 'Bad Gateway (HTTP 502). The reverse proxy or web server could not connect to the Node.js backend.';
+      } else if (res.status === 504) {
+        diagnosticMessage = 'Gateway Timeout (HTTP 504). The backend server took too long to respond.';
+      } else if (res.status === 404) {
+        diagnosticMessage = `API endpoint not found (HTTP 404). Path requested: ${endpoint}. Ensure API routes are mounted in Express.`;
+      } else if (res.status === 500) {
+        diagnosticMessage = 'Internal Server Error (HTTP 500). An error occurred on the Node.js server. Please check server logs.';
+      } else {
+        diagnosticMessage = isHtml
+          ? `Unexpected HTML response from server (HTTP ${res.status}). Verify API base URL and reverse proxy configuration.`
+          : `Unexpected server response format (HTTP ${res.status}): ${text.slice(0, 100)}`;
+      }
+
       return {
         success: false,
-        message: isHtml
-          ? `Backend API server is unreachable or returning HTML (HTTP ${res.status}). Please ensure Node.js is running in Hostinger.`
-          : `Unexpected server response format (HTTP ${res.status}): ${text.slice(0, 100)}`,
+        message: diagnosticMessage,
       };
     }
 
@@ -44,9 +79,22 @@ async function request<T = any>(endpoint: string, options: RequestInit = {}): Pr
     }));
 
     if (!res.ok) {
+      let defaultErrorMsg = `Request failed with status ${res.status}`;
+      if (res.status === 401) {
+        defaultErrorMsg = 'Authentication required or session expired. Please sign in.';
+      } else if (res.status === 403) {
+        defaultErrorMsg = 'Access forbidden. You do not have permission for this action.';
+      } else if (res.status === 404) {
+        defaultErrorMsg = 'Resource not found (HTTP 404).';
+      } else if (res.status === 500) {
+        defaultErrorMsg = 'An internal server error occurred. Please contact the administrator.';
+      } else if (res.status === 503) {
+        defaultErrorMsg = 'Backend service or database is currently unavailable (HTTP 503).';
+      }
+
       return {
         success: false,
-        message: data.message || `Request failed with status ${res.status}`,
+        message: data.message || defaultErrorMsg,
         errors: data.errors,
         isDuplicate: data.isDuplicate,
         existingCustomer: data.existingCustomer,
@@ -55,9 +103,16 @@ async function request<T = any>(endpoint: string, options: RequestInit = {}): Pr
 
     return data;
   } catch (err: any) {
+    const isNetworkError =
+      err.name === 'TypeError' ||
+      err.message?.includes('Failed to fetch') ||
+      err.message?.includes('NetworkError');
+
     return {
       success: false,
-      message: err.message || 'Network error occurred while connecting to server',
+      message: isNetworkError
+        ? 'Cannot reach the backend API server. Please verify network connection or Node.js status in Hostinger.'
+        : err.message || 'Network error occurred while connecting to server',
     };
   }
 }
@@ -232,9 +287,15 @@ export const api = {
     return request(`/dashboard/recent-leads?limit=${limit}`);
   },
 
-  // Health probe
+  // Health probes
   async getHealth(): Promise<ApiResponse> {
     return request('/health', {
+      method: 'GET',
+    });
+  },
+
+  async getDatabaseHealth(): Promise<ApiResponse> {
+    return request('/health/database', {
       method: 'GET',
     });
   },

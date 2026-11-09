@@ -189,6 +189,17 @@ export const mockPool = {
       return [{ insertId: id }];
     }
 
+    // 2B. UPDATE ADMINS PASSWORD
+    if (s.includes('UPDATE ADMINS') && s.includes('PASSWORD_HASH = ?')) {
+      const [newHash, username] = params;
+      const found = admins.find((a) => a.username === username);
+      if (found) {
+        found.password_hash = newHash;
+        found.updated_at = new Date();
+      }
+      return [{ affectedRows: found ? 1 : 0 }];
+    }
+
     // 3. INSERT INTO BUSINESS_PROFILES
     if (s.includes('INSERT INTO BUSINESS_PROFILES')) {
       const id = nextProfileId++;
