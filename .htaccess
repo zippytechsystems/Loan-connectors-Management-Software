@@ -11,26 +11,12 @@ DirectoryIndex index.html
   Require all denied
 </FilesMatch>
 
-# 2. Rewrite Rules
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteBase /
+# 2. Block direct HTTP listing of server backend code and migrations
+RewriteEngine On
+RewriteBase /
 
-  # Block direct access to backend server source code and migrations
-  RewriteRule ^server(/.*)?$ - [F,L]
-  RewriteRule ^migrations(/.*)?$ - [F,L]
-
-  # Route /api calls directly to Node.js backend on localhost:5000
-  RewriteRule ^api/(.*)$ http://127.0.0.1:5000/api/$1 [P,L]
-  RewriteRule ^api$ http://127.0.0.1:5000/api [P,L]
-
-  # Single Page Application (SPA) Routing for React Router (Frontend)
-  # Only rewrite non-existent files that are NOT API endpoints
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{REQUEST_URI} !^/api
-  RewriteRule ^(.*)$ index.html [QSA,L]
-</IfModule>
+RewriteRule ^server(/.*)?$ - [F,L]
+RewriteRule ^migrations(/.*)?$ - [F,L]
 
 # 3. Enable compression for speed
 <IfModule mod_deflate.c>
