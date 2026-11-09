@@ -27,8 +27,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 // -----------------------------------------------------------------------------
 // 1. Environment & Configuration Loader
 // -----------------------------------------------------------------------------
+if (!defined('ZIPPY_APP_LOADED')) {
+    define('ZIPPY_APP_LOADED', true);
+}
+
 function loadEnv() {
     $env = [];
+    $configFile = __DIR__ . '/config.php';
+    if (file_exists($configFile) && is_readable($configFile)) {
+        $loaded = include $configFile;
+        if (is_array($loaded)) {
+            $env = array_merge($env, $loaded);
+        }
+    }
+
     $envFiles = [
         __DIR__ . '/../.env',
         __DIR__ . '/../../.env',
@@ -53,15 +65,15 @@ function loadEnv() {
 }
 
 $fileEnv = loadEnv();
-$dbHost = getenv('DB_HOST') ?: ($fileEnv['DB_HOST'] ?? '127.0.0.1');
-$dbPort = getenv('DB_PORT') ?: ($fileEnv['DB_PORT'] ?? '3306');
-$dbName = getenv('DB_NAME') ?: ($fileEnv['DB_NAME'] ?? 'u914601002_Zippyloansdata');
-$dbUser = getenv('DB_USER') ?: ($fileEnv['DB_USER'] ?? 'u914601002_zippyicicloan');
-$dbPass = getenv('DB_PASSWORD') ?: ($fileEnv['DB_PASSWORD'] ?? '');
-$sessionSecret = getenv('SESSION_SECRET') ?: ($fileEnv['SESSION_SECRET'] ?? 'zippy_loan_connector_dev_secret_key_849204859345');
-$cookieName = getenv('COOKIE_NAME') ?: ($fileEnv['COOKIE_NAME'] ?? 'zippy_auth_token');
-$adminUser = getenv('ADMIN_USERNAME') ?: ($fileEnv['ADMIN_USERNAME'] ?? 'M.Lingaswamy@123');
-$adminPass = getenv('ADMIN_INITIAL_PASSWORD') ?: ($fileEnv['ADMIN_INITIAL_PASSWORD'] ?? 'M.Linga@123');
+$dbHost = getenv('DB_HOST') ?: ($_SERVER['DB_HOST'] ?? ($fileEnv['DB_HOST'] ?? '127.0.0.1'));
+$dbPort = getenv('DB_PORT') ?: ($_SERVER['DB_PORT'] ?? ($fileEnv['DB_PORT'] ?? '3306'));
+$dbName = getenv('DB_NAME') ?: ($_SERVER['DB_NAME'] ?? ($fileEnv['DB_NAME'] ?? 'u914601002_DSA_management'));
+$dbUser = getenv('DB_USER') ?: ($_SERVER['DB_USER'] ?? ($fileEnv['DB_USER'] ?? 'u914601002_DSA_database'));
+$dbPass = getenv('DB_PASSWORD') ?: ($_SERVER['DB_PASSWORD'] ?? ($fileEnv['DB_PASSWORD'] ?? 'M.Linga@123'));
+$sessionSecret = getenv('SESSION_SECRET') ?: ($_SERVER['SESSION_SECRET'] ?? ($fileEnv['SESSION_SECRET'] ?? 'zippy_loan_connector_dev_secret_key_849204859345'));
+$cookieName = getenv('COOKIE_NAME') ?: ($_SERVER['COOKIE_NAME'] ?? ($fileEnv['COOKIE_NAME'] ?? 'zippy_auth_token'));
+$adminUser = getenv('ADMIN_USERNAME') ?: ($_SERVER['ADMIN_USERNAME'] ?? ($fileEnv['ADMIN_USERNAME'] ?? 'M.Lingaswamy@123'));
+$adminPass = getenv('ADMIN_INITIAL_PASSWORD') ?: ($_SERVER['ADMIN_INITIAL_PASSWORD'] ?? ($fileEnv['ADMIN_INITIAL_PASSWORD'] ?? 'M.Linga@123'));
 
 // -----------------------------------------------------------------------------
 // 2. MySQL PDO Connection Helper
@@ -71,19 +83,25 @@ function getDbConnection() {
     static $pdo = null;
     if ($pdo !== null) return $pdo;
 
-    try {
-        $dsn = "mysql:host=$dbHost;port=$dbPort;dbname=$dbName;charset=utf8mb4";
-        $options = [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false,
-            PDO::ATTR_TIMEOUT => 5,
-        ];
-        $pdo = new PDO($dsn, $dbUser, $dbPass, $options);
-        return $pdo;
-    } catch (PDOException $e) {
-        return null;
+    $hostsToTry = array_values(array_unique([$dbHost, '127.0.0.1', 'localhost', 'srv1555.hstgr.io']));
+
+    foreach ($hostsToTry as $host) {
+        try {
+            $dsn = "mysql:host=$host;port=$dbPort;dbname=$dbName;charset=utf8mb4";
+            $options = [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false,
+                PDO::ATTR_TIMEOUT => 4,
+            ];
+            $pdo = new PDO($dsn, $dbUser, $dbPass, $options);
+            return $pdo;
+        } catch (PDOException $e) {
+            // Fallback to next host candidate
+        }
     }
+
+    return null;
 }
 
 // Ensure database tables and initial admin exist

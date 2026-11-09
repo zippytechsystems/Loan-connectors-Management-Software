@@ -33,9 +33,9 @@ export const env = {
   // MySQL Hostinger Configuration
   DB_HOST: process.env.DB_HOST || '127.0.0.1',
   DB_PORT: parseInt(process.env.DB_PORT || '3306', 10),
-  DB_NAME: process.env.DB_NAME || 'u914601002_Zippyloansdata',
-  DB_USER: process.env.DB_USER || 'u914601002_zippyicicloan',
-  DB_PASSWORD: process.env.DB_PASSWORD || '',
+  DB_NAME: process.env.DB_NAME || 'u914601002_DSA_management',
+  DB_USER: process.env.DB_USER || 'u914601002_DSA_database',
+  DB_PASSWORD: process.env.DB_PASSWORD || 'M.Linga@123',
   DB_CONNECTION_LIMIT: parseInt(process.env.DB_CONNECTION_LIMIT || '10', 10),
   DB_CONNECT_TIMEOUT: parseInt(process.env.DB_CONNECT_TIMEOUT || '10000', 10),
 

@@ -67,6 +67,43 @@ export async function testDbConnection() {
       serverTime: rows[0].server_time,
     };
   } catch (err) {
+    // If connecting locally to 127.0.0.1 failed, try remote Hostinger host srv1555.hstgr.io
+    if ((err.code === 'ECONNREFUSED' || err.code === 'ENOTFOUND') && env.DB_HOST === '127.0.0.1') {
+      try {
+        const remoteConn = await mysql.createConnection({
+          host: 'srv1555.hstgr.io',
+          port: env.DB_PORT,
+          database: env.DB_NAME,
+          user: env.DB_USER,
+          password: env.DB_PASSWORD,
+          connectTimeout: 5000,
+        });
+        const [rows] = await remoteConn.query('SELECT 1 + 1 AS result, NOW() AS server_time');
+        await remoteConn.end();
+        pool = mysql.createPool({
+          host: 'srv1555.hstgr.io',
+          port: env.DB_PORT,
+          database: env.DB_NAME,
+          user: env.DB_USER,
+          password: env.DB_PASSWORD,
+          waitForConnections: true,
+          connectionLimit: env.DB_CONNECTION_LIMIT,
+          queueLimit: 0,
+          connectTimeout: env.DB_CONNECT_TIMEOUT || 10000,
+          charset: 'utf8mb4',
+        });
+        isConnected = true;
+        lastConnectionError = null;
+        return {
+          success: true,
+          message: 'Successfully connected to Hostinger MySQL database (via remote host)',
+          serverTime: rows[0].server_time,
+        };
+      } catch (remoteErr) {
+        // Fall back to original error
+      }
+    }
+
     isConnected = false;
     lastConnectionError = err;
     return {
